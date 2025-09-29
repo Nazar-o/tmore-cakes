@@ -104,13 +104,13 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
                 </form>
 
                 {/* Demo Credentials */}
-                <div className="mt-6 p-4 bg-yellow-50 rounded-xl">
+                {/* <div className="mt-6 p-4 bg-yellow-50 rounded-xl">
                     <p className="text-sm text-gray-600 text-center">
                         <strong>Demo Credentials:</strong><br />
                         Email: admin@tmorescakes.com<br />
                         Password: admin123
                     </p>
-                </div>
+                </div> */}
 
                 {/* Footer */}
                 <div className="mt-8 text-center">

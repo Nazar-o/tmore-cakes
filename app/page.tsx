@@ -14,20 +14,33 @@ export default function Home() {
             {/* Hero Section */}
             <HeroSection />
 
-            <section id="about" className="py-10 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="text-center
-                    ">
-                        <h2 className="text-4xl md:text-5xl font-bold">
+            {/* About Section - Mobile optimized */}
+            <section id="about" className="py-12 sm:py-16 lg:py-20 bg-white">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-6xl mx-auto">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
                             Meet Your <span className="gradient-text">Baker</span>
                         </h2>
-                        <div className="w-170 h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto my-3 rounded-full"></div>
-                        <img src="/images/home.JPG" alt="Image of Tari, the baker." className="w-100 h-100 object-cover rounded-full mx-auto mb-6" />
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10 font-medium">
+                        <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto mb-6 sm:mb-8 rounded-full"></div>
+
+                        {/* Profile Image - Mobile responsive */}
+                        <div className="mb-6 sm:mb-8">
+                            <img
+                                src="/images/home.JPG"
+                                alt="Image of Tari, the baker."
+                                className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 object-cover rounded-full mx-auto shadow-lg"
+                            />
+                        </div>
+
+                        <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-medium leading-relaxed px-4">
                             Hi, I'm Tari! I've been passionate about baking since I was a little girl,
                             and now I'm turning that passion into creating magical moments for others.
                         </p>
-                        <Link href="/about" className="btn-primary text-lg px-8 py-4 mt-10">
+
+                        <Link
+                            href="/about"
+                            className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-block"
+                        >
                             Learn More
                         </Link>
                     </div>
@@ -40,14 +53,14 @@ export default function Home() {
             {/* Gallery Preview */}
             <GalleryPreview />
 
-            {/* Main Order Form */}
-            <section id="order-form" className="py-20 gradient-bg">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            {/* Main Order Form - Mobile optimized */}
+            <section id="order-form" className="py-12 sm:py-16 lg:py-20 gradient-bg">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-4xl mx-auto text-center mb-8 sm:mb-12">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                             Ready to Order Your <span className="gradient-text">Dream Cake</span>?
                         </h2>
-                        <p className="text-xl text-gray-600 mb-8">
+                        <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                             Fill out the form below and let's create something magical together!
                         </p>
                     </div>
@@ -58,4 +71,4 @@ export default function Home() {
             <Footer />
         </div>
     );
-} 
+}

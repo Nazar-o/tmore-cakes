@@ -27,10 +27,10 @@ const galleryCategories = [
 ];
 
 const sampleImages = [
-    { id: 1, category: 'Birthday', flavor: 'Red Velvet', event: '25th Birthday' },
-    { id: 2, category: 'Wedding', flavor: 'Classic Vanilla', event: 'Beach Wedding' },
-    { id: 3, category: 'Kids', flavor: 'Chocolate', event: 'Dinosaur Party' },
-    { id: 4, category: 'Specialty', flavor: 'Lemon', event: 'Corporate Event' }
+    { id: 1, category: 'Birthday', flavor: 'Red Velvet', event: '' },
+    { id: 2, category: 'Wedding', flavor: 'Classic Vanilla', event: '' },
+    { id: 3, category: 'Kids', flavor: 'Chocolate', event: '' },
+    { id: 4, category: 'Specialty', flavor: 'Lemon', event: '' }
 ];
 
 export default function GalleryPreview() {

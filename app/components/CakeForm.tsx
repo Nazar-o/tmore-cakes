@@ -103,53 +103,56 @@ export default function CakeForm() {
 
     return (
         <form id="order-form" onSubmit={handleSubmit} className="max-w-4xl mx-auto card">
-            <h2 className="text-2xl font-bold mb-6 text-center">Request Your Custom Cake</h2>
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8 text-center">Request Your Custom Cake</h2>
 
-            {/* Basic Information */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* Basic Information - Mobile optimized grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Name *</label>
                     <input
                         type="text"
                         name="name"
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        placeholder="Your full name"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                     <input
                         type="email"
                         name="email"
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        placeholder="your.email@example.com"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
                     <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        placeholder="(555) 123-4567"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Cake Type *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Cake Type *</label>
                     <select
                         name="cakeType"
                         required
                         value={formData.cakeType}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     >
                         <option value="">Select cake type</option>
                         <option value="birthday">Birthday Cake</option>
@@ -160,13 +163,13 @@ export default function CakeForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Size *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Size *</label>
                     <select
                         name="size"
                         required
                         value={formData.size}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     >
                         <option value="">Select size</option>
                         <option value="8-inch">8" Round (24-28 servings)</option>
@@ -183,96 +186,97 @@ export default function CakeForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Occasion</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Occasion</label>
                     <input
                         type="text"
                         name="occasion"
                         value={formData.occasion}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        placeholder="Birthday party, wedding, etc."
                     />
                 </div>
             </div>
 
             {/* Dietary Restrictions */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Dietary Restrictions/Allergies</label>
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Dietary Restrictions/Allergies</label>
                 <input
                     type="text"
                     name="dietaryRestrictions"
                     value={formData.dietaryRestrictions}
                     onChange={handleChange}
                     placeholder="e.g., Gluten-free, Nut allergy, Vegan"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 />
             </div>
 
             {/* Inspiration Photo */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Inspiration Photo</label>
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Inspiration Photo</label>
                 <input
                     type="file"
                     name="inspirationPhoto"
                     accept="image/*"
                     onChange={handleFileChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100"
                 />
-                <p className="text-sm text-gray-500 mt-1">Upload an image that inspires your cake design</p>
+                <p className="text-sm text-gray-500 mt-2">Upload an image that inspires your cake design</p>
             </div>
 
             {/* Delivery/Pickup Options */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Delivery or Pickup *</label>
-                <div className="flex space-x-4">
-                    <label className="flex items-center">
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-3">Delivery or Pickup *</label>
+                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-6">
+                    <label className="flex items-center cursor-pointer">
                         <input
                             type="radio"
                             name="deliveryOption"
                             value="pickup"
                             checked={formData.deliveryOption === 'pickup'}
                             onChange={handleChange}
-                            className="mr-2"
+                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
                         />
-                        <span>Pickup</span>
+                        <span className="text-base">Pickup</span>
                     </label>
-                    <label className="flex items-center">
+                    <label className="flex items-center cursor-pointer">
                         <input
                             type="radio"
                             name="deliveryOption"
                             value="delivery"
                             checked={formData.deliveryOption === 'delivery'}
                             onChange={handleChange}
-                            className="mr-2"
+                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
                         />
-                        <span>Delivery</span>
+                        <span className="text-base">Delivery</span>
                     </label>
                 </div>
             </div>
 
             {/* Delivery Address (conditional) */}
             {formData.deliveryOption === 'delivery' && (
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Delivery Address *</label>
+                <div className="mb-6 sm:mb-8">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Delivery Address *</label>
                     <textarea
                         name="deliveryAddress"
                         required={formData.deliveryOption === 'delivery'}
                         value={formData.deliveryAddress}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                         placeholder="Please provide complete delivery address including city, state, and zip code"
                     />
                 </div>
             )}
 
             {/* Target Budget */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Target Budget</label>
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Target Budget</label>
                 <select
                     name="targetBudget"
                     value={formData.targetBudget}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 >
                     <option value="">Select budget range</option>
                     <option value="200-300">$200 - $300</option>
@@ -284,14 +288,14 @@ export default function CakeForm() {
             </div>
 
             {/* Contact Preferences */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Best Contact Method</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Best Contact Method</label>
                     <select
                         name="contactMethod"
                         value={formData.contactMethod}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     >
                         <option value="">Select preferred method</option>
                         <option value="phone">Phone Call</option>
@@ -301,26 +305,26 @@ export default function CakeForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Best Time to Contact</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Best Time to Contact</label>
                     <input
                         type="text"
                         name="contactTime"
                         value={formData.contactTime}
                         onChange={handleChange}
                         placeholder="e.g., After 5 PM, Weekends only"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     />
                 </div>
             </div>
 
             {/* Payment Method */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Payment Method</label>
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Payment Method</label>
                 <select
                     name="paymentMethod"
                     value={formData.paymentMethod}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 >
                     <option value="">Select payment method</option>
                     <option value="credit-card">Credit Card</option>
@@ -334,35 +338,35 @@ export default function CakeForm() {
             </div>
 
             {/* Description */}
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description (Please be as detailed as possible)</label>
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description (Please be as detailed as possible)</label>
                 <textarea
                     name="description"
                     rows={4}
                     value={formData.description}
                     onChange={handleChange}
                     placeholder="Describe your cake design, flavors, colors, etc."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 />
             </div>
 
             {/* Date */}
-            <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date Needed *</label>
+            <div className="mb-8 sm:mb-10">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date Needed *</label>
                 <input
                     type="date"
                     name="date"
                     required
                     value={formData.date}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 />
             </div>
 
             <div className="text-center">
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 text-white py-4 px-8 rounded-lg hover:from-yellow-500 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-200 font-semibold text-lg shadow-lg"
                 >
                     Submit Request
                 </button>
