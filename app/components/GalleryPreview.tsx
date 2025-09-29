@@ -7,25 +7,21 @@ const galleryCategories = [
     {
         name: 'Birthday Cakes',
         icon: '🎂',
-        count: 25,
         description: 'Colorful and fun designs for all ages'
     },
     {
         name: 'Kids Cakes',
         icon: '🧸',
-        count: 18,
         description: 'Adorable themes that make kids smile'
     },
     {
         name: 'Wedding Cakes',
         icon: '💒',
-        count: 32,
         description: 'Elegant and romantic centerpieces'
     },
     {
         name: 'Specialty Cakes',
         icon: '✨',
-        count: 15,
         description: 'Unique sculpted and themed designs'
     }
 ];
@@ -78,7 +74,7 @@ export default function GalleryPreview() {
                 </div>
 
                 {/* Gallery Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-10">
                     {sampleImages.map((image) => (
                         <div key={image.id} className="group cursor-pointer">
                             <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl p-6 h-64 flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
@@ -101,9 +97,6 @@ export default function GalleryPreview() {
                             <h3 className="text-lg font-semibold mb-2 text-gray-800">
                                 {category.name}
                             </h3>
-                            <div className="text-2xl font-bold text-yellow-600 mb-2">
-                                {category.count}+
-                            </div>
                             <p className="text-sm text-gray-600">
                                 {category.description}
                             </p>
@@ -123,9 +116,6 @@ export default function GalleryPreview() {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Link href="/gallery" className="btn-primary">
                                 View Full Gallery
-                            </Link>
-                            <Link href="#order-form" className="btn-secondary">
-                                Start Your Order
                             </Link>
                         </div>
                     </div>

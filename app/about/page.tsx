@@ -50,8 +50,6 @@ export default function AboutPage() {
                                 </div>
 
                                 <div className="text-center">
-                                    <div className="text-4xl mb-6">💝</div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Mission Statement</h3>
                                     <p className="about-text">
                                         At Tmore's Cakes, every cake is baked with love, creativity, and a whole lot of joy because your celebrations deserve the sweetest touch.
                                     </p>

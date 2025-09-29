@@ -68,10 +68,32 @@ cp env.template .env.local
 
 Then edit `.env.local` with your actual Supabase URL and API key.
 
+## Database Setup
+
+1. Create a new Supabase project at [supabase.com](https://supabase.com)
+2. Run the SQL script in your Supabase SQL editor:
+
+```sql
+-- Copy and paste the contents of supabase-setup.sql
+```
+
+3. Update your `.env.local` with your Supabase credentials:
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
 ## Admin Access
 
 Access the admin dashboard at `/admin` or click the "Admin" button in the navigation.
 Demo credentials: admin@tmorescakes.com / admin123
+
+## Features
+
+- **Form Integration**: Cake orders are automatically saved to the database
+- **Real-time Updates**: Admin dashboard shows live order data
+- **Order Management**: View, edit, and track order status
+- **Cost Calculator**: Calculate pricing with profit margins
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

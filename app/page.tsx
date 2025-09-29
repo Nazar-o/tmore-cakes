@@ -17,7 +17,8 @@ export default function Home() {
 
             <section id="about" className="py-10 bg-white">
                 <div className="container mx-auto px-4">
-                    <div className="text-center">
+                    <div className="text-center
+                    ">
                         <h2 className="text-4xl md:text-5xl font-bold">
                             Meet Your <span className="gradient-text">Baker</span>
                         </h2>
@@ -34,9 +35,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Features Section */}
-            <FeaturesSection />
-
             {/* Pricing Section */}
             <PricingSection />
 
@@ -44,7 +42,7 @@ export default function Home() {
             <GalleryPreview />
 
             {/* Main Order Form */}
-            <section className="py-20 gradient-bg">
+            <section id="order-form" className="py-20 gradient-bg">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center mb-12">
                         <h2 className="text-4xl md:text-5xl font-bold mb-6">

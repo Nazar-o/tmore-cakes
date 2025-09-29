@@ -19,4 +19,4 @@ export interface CakeRequest {
     status: 'pending' | 'approved' | 'in_progress' | 'completed' | 'cancelled';
     created_at: string;
     updated_at: string;
-} 
+}
