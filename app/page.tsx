@@ -2,7 +2,6 @@ import CakeForm from './components/CakeForm';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HeroSection from './components/HeroSection';
-import FeaturesSection from './components/FeaturesSection';
 import PricingSection from './components/PricingSection';
 import GalleryPreview from './components/GalleryPreview';
 import Link from 'next/link';
