@@ -41,15 +41,15 @@ export default function GalleryPreview() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        Cake <span className="gradient-text">Gallery</span>
+                        Cake <span className="gradient-text">Gallery (Coming Soon)</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Take a look at some of our recent creations. Each cake tells a unique story!
+                        Take a look at some of our recent creations. Each cake tells a unique story! 
                     </p>
                 </div>
 
                 {/* Category Tabs */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                {/* <div className="flex flex-wrap justify-center gap-4 mb-12">
                     <button
                         onClick={() => setActiveCategory('all')}
                         className={`px-6 py-3 rounded-full font-medium transition-all ${activeCategory === 'all'
@@ -71,10 +71,10 @@ export default function GalleryPreview() {
                             {category.icon} {category.name}
                         </button>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Gallery Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-10">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-10">
                     {sampleImages.map((image) => (
                         <div key={image.id} className="group cursor-pointer">
                             <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl p-6 h-64 flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
@@ -85,7 +85,7 @@ export default function GalleryPreview() {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Category Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">

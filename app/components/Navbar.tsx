@@ -10,9 +10,9 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="bg-white/95 backdrop-blur-md shadow-lg fixed w-full top-0 z-50">
+            <nav className="bg-white/95 backdrop-blur-md shadow-lg fixed w-full top-0 z-50 h-30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16 sm:h-20">
+                    <div className="flex justify-between items-center h-16 sm:h-20 mt-5">
                         {/* Logo - Mobile optimized */}
                         <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
                             <div className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300">

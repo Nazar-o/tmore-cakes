@@ -259,7 +259,7 @@ export default function PricingSection() {
 
                 {/* CTA - Mobile optimized */}
                 <div className="text-center mt-8 sm:mt-10">
-                    <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6">
+                    <p className="text-base sm:text-lg text-gray-600 mb-2 sm:mb-6">
                         Ready to start your custom cake journey?
                     </p>
                     <a
