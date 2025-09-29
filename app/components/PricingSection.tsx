@@ -51,92 +51,79 @@ const tierSuggestions = [
 ];
 
 const flavors = {
-    included: [
-        'Vanilla', 'Chocolate', 'Strawberry', 'Lemon',
-        'Red Velvet', 'Carrot', 'Banana', 'Coconut'
-    ],
-    premium: [
-        'Salted Caramel', 'Cookies & Cream', 'Tiramisu',
-        'Chocolate Raspberry', 'Lavender', 'Pistachio'
-    ]
+    included: ['White Vanilla', 'Red Velvet', 'Dark Chocolate', 'Zesty Lemon', 'Classic Wedding Cake', 'Almond'],
+    premium: ['Carrot', 'Strawberry', 'Cookies & Cream', 'Raspberry', 'Piña Colada', 'Guinness Chocolate Fudge', 'Italian Cream Cake']
 };
 
-const frostings = [
-    'Vanilla Swiss Meringue Buttercream',
-    'Chocolate Swiss Meringue Buttercream',
-    'Cream Cheese Frosting',
-    'Chocolate Ganache',
-    'Whipped Cream',
-    'Italian Meringue'
-];
+const frostings = ['Chocolate', 'Mocha', 'Mint Chocolate Chip', 'Strawberry', 'Cookies & Cream', 'Zesty Lemon', 'Almond', 'Cream Cheese'];
 
 export default function PricingSection() {
-    const [activeTab, setActiveTab] = useState('sizes');
+    const [activeTab, setActiveTab] = useState('flavors');
 
     return (
-        <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
-                <div className="text-center mb-8 sm:mb-12">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-                        Our <span className="gradient-text">Pricing</span>
+        <section id="pricing" className="py-20 gradient-bg">
+            <div className="container mx-auto px-4">
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                        <span className="gradient-text">Flavors</span> & Pricing
                     </h2>
-                    <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-                        Transparent pricing for every celebration. All cakes are custom-made with premium ingredients.
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Starting at $9 per serving with an 8" minimum. Premium flavors available for an additional $15.
                     </p>
                 </div>
 
-                {/* Tab Navigation - Mobile optimized */}
-                <div className="flex flex-col sm:flex-row justify-center mb-8 sm:mb-12">
-                    <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
-                        <button
-                            onClick={() => setActiveTab('sizes')}
-                            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-200 ${activeTab === 'sizes'
-                                ? 'bg-yellow-500 text-white shadow-lg'
-                                : 'bg-white text-gray-700 hover:bg-yellow-50 border border-gray-300'
-                                }`}
-                        >
-                            Cake Sizes
-                        </button>
+                {/* Tab Navigation */}
+                <div className="flex justify-center mb-12">
+                    <div className="bg-white rounded-full p-2 shadow-lg">
                         <button
                             onClick={() => setActiveTab('flavors')}
-                            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition-all duration-200 ${activeTab === 'flavors'
-                                ? 'bg-yellow-500 text-white shadow-lg'
-                                : 'bg-white text-gray-700 hover:bg-yellow-50 border border-gray-300'
+                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'flavors'
+                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
+                                : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
                             Flavors & Frostings
                         </button>
+                        <button
+                            onClick={() => setActiveTab('sizes')}
+                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'sizes'
+                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                        >
+                            Cake Sizes
+                        </button>
                     </div>
                 </div>
 
-                {/* Tab Content */}
+
+
                 {activeTab === 'flavors' && (
                     <div className="max-w-6xl mx-auto">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
                             {/* Flavors */}
-                            <div className="card">
-                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">Cake Flavors</h3>
+                            <div className="card w-140 justify-items-center">
+                                <h3 className="text-2xl font-bold mb-6 text-center">Cake Flavors</h3>
 
-                                <div className="mb-6 sm:mb-8">
-                                    <h4 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-gray-800 text-center">Standard Flavors</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                                <div className="mb-8">
+                                    <h4 className="text-xl font-semibold mb-4 text-black-600 text-center">Standard Flavors</h4>
+                                    <div className="grid grid-cols-2 gap-3">
                                         {flavors.included.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
-                                                <div className="w-2 h-2 bg-gray-400 rounded-full flex-shrink-0"></div>
-                                                <span className="text-gray-700 text-sm sm:text-base">{flavor}</span>
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
+                                                <span className="text-gray-700">{flavor}</span>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <h4 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-purple-600 text-center">Premium Flavors (+$15)</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                                    <h4 className="text-xl font-semibold mb-4 text-purple-600 text-center">Premium Flavors (+$15)</h4>
+                                    <div className="grid grid-cols-2 gap-3">
                                         {flavors.premium.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
-                                                <div className="w-2 h-2 bg-purple-400 rounded-full flex-shrink-0"></div>
-                                                <span className="text-gray-700 text-sm sm:text-base">{flavor}</span>
+                                                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                                <span className="text-gray-700">{flavor}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -144,16 +131,16 @@ export default function PricingSection() {
                             </div>
 
                             {/* Frostings */}
-                            <div className="card">
-                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">Frostings & Fillings</h3>
-                                <p className="text-gray-600 mb-4 sm:mb-6 text-center text-sm sm:text-base">
+                            <div className="card w-140">
+                                <h3 className="text-2xl font-bold mb-6 text-center ">Frostings & Fillings</h3>
+                                <p className="text-gray-600 mb-6 text-center">
                                     All frostings are Swiss Meringue Buttercream based
                                 </p>
-                                <div className="space-y-2 sm:space-y-3">
+                                <div className="flex flex-col items-center gap-3">
                                     {frostings.map((frosting, index) => (
                                         <div key={index} className="flex items-center space-x-2">
-                                            <div className="w-2 h-2 bg-yellow-400 rounded-full flex-shrink-0"></div>
-                                            <span className="text-gray-700 text-sm sm:text-base">{frosting}</span>
+                                            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                                            <span className="text-gray-700">{frosting}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -161,24 +148,24 @@ export default function PricingSection() {
                         </div>
 
                         {/* Add-ons */}
-                        <div className="mt-6 sm:mt-8">
+                        <div className="mt-8">
                             <div className="card">
-                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">Additional Services</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-                                    <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                        <div className="text-2xl sm:text-3xl mb-2">🚚</div>
-                                        <h4 className="font-semibold mb-2 text-sm sm:text-base">Delivery</h4>
-                                        <p className="text-gray-600 text-sm sm:text-base">$35 - $85</p>
+                                <h3 className="text-2xl font-bold mb-6 text-center">Additional Services</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="text-center">
+                                        <div className="text-2xl mb-2">🚚</div>
+                                        <h4 className="font-semibold mb-2">Delivery</h4>
+                                        <p className="text-gray-600">$35 - $85</p>
                                     </div>
-                                    <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                        <div className="text-2xl sm:text-3xl mb-2">🎨</div>
-                                        <h4 className="font-semibold mb-2 text-sm sm:text-base">Setup Fee</h4>
-                                        <p className="text-gray-600 text-sm sm:text-base">$25 - $100</p>
+                                    <div className="text-center">
+                                        <div className="text-2xl mb-2">🎨</div>
+                                        <h4 className="font-semibold mb-2">Setup Fee</h4>
+                                        <p className="text-gray-600">$25 - $100</p>
                                     </div>
-                                    <div className="text-center p-4 bg-gray-50 rounded-lg">
-                                        <div className="text-2xl sm:text-3xl mb-2">⭐</div>
-                                        <h4 className="font-semibold mb-2 text-sm sm:text-base">Custom Decorations</h4>
-                                        <p className="text-gray-600 text-sm sm:text-base">Priced by design</p>
+                                    <div className="text-center">
+                                        <div className="text-2xl mb-2">⭐</div>
+                                        <h4 className="font-semibold mb-2">Custom Decorations</h4>
+                                        <p className="text-gray-600">Priced by design</p>
                                     </div>
                                 </div>
                             </div>
@@ -190,35 +177,35 @@ export default function PricingSection() {
                 {activeTab === 'sizes' && (
                     <div className="max-w-6xl mx-auto">
                         {/* Base Pricing Info */}
-                        <div className="text-center mb-8 sm:mb-12">
-                            <div className="card max-w-2xl mx-auto mb-6 sm:mb-8">
-                                <h3 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 text-center">Base Pricing Guide</h3>
+                        <div className="text-center mb-12">
+                            <div className="card max-w-2xl mx-auto mb-8">
+                                <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">Base Pricing Guide</h3>
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                                        <span className="text-gray-700 text-sm sm:text-base">Starting at:</span>
-                                        <span className="text-xl sm:text-2xl font-bold text-yellow-600">$9/serving</span>
+                                        <span className="text-gray-700">Starting at:</span>
+                                        <span className="text-2xl font-bold text-yellow-600">$9/serving</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                                        <span className="text-gray-700 text-sm sm:text-base">Minimum order:</span>
-                                        <span className="text-base sm:text-lg font-semibold text-gray-900">8-inch (24-28 servings)</span>
+                                        <span className="text-gray-700">Minimum order:</span>
+                                        <span className="text-lg font-semibold text-gray-900">8-inch (24-28 servings)</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2">
-                                        <span className="text-gray-700 text-sm sm:text-base">Double Barrel 6":</span>
-                                        <span className="text-base sm:text-lg font-semibold text-gray-900">28-30 servings</span>
+                                        <span className="text-gray-700">Double Barrel 6":</span>
+                                        <span className="text-lg font-semibold text-gray-900">28-30 servings</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Single Cakes - Mobile optimized grid */}
-                        <div className="mb-8 sm:mb-12">
-                            <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-gray-900">Single Cakes</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+                        {/* Single Cakes */}
+                        <div className="mb-12">
+                            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Single Cakes</h3>
+                            <div className="grid grid-cols-3 gap-8 justify-items-center">
                                 {cakeSizes.filter(size => size.type === 'single').map((size, index) => (
-                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300">
-                                        <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">🎂</div>
-                                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
-                                        <div className="text-2xl sm:text-3xl font-bold text-yellow-600 mb-2">
+                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
+                                        <div className="text-4xl mb-4">🎂</div>
+                                        <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
+                                        <div className="text-3xl font-bold text-yellow-600 mb-2">
                                             ${size.basePrice}
                                         </div>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
@@ -228,23 +215,23 @@ export default function PricingSection() {
                             </div>
                         </div>
 
-                        {/* Tiered Cakes - Mobile optimized */}
-                        <div className="mb-8 sm:mb-12">
-                            <h3 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-gray-900">Tiered Cakes</h3>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                        {/* Tiered Cakes */}
+                        <div>
+                            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Tiered Cakes</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
                                 {tierSuggestions.map((tier, index) => (
-                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300">
-                                        <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">{tier.icon}</div>
-                                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
-                                        <div className="text-2xl sm:text-3xl font-bold text-yellow-600 mb-2">
+                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
+                                        <div className="text-4xl mb-4">{tier.icon}</div>
+                                        <h3 className="text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
+                                        <div className="text-3xl font-bold text-yellow-600 mb-2">
                                             From ${tier.startingPrice}
                                         </div>
-                                        <p className="text-gray-600 text-sm sm:text-base mb-4">{tier.description}</p>
+                                        <p className="text-gray-600 text-sm mb-4">{tier.description}</p>
                                         <div className="space-y-2">
-                                            <h4 className="font-semibold text-gray-700 text-center text-sm sm:text-base">Available Combinations:</h4>
-                                            <div className="flex flex-wrap justify-center gap-2">
+                                            <h4 className="font-semibold text-gray-700 text-center">Available Combinations:</h4>
+                                            <div className="flex flex-col items-center gap-2">
                                                 {tier.tiers.map((combination, idx) => (
-                                                    <div key={idx} className="text-xs sm:text-sm text-gray-600 bg-gray-50 px-2 sm:px-3 py-1 rounded-full">
+                                                    <div key={idx} className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full">
                                                         {combination}
                                                     </div>
                                                 ))}
@@ -257,19 +244,16 @@ export default function PricingSection() {
                     </div>
                 )}
 
-                {/* CTA - Mobile optimized */}
-                <div className="text-center mt-8 sm:mt-10">
-                    <p className="text-base sm:text-lg text-gray-600 mb-2 sm:mb-6">
+                {/* CTA */}
+                <div className="text-center mt-10">
+                    <p className="text-lg text-gray-600 mb-6">
                         Ready to start your custom cake journey?
                     </p>
-                    <a
-                        href="#order-form"
-                        className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 inline-block"
-                    >
+                    <a href="#order-form" className="btn-primary text-lg px-8 py-4">
                         Get Started Today
                     </a>
                 </div>
             </div>
         </section>
     );
-}
+} 
