@@ -58,14 +58,14 @@ const flavors = {
 const frostings = ['Chocolate', 'Mocha', 'Mint Chocolate Chip', 'Strawberry', 'Cookies & Cream', 'Zesty Lemon', 'Almond', 'Cream Cheese'];
 
 export default function PricingSection() {
-    const [activeTab, setActiveTab] = useState('flavors');
+    const [activeTab, setActiveTab] = useState('sizes');
 
     return (
         <section id="pricing" className="py-20 gradient-bg">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="gradient-text">Flavors</span> & Pricing
+                        <span className="gradient-text-dark">Flavors & Pricing</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                         Starting at $9 per serving with an 8" minimum. Premium flavors available for an additional $15.
@@ -75,15 +75,7 @@ export default function PricingSection() {
                 {/* Tab Navigation */}
                 <div className="flex justify-center mb-12">
                     <div className="bg-white rounded-full p-2 shadow-lg">
-                        <button
-                            onClick={() => setActiveTab('flavors')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'flavors'
-                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
-                                : 'text-gray-600 hover:text-gray-900'
-                                }`}
-                        >
-                            Flavors & Frostings
-                        </button>
+
                         <button
                             onClick={() => setActiveTab('sizes')}
                             className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'sizes'
@@ -92,6 +84,15 @@ export default function PricingSection() {
                                 }`}
                         >
                             Cake Sizes
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('flavors')}
+                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'flavors'
+                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                        >
+                            Flavors & Frostings
                         </button>
                     </div>
                 </div>
@@ -103,7 +104,7 @@ export default function PricingSection() {
                         <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
                             {/* Flavors */}
                             <div className="card w-140 justify-items-center">
-                                <h3 className="text-2xl font-bold mb-6 text-center">Cake Flavors</h3>
+                                <h3 className="pricing-card-title">Cake Flavors</h3>
 
                                 <div className="mb-8">
                                     <h4 className="text-xl font-semibold mb-4 text-black-600 text-center">Standard Flavors</h4>
@@ -132,7 +133,7 @@ export default function PricingSection() {
 
                             {/* Frostings */}
                             <div className="card w-140">
-                                <h3 className="text-2xl font-bold mb-6 text-center ">Frostings & Fillings</h3>
+                                <h3 className="pricing-card-title">Frostings & Fillings</h3>
                                 <p className="text-gray-600 mb-6 text-center">
                                     All frostings are Swiss Meringue Buttercream based
                                 </p>
@@ -150,7 +151,7 @@ export default function PricingSection() {
                         {/* Add-ons */}
                         <div className="mt-8">
                             <div className="card">
-                                <h3 className="text-2xl font-bold mb-6 text-center">Additional Services</h3>
+                                <h3 className="pricing-card-title">Additional Services</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">🚚</div>
@@ -179,7 +180,7 @@ export default function PricingSection() {
                         {/* Base Pricing Info */}
                         <div className="text-center mb-12">
                             <div className="card max-w-2xl mx-auto mb-8">
-                                <h3 className="text-2xl font-bold mb-4 text-gray-900 text-center">Base Pricing Guide</h3>
+                                <h3 className="pricing-card-title">Base Pricing Guide</h3>
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Starting at:</span>
@@ -199,7 +200,7 @@ export default function PricingSection() {
 
                         {/* Single Cakes */}
                         <div className="mb-12">
-                            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Single Cakes</h3>
+                            <h3 className="pricing-card-title">Single Cakes</h3>
                             <div className="grid grid-cols-3 gap-8 justify-items-center">
                                 {cakeSizes.filter(size => size.type === 'single').map((size, index) => (
                                     <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
@@ -217,7 +218,7 @@ export default function PricingSection() {
 
                         {/* Tiered Cakes */}
                         <div>
-                            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Tiered Cakes</h3>
+                            <h3 className="pricing-card-title">Tiered Cakes</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
                                 {tierSuggestions.map((tier, index) => (
                                     <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">

@@ -18,7 +18,7 @@ export default function Home() {
             <section id="about" className="py-12 sm:py-16 lg:py-20 bg-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-6xl mx-auto">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 ">
                             Meet Your <span className="gradient-text">Baker</span>
                         </h2>
                         <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto mb-6 sm:mb-8 rounded-full"></div>

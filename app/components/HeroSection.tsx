@@ -26,7 +26,7 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section className="relative min-h-[900px] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[1100px] flex items-center justify-center overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30 z-10" />
@@ -44,28 +44,25 @@ export default function HeroSection() {
             </div>
 
             {/* Content */}
-            <div className="relative z-20 text-center text-white px-4 max-w-8xl mx-auto top-20">
-                <h1 className="sacrifice-font">
+            <div className="relative z-20 norican-font text-center text-white px-4 max-w-8xl mx-auto top-20">
+                {/* <h1>
                     Crafting Sweet Memories,<br />
-                    <span className="text-yellow-300 sacrifice-font">One Slice at a Time</span>
-                </h1>
+                    <span className="text-yellow-300 ">One Slice at a Time</span>
+                </h1> */}
+            </div>
 
-
-                {/* Call to Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mt-10">
-                    <Link href="#order-form" className="btn-primary text-lg px-8 py-4 ">
-                        Order a Custom Cake
-                    </Link>
-                </div>
-
-
+            {/* Call to Action Button - Positioned above arrow */}
+            <div className="absolute bottom-25 left-1/2 transform -translate-x-1/2 z-20">
+                <Link href="#order-form" className="btn-primary text-2xl px-8 py-4 inline-block">
+                    Order a Custom Cake
+                </Link>
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
                 <div className="animate-bounce">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                 </div>
             </div>

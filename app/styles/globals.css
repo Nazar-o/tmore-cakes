@@ -18,8 +18,15 @@
 }
 
 @font-face {
-  font-family: 'Norican';
-  src: url('/fonts/Norican.ttf') format('truetype');
+  font-family: 'Gabrielle';
+  src: url('/fonts/Gabrielle.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Royalty';
+  src: url('/fonts/Royalty.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -49,11 +56,19 @@ body {
   transform: translateY(-1px);
 }
 
-.sacrifice-font {
+.norican-font {
   font-family: 'Norican';
   font-size: 150px;
-  font-weight: 200; 
+  font-weight: 200;
 }
+
+.royalty-font {
+  font-family: 'Royalty';
+  font-size: 60px;
+  font-weight: 200;
+  color: rgb(255, 255, 255);
+}
+
 
 .about-text {
   font-size: 20px;
@@ -68,6 +83,17 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-family: 'Gabrielle';
+  font-size: 75px;
+}
+
+.gradient-text-dark {
+  background: linear-gradient(180deg, var(--text-dark), var(--text-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Gabrielle';
+  font-size: 75px;
 }
 
 .gradient-bg {
@@ -86,15 +112,18 @@ body {
   background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold));
   color: white;
   padding: 12px 32px;
-  border-radius: 50px;
-  font-weight: 600;
+  border-radius: 25px;
+  font-weight: 800;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-gold);
-  font-size: 20px;
+  font-size: 33px;
+  font-family: 'Gabrielle';
+  display: inline-block;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25);
 }
 
@@ -124,4 +153,230 @@ body {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* Pricing Section Styles */
+.pricing-card-title {
+  font-family: 'Royalty';
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  font-size: 55px;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.pricing-card-title:hover {
+  color: #d97706;
+  /* yellow-600 */
+  transition: color 0.3s ease;
+}
+
+/* Navbar Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 11rem;
+  transition: all 0.3s ease;
+}
+
+.navbar-transparent {
+  background: transparent;
+  box-shadow: none;
+}
+
+.navbar-solid {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  margin-top: 3rem;
+}
+
+.navbar-links {
+  display: none;
+  align-items: center;
+  gap: 50rem;
+  font-size: 150rem;
+}
+
+.navbar-links-desktop {
+  display: flex;
+  align-items: center;
+  gap: 8rem;
+}
+
+/* Hide desktop links on mobile */
+@media (max-width: 1023px) {
+  .navbar-links-desktop {
+    display: none;
+  }
+}
+
+.navbar-links-xl {
+  gap: 6.25rem;
+  font-size: 1.875rem;
+}
+
+.navbar-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  font-family: 'Royalty';
+  font-size: 60px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-link:hover {
+  color: #f9a8d4;
+  /* pink-300 */
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: #f9a8d4;
+  transition: width 0.3s ease;
+}
+
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+/* Darker text when navbar is solid */
+.navbar-solid .navbar-link {
+  color: #1f2937;
+  /* gray-800 */
+}
+
+.navbar-solid .navbar-link:hover {
+  color: #ec4899;
+  /* pink-600 */
+}
+
+/* Underline for solid navbar */
+.navbar-solid .navbar-link::after {
+  background: #ec4899;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  transition: transform 0.3s ease;
+  margin-top: -1.5rem;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+}
+
+.navbar-logo-bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 48%;
+  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  margin: -1rem;
+  margin-top: 10px;
+}
+
+/* Hide logo background when navbar is solid */
+.navbar-solid .navbar-logo-bg {
+  opacity: 0;
+}
+
+.navbar-logo-img {
+  position: relative;
+  z-index: 10;
+  width: 9.375rem;
+  height: 9.375rem;
+  object-fit: contain;
+}
+
+.navbar-mobile-button {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-mobile-button:hover {
+  color: #f9a8d4;
+  /* pink-300 */
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-mobile-menu {
+  display: block;
+  padding-bottom: 1rem;
+  border-top: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.navbar-mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+.navbar-mobile-link {
+  color: #1f2937;
+  /* gray-800 */
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-mobile-link:hover {
+  color: #ec4899;
+  /* pink-600 */
+  background: #f9fafb;
+  /* gray-50 */
+}
+
+@media (min-width: 1024px) {
+  .navbar-links {
+    display: flex;
+  }
+
+  .navbar-mobile-button {
+    display: none;
+  }
+
+  .navbar-mobile-menu {
+    display: none;
+  }
 }

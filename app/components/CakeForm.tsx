@@ -366,7 +366,7 @@ export default function CakeForm() {
             <div className="text-center">
                 <button
                     type="submit"
-                    className="w-full sm:w-auto bg-gradient-to-r from-yellow-400 to-yellow-500 text-white py-4 px-8 rounded-lg hover:from-yellow-500 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-200 font-semibold text-lg shadow-lg"
+                    className="btn-primary"
                 >
                     Submit Request
                 </button>

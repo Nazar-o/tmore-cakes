@@ -41,10 +41,10 @@ export default function GalleryPreview() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        Cake <span className="gradient-text">Gallery (Coming Soon)</span>
+                        <span className="gradient-text-dark"> Cake Gallery (Coming Soon)</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Take a look at some of our recent creations. Each cake tells a unique story! 
+                        Take a look at some of our recent creations. Each cake tells a unique story!
                     </p>
                 </div>
 
@@ -114,7 +114,7 @@ export default function GalleryPreview() {
                             Browse our full gallery of custom cakes and get inspired for your next celebration!
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="/gallery" className="btn-primary">
+                            <Link href="#" className="btn-primary">
                                 View Full Gallery
                             </Link>
                         </div>

@@ -1,16 +1,9 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
+  // Ensure Next selects the correct workspace root when multiple lockfiles exist
+  outputFileTracingRoot: path.join(__dirname),
   // Optimize for production
   images: {
     domains: ['ltueacqcsghhhrrynuet.supabase.co'],
