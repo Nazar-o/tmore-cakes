@@ -26,7 +26,7 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section className="relative min-h-[1100px] flex items-center justify-center overflow-hidden">
+        <section className="hero-section relative min-h-[1100px] lg:min-h-[1100px] md:min-h-[800px] sm:min-h-[600px] flex items-center justify-center overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30 z-10" />
@@ -53,7 +53,7 @@ export default function HeroSection() {
 
             {/* Call to Action Button - Positioned above arrow */}
             <div className="absolute bottom-25 left-1/2 transform -translate-x-1/2 z-20">
-                <Link href="#order-form" className="btn-primary text-2xl px-8 py-4 inline-block">
+                <Link href="#order-form" className="btn-primary hero-button text-2xl lg:text-2xl md:text-xl sm:text-lg px-8 py-4 inline-block">
                     Order a Custom Cake
                 </Link>
             </div>

@@ -122,6 +122,7 @@ body {
   text-decoration: none;
 }
 
+
 .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25);
@@ -183,6 +184,7 @@ body {
   transition: all 0.3s ease;
 }
 
+
 .navbar-transparent {
   background: transparent;
   box-shadow: none;
@@ -207,6 +209,7 @@ body {
   height: 5rem;
   margin-top: 3rem;
 }
+
 
 .navbar-links {
   display: none;
@@ -305,6 +308,7 @@ body {
   margin-top: 10px;
 }
 
+
 /* Hide logo background when navbar is solid */
 .navbar-solid .navbar-logo-bg {
   opacity: 0;
@@ -317,6 +321,7 @@ body {
   height: 9.375rem;
   object-fit: contain;
 }
+
 
 .navbar-mobile-button {
   display: block;
@@ -335,29 +340,55 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Mobile button darker when navbar is solid (scrolled) */
+.navbar-solid .navbar-mobile-button {
+  color: #1f2937;
+  /* gray-800 - darker color */
+}
+
+.navbar-solid .navbar-mobile-button:hover {
+  color: #ec4899;
+  background: rgba(31, 41, 55, 0.1);
+}
+
 .navbar-mobile-menu {
   display: block;
   padding-bottom: 1rem;
+  /* Reduced padding */
   border-top: 1px solid #e5e7eb;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
+  border-radius: 20 20 20px 20px;
+  margin-top: 3rem;
+  max-width: 250px;
+  /* Limit menu width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbar-mobile-links {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding-top: 1rem;
+  gap: 1rem;
+  /* Reduced gap between links */
+  padding-top: 0.75rem;
 }
 
 .navbar-mobile-link {
   color: #1f2937;
   /* gray-800 */
-  font-size: 1rem;
+  font-size: 1.25rem;
+  /* Reduced from 2rem to 1.25rem */
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  /* Reduced padding */
+  border-radius: 0.75rem;
+  /* Slightly less rounded */
   text-decoration: none;
   transition: all 0.3s ease;
+  font-family: 'Royalty';
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .navbar-mobile-link:hover {
@@ -378,5 +409,220 @@ body {
 
   .navbar-mobile-menu {
     display: none;
+  }
+}
+
+
+
+/* ========================================
+   MOBILE STYLES - CENTRALIZED SECTION
+   ======================================== */
+
+@media (max-width: 1023px) {
+
+  /* Mobile Navbar */
+  .navbar {
+    height: 7rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-content {
+    height: 3rem;
+    margin-top: 1.5rem;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .navbar-mobile-button {
+    position: absolute;
+  }
+
+  .navbar-logo {
+    position: relative;
+    top: 1rem;
+    left: 15.5rem;
+  }
+
+  /* Mobile Logo */
+  .navbar-logo-img {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .navbar-logo-bg {
+    margin: -1.5rem;
+    margin-top: -0.5px;
+    margin-bottom: -0.5rem;
+  }
+
+  /* Mobile Button Colors */
+  .navbar-solid .navbar-mobile-button {
+    color: #1f2937;
+  }
+
+  .navbar-solid .navbar-mobile-button:hover {
+    color: #ec4899;
+    background: rgba(31, 41, 55, 0.1);
+  }
+
+  /* Mobile Menu */
+  .navbar-mobile-menu {
+    padding-bottom: 1rem;
+    border-radius: 20 20 20px 20px;
+    margin-top: 3rem;
+    max-width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .navbar-mobile-links {
+    gap: 1rem;
+    padding-top: 0.75rem;
+  }
+
+  .navbar-mobile-link {
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+  }
+
+  /* Mobile Button Styling */
+  .btn-primary {
+    font-size: 20px;
+    padding: 8px 24px;
+  }
+
+  .gradient-text {
+    font-size: 35px;
+  }
+
+  .gradient-text-dark {
+    font-size: 45px;
+  }
+
+  /* Mobile Hero Section */
+  .hero-section {
+    min-height: 600px;
+  }
+
+  .hero-button {
+    font-size: 18px;
+    padding: 10px 20px;
+  }
+
+  /* Mobile Pricing Section */
+  .pricing-section {
+    padding: 2rem 1rem;
+  }
+
+  .pricing-section-text {
+    text-align: center;
+    max-width: 85%;
+    font-size: 15px;
+    margin-bottom: -2rem;
+  }
+
+  .pricing-card-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .pricing-grid-mobile {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .pricing-card-mobile {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .pricing-card-mobile h3 {
+    font-size: 1.25rem;
+  }
+
+  .pricing-card-mobile .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .pricing-card-mobile .text-4xl {
+    font-size: 2rem;
+  }
+
+  /* Mobile Flavors & Frosting Cards */
+  .flavors-frosting-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .flavors-card-mobile {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .flavors-card-mobile h3 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .flavors-card-mobile h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .flavors-grid-mobile {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  .flavors-grid-mobile .flex {
+    padding: 0.25rem 0;
+  }
+
+  .flavors-grid-mobile span {
+    font-size: 0.9rem;
+  }
+
+  .frostings-list-mobile {
+    gap: 0.5rem;
+  }
+
+  .frostings-list-mobile .flex {
+    padding: 0.25rem 0;
+  }
+
+  .frostings-list-mobile span {
+    font-size: 0.9rem;
+  }
+
+  /* Mobile Additional Services */
+  .additional-services-mobile {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-card-mobile {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .service-card-mobile .text-2xl {
+    font-size: 1.5rem;
+  }
+
+  .service-card-mobile h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card-mobile p {
+    font-size: 0.9rem;
   }
 }

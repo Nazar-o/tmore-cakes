@@ -64,10 +64,10 @@ export default function PricingSection() {
         <section id="pricing" className="py-20 gradient-bg">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="gradient-text-dark">Flavors & Pricing</span>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 ">
+                        <span className="gradient-text-dark pricing-section-title">Flavors & Pricing</span>
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-gray-600 max-w-3xl mx-auto pricing-section-text">
                         Starting at $9 per serving with an 8" minimum. Premium flavors available for an additional $15.
                     </p>
                 </div>
@@ -101,14 +101,14 @@ export default function PricingSection() {
 
                 {activeTab === 'flavors' && (
                     <div className="max-w-6xl mx-auto">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+                        <div className="flavors-frosting-grid grid grid-cols-1 lg:grid-cols-2 justify-items-center">
                             {/* Flavors */}
-                            <div className="card w-140 justify-items-center">
+                            <div className="flavors-card-mobile card w-140 justify-items-center">
                                 <h3 className="pricing-card-title">Cake Flavors</h3>
 
                                 <div className="mb-8">
                                     <h4 className="text-xl font-semibold mb-4 text-black-600 text-center">Standard Flavors</h4>
-                                    <div className="grid grid-cols-2 gap-3">
+                                    <div className="flavors-grid-mobile grid grid-cols-2 gap-3">
                                         {flavors.included.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
                                                 <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
@@ -120,7 +120,7 @@ export default function PricingSection() {
 
                                 <div>
                                     <h4 className="text-xl font-semibold mb-4 text-purple-600 text-center">Premium Flavors (+$15)</h4>
-                                    <div className="grid grid-cols-2 gap-3">
+                                    <div className="flavors-grid-mobile grid grid-cols-2 gap-3">
                                         {flavors.premium.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
                                                 <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
@@ -132,12 +132,12 @@ export default function PricingSection() {
                             </div>
 
                             {/* Frostings */}
-                            <div className="card w-140">
+                            <div className="flavors-card-mobile card w-140">
                                 <h3 className="pricing-card-title">Frostings & Fillings</h3>
                                 <p className="text-gray-600 mb-6 text-center">
                                     All frostings are Swiss Meringue Buttercream based
                                 </p>
-                                <div className="flex flex-col items-center gap-3">
+                                <div className="frostings-list-mobile flex flex-col items-center gap-3">
                                     {frostings.map((frosting, index) => (
                                         <div key={index} className="flex items-center space-x-2">
                                             <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
@@ -152,18 +152,18 @@ export default function PricingSection() {
                         <div className="mt-8">
                             <div className="card">
                                 <h3 className="pricing-card-title">Additional Services</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div className="text-center">
+                                <div className="additional-services-mobile grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="service-card-mobile text-center">
                                         <div className="text-2xl mb-2">🚚</div>
                                         <h4 className="font-semibold mb-2">Delivery</h4>
                                         <p className="text-gray-600">$35 - $85</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="service-card-mobile text-center">
                                         <div className="text-2xl mb-2">🎨</div>
                                         <h4 className="font-semibold mb-2">Setup Fee</h4>
                                         <p className="text-gray-600">$25 - $100</p>
                                     </div>
-                                    <div className="text-center">
+                                    <div className="service-card-mobile text-center">
                                         <div className="text-2xl mb-2">⭐</div>
                                         <h4 className="font-semibold mb-2">Custom Decorations</h4>
                                         <p className="text-gray-600">Priced by design</p>
@@ -184,15 +184,15 @@ export default function PricingSection() {
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Starting at:</span>
-                                        <span className="text-2xl font-bold text-yellow-600">$9/serving</span>
+                                        <span className="text-xl font-bold text-yellow-600">$9/serving</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Minimum order:</span>
-                                        <span className="text-lg font-semibold text-gray-900">8-inch (24-28 servings)</span>
+                                        <span className="text-md font-semibold text-gray-900">8-inch (24-28 servings)</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2">
                                         <span className="text-gray-700">Double Barrel 6":</span>
-                                        <span className="text-lg font-semibold text-gray-900">28-30 servings</span>
+                                        <span className="text-md font-semibold text-gray-900">28-30 servings</span>
                                     </div>
                                 </div>
                             </div>
@@ -201,9 +201,9 @@ export default function PricingSection() {
                         {/* Single Cakes */}
                         <div className="mb-12">
                             <h3 className="pricing-card-title">Single Cakes</h3>
-                            <div className="grid grid-cols-3 gap-8 justify-items-center">
+                            <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 justify-items-center">
                                 {cakeSizes.filter(size => size.type === 'single').map((size, index) => (
-                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
                                         <div className="text-4xl mb-4">🎂</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-3xl font-bold text-yellow-600 mb-2">
@@ -219,9 +219,9 @@ export default function PricingSection() {
                         {/* Tiered Cakes */}
                         <div>
                             <h3 className="pricing-card-title">Tiered Cakes</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center">
+                            <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-items-center">
                                 {tierSuggestions.map((tier, index) => (
-                                    <div key={index} className="card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
                                         <div className="text-4xl mb-4">{tier.icon}</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
                                         <div className="text-3xl font-bold text-yellow-600 mb-2">

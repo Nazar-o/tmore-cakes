@@ -92,13 +92,13 @@ export default function Navbar() {
                                 >
                                     Gallery
                                 </Link>
-                                <Link
+                                {/* <Link
                                     href="#order-form"
                                     className="btn-primary text-center text-base py-3 px-4 mx-4 rounded-lg"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Order Now
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                     )}
