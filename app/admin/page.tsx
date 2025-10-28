@@ -51,6 +51,14 @@ export default function AdminDashboard() {
     const [showPriceModal, setShowPriceModal] = useState(false);
     const [selectedOrderForPrice, setSelectedOrderForPrice] = useState<CakeOrder | null>(null);
 
+    // Gallery state
+    const [galleryImages, setGalleryImages] = useState<any[]>([]);
+    const [galleryLoading, setGalleryLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [showCategoryPicker, setShowCategoryPicker] = useState(false);
+    const [pendingUploadFile, setPendingUploadFile] = useState<File | null>(null);
+    const categoryOptions = ['Birthday', 'Kids', 'Wedding', 'Specialty'];
+
     // Fetch orders from database
     useEffect(() => {
         const fetchOrders = async () => {
@@ -73,7 +81,141 @@ export default function AdminDashboard() {
         };
 
         fetchOrders();
+        fetchGalleryImages();
     }, []);
+
+    // Gallery functions
+    const fetchGalleryImages = async () => {
+        try {
+            setGalleryLoading(true);
+            const { data, error } = await supabase
+                .from('gallery_images')
+                .select('*')
+                .order('display_order', { ascending: true })
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching gallery images:', error);
+            } else {
+                setGalleryImages(data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching gallery images:', error);
+        } finally {
+            setGalleryLoading(false);
+        }
+    };
+
+    const uploadGalleryImage = async (file: File, category: string) => {
+        try {
+            setUploading(true);
+
+            // Upload to Supabase storage
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+
+            const { data: uploadData, error: uploadError } = await supabase.storage
+                .from('gallery-photos')
+                .upload(fileName, file);
+
+            if (uploadError) {
+                console.error('File upload error:', uploadError);
+                alert('Failed to upload image');
+                return;
+            }
+
+            // Get public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('gallery-photos')
+                .getPublicUrl(fileName);
+
+            // Save to database
+            const { error: dbError } = await supabase
+                .from('gallery_images')
+                .insert([{
+                    image_url: publicUrl,
+                    category: category,
+                    is_featured: false,
+                    display_order: galleryImages.length
+                }]);
+
+            if (dbError) {
+                console.error('Database error:', dbError);
+                alert('Failed to save image metadata');
+                return;
+            }
+
+            // Refresh gallery
+            fetchGalleryImages();
+            alert('Image uploaded successfully!');
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Failed to upload image');
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    const deleteGalleryImage = async (imageId: string, imageUrl: string) => {
+        if (!confirm('Are you sure you want to delete this image?')) {
+            return;
+        }
+
+        try {
+            // Extract filename from URL
+            const urlParts = imageUrl.split('/');
+            const fileName = urlParts[urlParts.length - 1];
+
+            // Delete from storage
+            const { error: storageError } = await supabase.storage
+                .from('gallery-photos')
+                .remove([fileName]);
+
+            if (storageError) {
+                console.error('Storage deletion error:', storageError);
+            }
+
+            // Delete from database
+            const { error: dbError } = await supabase
+                .from('gallery_images')
+                .delete()
+                .eq('id', imageId);
+
+            if (dbError) {
+                console.error('Database deletion error:', dbError);
+                alert('Failed to delete image');
+                return;
+            }
+
+            // Refresh gallery
+            fetchGalleryImages();
+            alert('Image deleted successfully!');
+        } catch (error) {
+            console.error('Error deleting image:', error);
+            alert('Failed to delete image');
+        }
+    };
+
+    const toggleFeatured = async (imageId: string, currentFeatured: boolean) => {
+        try {
+            const { error } = await supabase
+                .from('gallery_images')
+                .update({ is_featured: !currentFeatured })
+                .eq('id', imageId);
+
+            if (error) {
+                console.error('Error updating featured status:', error);
+                alert('Failed to update featured status');
+                return;
+            }
+
+            // Refresh gallery
+            fetchGalleryImages();
+        } catch (error) {
+            console.error('Error updating featured status:', error);
+            alert('Failed to update featured status');
+        }
+    };
 
     const calculateCost = () => {
         let baseCost = 0;
@@ -348,6 +490,15 @@ export default function AdminDashboard() {
                                 }`}
                         >
                             Cake Calendar
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('gallery')}
+                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'gallery'
+                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                        >
+                            Gallery
                         </button>
                         <button
                             onClick={() => setActiveTab('documents')}
@@ -728,6 +879,103 @@ export default function AdminDashboard() {
                     </div>
                 )}
 
+                {activeTab === 'gallery' && (
+                    <div className="max-w-6xl mx-auto">
+                        <div className="card">
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-2xl font-bold">Gallery Management</h3>
+                                <div className="flex gap-4">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                setPendingUploadFile(file);
+                                                setShowCategoryPicker(true);
+                                                // reset file input to allow re-selecting the same file later
+                                                (e.target as HTMLInputElement).value = '';
+                                            }
+                                        }}
+                                        className="hidden"
+                                        id="gallery-upload"
+                                    />
+                                    <label
+                                        htmlFor="gallery-upload"
+                                        className="btn-primary cursor-pointer"
+                                        style={{ opacity: uploading ? 0.5 : 1 }}
+                                    >
+                                        {uploading ? 'Uploading...' : 'Upload Image'}
+                                    </label>
+                                </div>
+                            </div>
+
+                            {galleryLoading ? (
+                                <div className="text-center py-8">
+                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto"></div>
+                                    <p className="mt-4 text-gray-600">Loading gallery...</p>
+                                </div>
+                            ) : galleryImages.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <div className="text-6xl mb-4">📸</div>
+                                    <h4 className="text-xl font-semibold mb-2">No images uploaded yet</h4>
+                                    <p className="text-gray-600">Upload your first cake image to get started!</p>
+                                </div>
+                            ) : (
+                                <div className="admin-gallery-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                    {galleryImages.map((image) => (
+                                        <div key={image.id} className="bg-white rounded-2xl shadow-md overflow-hidden">
+                                            <div className="relative aspect-[4/3]">
+                                                <img
+                                                    src={image.image_url}
+                                                    alt={`${image.category} cake`}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                {/* Category pill */}
+                                                <div className="absolute top-3 left-3">
+                                                    <span className="backdrop-blur-sm bg-white/80 text-gray-800 text-xs font-medium px-3 py-1 rounded-full shadow-sm border border-white/70">
+                                                        {image.category}
+                                                    </span>
+                                                </div>
+                                                {/* Featured badge */}
+                                                {image.is_featured && (
+                                                    <div className="absolute top-3 right-3">
+                                                        <span className="backdrop-blur-sm bg-yellow-400/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                                                            Featured
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="p-3">
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-xs text-gray-500">#{image.display_order}</span>
+                                                    <div className="flex gap-2">
+                                                        <button
+                                                            onClick={() => toggleFeatured(image.id, image.is_featured)}
+                                                            className={`text-xs px-2 py-1 rounded transition-colors ${image.is_featured
+                                                                ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+                                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                                }`}
+                                                        >
+                                                            {image.is_featured ? 'Unfeature' : 'Feature'}
+                                                        </button>
+                                                        <button
+                                                            onClick={() => deleteGalleryImage(image.id, image.image_url)}
+                                                            className="text-xs px-2 py-1 rounded bg-red-100 text-red-600 hover:bg-red-200"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+
                 {activeTab === 'documents' && (
                     <div className="max-w-4xl mx-auto">
                         <div className="card">
@@ -807,6 +1055,44 @@ export default function AdminDashboard() {
                     </Link>
                 </div>
             </div>
+
+            {/* Category Picker Modal */}
+            {showCategoryPicker && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                        <h3 className="text-xl font-bold mb-4">Select Category</h3>
+                        <p className="text-sm text-gray-600 mb-4">Choose the category for this image.</p>
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                            {categoryOptions.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => {
+                                        if (pendingUploadFile) {
+                                            uploadGalleryImage(pendingUploadFile, cat);
+                                        }
+                                        setPendingUploadFile(null);
+                                        setShowCategoryPicker(false);
+                                    }}
+                                    className="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium"
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="flex justify-end gap-2">
+                            <button
+                                onClick={() => {
+                                    setPendingUploadFile(null);
+                                    setShowCategoryPicker(false);
+                                }}
+                                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Edit Order Modal */}
             {showEditModal && editingOrder && (

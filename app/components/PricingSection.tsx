@@ -65,10 +65,10 @@ export default function PricingSection() {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6 ">
-                        <span className="gradient-text-dark pricing-section-title">Flavors & Pricing</span>
+                        <span className="gradient-text-dark pricing-section-title">Our Cake Collection</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto pricing-section-text">
-                        Starting at $9 per serving with an 8" minimum. Premium flavors available for an additional $15.
+                        Explore our variety of cake sizes, flavors, and styles. Each cake is custom-made to perfection for your special occasion.
                     </p>
                 </div>
 
@@ -83,7 +83,7 @@ export default function PricingSection() {
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
-                            Cake Sizes
+                            Cake Sizes & Styles
                         </button>
                         <button
                             onClick={() => setActiveTab('flavors')}
@@ -206,11 +206,11 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
                                         <div className="text-4xl mb-4">🎂</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
-                                        <div className="text-3xl font-bold text-yellow-600 mb-2">
-                                            ${size.basePrice}
-                                        </div>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
-                                        <p className="text-gray-600 text-sm">{size.description}</p>
+                                        <p className="text-gray-600 text-sm mb-4">{size.description}</p>
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                            <p className="text-sm text-yellow-800 font-medium">Perfect for intimate celebrations</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -224,9 +224,6 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
                                         <div className="text-4xl mb-4">{tier.icon}</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
-                                        <div className="text-3xl font-bold text-yellow-600 mb-2">
-                                            From ${tier.startingPrice}
-                                        </div>
                                         <p className="text-gray-600 text-sm mb-4">{tier.description}</p>
                                         <div className="space-y-2">
                                             <h4 className="font-semibold text-gray-700 text-center">Available Combinations:</h4>
@@ -238,6 +235,9 @@ export default function PricingSection() {
                                                 ))}
                                             </div>
                                         </div>
+                                        <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3">
+                                            <p className="text-sm text-purple-800 font-medium">Custom pricing based on design complexity</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -248,10 +248,10 @@ export default function PricingSection() {
                 {/* CTA */}
                 <div className="text-center mt-10">
                     <p className="text-lg text-gray-600 mb-6">
-                        Ready to start your custom cake journey?
+                        Ready to create your perfect custom cake? Get a personalized quote today!
                     </p>
                     <a href="#order-form" className="btn-primary text-lg px-8 py-4">
-                        Get Started Today
+                        Get Your Custom Quote
                     </a>
                 </div>
             </div>

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { supabase } from '@/app/lib/supabaseClient';
 
 const galleryCategories = [
     {
@@ -26,66 +27,106 @@ const galleryCategories = [
     }
 ];
 
-const sampleImages = [
-    { id: 1, category: 'Birthday', flavor: 'Red Velvet', event: '' },
-    { id: 2, category: 'Wedding', flavor: 'Classic Vanilla', event: '' },
-    { id: 3, category: 'Kids', flavor: 'Chocolate', event: '' },
-    { id: 4, category: 'Specialty', flavor: 'Lemon', event: '' }
-];
+interface GalleryImage {
+    id: string;
+    image_url: string;
+    category: string;
+    is_featured: boolean;
+    display_order: number;
+    created_at: string;
+}
 
 export default function GalleryPreview() {
-    const [activeCategory, setActiveCategory] = useState('all');
+    const [featuredImages, setFeaturedImages] = useState<GalleryImage[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchFeaturedImages();
+    }, []);
+
+    const fetchFeaturedImages = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('gallery_images')
+                .select('*')
+                .eq('is_featured', true)
+                .order('display_order', { ascending: true })
+                .order('created_at', { ascending: false })
+                .limit(8);
+
+            if (error) {
+                console.error('Error fetching featured images:', error);
+            } else {
+                setFeaturedImages(data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching featured images:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <section id="gallery" className="py-20 bg-white">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="gradient-text-dark"> Cake Gallery (Coming Soon)</span>
+                        <span className="gradient-text-dark">Cake Gallery</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                         Take a look at some of our recent creations. Each cake tells a unique story!
                     </p>
                 </div>
 
-                {/* Category Tabs */}
-                {/* <div className="flex flex-wrap justify-center gap-4 mb-12">
-                    <button
-                        onClick={() => setActiveCategory('all')}
-                        className={`px-6 py-3 rounded-full font-medium transition-all ${activeCategory === 'all'
-                            ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            }`}
-                    >
-                        All Cakes
-                    </button>
-                    {galleryCategories.map((category) => (
-                        <button
-                            key={category.name}
-                            onClick={() => setActiveCategory(category.name)}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeCategory === category.name
-                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                }`}
-                        >
-                            {category.icon} {category.name}
-                        </button>
-                    ))}
-                </div> */}
+                {/* Featured Images Grid */}
+                {loading ? (
+                    <div className="text-center py-12">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto"></div>
+                        <p className="mt-4 text-gray-600">Loading gallery...</p>
+                    </div>
+                ) : featuredImages.length > 0 ? (
+                    <div className="gallery-preview-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-10">
+                        {featuredImages.map((image) => (
+                            <div key={image.id} className="group cursor-pointer">
+                                <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:scale-105">
+                                    <div className="relative aspect-[4/3]">
+                                        <img
+                                            src={image.image_url}
+                                            alt={`${image.category} cake`}
+                                            className="w-full h-full object-cover block"
+                                            loading="lazy"
+                                        />
+                                        {/* Hover veil */}
+                                        <div className="pointer-events-none absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors duration-300" />
 
-                {/* Gallery Grid */}
-                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-10">
-                    {sampleImages.map((image) => (
-                        <div key={image.id} className="group cursor-pointer">
-                            <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 rounded-2xl p-6 h-64 flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
-                                <div className="text-6xl mb-4">🎂</div>
-                                <h3 className="font-semibold text-gray-800 mb-2">{image.category}</h3>
-                                <p className="text-sm text-gray-600 mb-1">{image.flavor}</p>
-                                <p className="text-xs text-gray-500">{image.event}</p>
+                                        {/* Category pill (top-left) */}
+                                        <div className="absolute top-3 left-3">
+                                            <span className="backdrop-blur-sm bg-white/80 text-gray-800 text-xs font-medium px-3 py-1 rounded-full shadow-sm border border-white/70">
+                                                {image.category}
+                                            </span>
+                                        </div>
+
+                                        {/* Featured badge (top-right) */}
+                                        {image.is_featured && (
+                                            <div className="absolute top-3 right-3">
+                                                <span className="backdrop-blur-sm bg-yellow-400/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                                                    Featured
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {/* No bottom bar - overlays handle labels */}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div> */}
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-12">
+                        <div className="text-6xl mb-4">🎂</div>
+                        <h3 className="text-2xl font-bold text-gray-800 mb-2">Gallery Coming Soon</h3>
+                        <p className="text-gray-600">We're working on adding our beautiful cake creations to the gallery.</p>
+                    </div>
+                )}
 
                 {/* Category Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
@@ -114,7 +155,7 @@ export default function GalleryPreview() {
                             Browse our full gallery of custom cakes and get inspired for your next celebration!
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Link href="#" className="btn-primary">
+                            <Link href="/gallery" className="btn-primary">
                                 View Full Gallery
                             </Link>
                         </div>
