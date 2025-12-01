@@ -8,22 +8,22 @@ import { supabase } from '@/app/lib/supabaseClient';
 const galleryCategories = [
     {
         name: 'Birthday Cakes',
-        // icon: '🎂',
+        icon: '🎂',
         description: 'Colorful and fun designs for all ages'
     },
     {
         name: 'Kids Cakes',
-        // icon: '🧸',
+        icon: '🧸',
         description: 'Adorable themes that make kids smile'
     },
     {
         name: 'Wedding Cakes',
-        // icon: '💒',
+        icon: '💒',
         description: 'Elegant and romantic centerpieces'
     },
     {
         name: 'Specialty Cakes',
-        // icon: '✨',
+        icon: '✨',
         description: 'Unique sculpted and themed designs'
     }
 ];
