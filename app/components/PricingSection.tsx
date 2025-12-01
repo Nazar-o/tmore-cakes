@@ -74,11 +74,10 @@ export default function PricingSection() {
 
                 {/* Tab Navigation */}
                 <div className="flex justify-center mb-12">
-                    <div className="bg-white rounded-full p-2 shadow-lg">
-
+                    <div className="bg-white rounded-full p-2 shadow-lg flex">
                         <button
                             onClick={() => setActiveTab('sizes')}
-                            className={`px-6 py-3 rounded-full font-small transition-all ${activeTab === 'sizes'
+                            className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'sizes'
                                 ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
@@ -87,7 +86,7 @@ export default function PricingSection() {
                         </button>
                         <button
                             onClick={() => setActiveTab('flavors')}
-                            className={`px-6 py-3 rounded-full font-small transition-all ${activeTab === 'flavors'
+                            className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'flavors'
                                 ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
@@ -208,7 +207,6 @@ export default function PricingSection() {
                             <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 justify-items-center">
                                 {cakeSizes.filter(size => size.type === 'single').map((size, index) => (
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
-                                        <div className="text-4xl mb-4">🎂</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
                                         <p className="text-gray-600 text-sm mb-4">{size.description}</p>
@@ -227,7 +225,6 @@ export default function PricingSection() {
                             <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-items-center">
                                 {tierSuggestions.map((tier, index) => (
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
-                                        <div className="text-4xl mb-4">{tier.icon}</div>
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
                                         <p className="text-gray-600 text-sm mb-4">{tier.description}</p>
                                         <div className="space-y-2">

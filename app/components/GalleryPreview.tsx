@@ -265,9 +265,6 @@ export default function GalleryPreview() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto mb-16">
                     {galleryCategories.map((category) => (
                         <div key={category.name} className="text-center group">
-                            <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                                {category.icon}
-                            </div>
                             <h3 className="text-lg font-semibold mb-2 text-gray-800">
                                 {category.name}
                             </h3>
