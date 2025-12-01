@@ -84,13 +84,13 @@ export default function Home() {
                                     href="mailto:tmorescakes@gmail.com"
                                     className="text-xl text-gray-700 hover:text-yellow-600 transition-colors font-medium"
                                 >
-                                    tmorescakes@gmail.com
+                                    Tmorescakes@gmail.com
                                 </a>
                             </div>
 
                             <div className="flex flex-col items-center space-y-2">
                                 {/* <div className="text-2xl">💳</div> */}
-                                <span className="text-lg text-gray-600">Zelle: tmorescakes@gmail.com</span>
+                                <span className="text-lg text-gray-600">Zelle: Tmorescakes@gmail.com</span>
                             </div>
                         </div>
 

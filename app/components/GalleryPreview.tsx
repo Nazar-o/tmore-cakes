@@ -199,15 +199,6 @@ export default function GalleryPreview() {
                                                             {image.category}
                                                         </span>
                                                     </div>
-
-                                                    {/* Featured badge (top-right) */}
-                                                    {image.is_featured && (
-                                                        <div className="absolute top-3 right-3">
-                                                            <span className="backdrop-blur-sm bg-yellow-400/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
-                                                                Featured
-                                                            </span>
-                                                        </div>
-                                                    )}
                                                 </div>
                                             </div>
                                         </div>

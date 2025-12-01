@@ -645,7 +645,7 @@ export default function AdminDashboard() {
                         <div className="card">
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-2xl font-bold">Order Management</h3>
-                                <button className="btn-primary">Add New Order</button>
+                                <button className="btn-secondary">Add New Order</button>
                             </div>
 
                             {/* Quick Stats */}
@@ -902,7 +902,7 @@ export default function AdminDashboard() {
                                     />
                                     <label
                                         htmlFor="gallery-upload"
-                                        className="btn-primary cursor-pointer"
+                                        className="btn-secondary cursor-pointer"
                                         style={{ opacity: uploading ? 0.5 : 1 }}
                                     >
                                         {uploading ? 'Uploading...' : 'Upload Image'}
@@ -988,7 +988,7 @@ export default function AdminDashboard() {
                                     <p className="text-gray-600 mb-4">Download all orders as CSV file</p>
                                     <button
                                         onClick={exportToCSV}
-                                        className="btn-primary"
+                                        className="btn-secondary"
                                     >
                                         Export CSV
                                     </button>
