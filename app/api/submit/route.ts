@@ -14,8 +14,9 @@ export async function POST(request: NextRequest) {
         const occasion = formData.get('occasion') as string;
         const description = formData.get('description') as string;
         const date = formData.get('date') as string;
-        const dietaryRestrictions = formData.get('dietaryRestrictions') as string;
         const deliveryOption = formData.get('deliveryOption') as string;
+        const inscription = formData.get('inscription') as string;
+        const topper = formData.get('topper') as string;
         const deliveryAddress = formData.get('deliveryAddress') as string;
         const targetBudget = formData.get('targetBudget') as string;
         const contactMethod = formData.get('contactMethod') as string;
@@ -67,8 +68,9 @@ export async function POST(request: NextRequest) {
                 occasion,
                 description,
                 date_needed: date,
-                dietary_restrictions: dietaryRestrictions,
                 delivery_option: deliveryOption,
+                inscription: inscription || null,
+                topper: topper || null,
                 delivery_address: deliveryAddress,
                 target_budget: targetBudget,
                 contact_method: contactMethod,

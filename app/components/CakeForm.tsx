@@ -12,7 +12,6 @@ export default function CakeForm() {
         occasion: '',
         description: '',
         date: '',
-        dietaryRestrictions: '',
         inspirationPhoto: null as File | null,
         deliveryOption: '',
         deliveryAddress: '',
@@ -38,7 +37,6 @@ export default function CakeForm() {
             submitData.append('occasion', formData.occasion);
             submitData.append('description', formData.description);
             submitData.append('date', formData.date);
-            submitData.append('dietaryRestrictions', formData.dietaryRestrictions);
             submitData.append('deliveryOption', formData.deliveryOption);
             submitData.append('deliveryAddress', formData.deliveryAddress);
             submitData.append('targetBudget', formData.targetBudget);
@@ -70,7 +68,6 @@ export default function CakeForm() {
                     occasion: '',
                     description: '',
                     date: '',
-                    dietaryRestrictions: '',
                     inspirationPhoto: null,
                     deliveryOption: '',
                     deliveryAddress: '',
@@ -205,19 +202,6 @@ export default function CakeForm() {
                 </div>
             </div>
 
-            {/* Dietary Restrictions */}
-            <div className="mb-6 sm:mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Dietary Restrictions/Allergies</label>
-                <input
-                    type="text"
-                    name="dietaryRestrictions"
-                    value={formData.dietaryRestrictions}
-                    onChange={handleChange}
-                    placeholder="e.g., Gluten-free, Nut allergy, Vegan"
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
-                />
-            </div>
-
             {/* Inspiration Photo */}
             <div className="mb-6 sm:mb-8">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Inspiration Photo</label>
@@ -337,6 +321,8 @@ export default function CakeForm() {
                     <option value="">Select payment method</option>
                     <option value="credit-debit-card">Credit/Debit Card</option>
                     <option value="zelle">Zelle</option>
+                    <option value="apple-pay">Apple Pay</option>
+                    <option value="google-pay">Google Pay</option>
                 </select>
             </div>
 
