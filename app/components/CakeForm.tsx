@@ -19,7 +19,9 @@ export default function CakeForm() {
         targetBudget: '',
         contactMethod: '',
         contactTime: '',
-        paymentMethod: ''
+        paymentMethod: '',
+        inscription: '',
+        topper: ''
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -43,6 +45,8 @@ export default function CakeForm() {
             submitData.append('contactMethod', formData.contactMethod);
             submitData.append('contactTime', formData.contactTime);
             submitData.append('paymentMethod', formData.paymentMethod);
+            submitData.append('inscription', formData.inscription);
+            submitData.append('topper', formData.topper);
 
             if (formData.inspirationPhoto) {
                 submitData.append('inspirationPhoto', formData.inspirationPhoto);
@@ -73,7 +77,9 @@ export default function CakeForm() {
                     targetBudget: '',
                     contactMethod: '',
                     contactTime: '',
-                    paymentMethod: ''
+                    paymentMethod: '',
+                    inscription: '',
+                    topper: ''
                 });
             } else {
                 const error = await response.json();
@@ -173,16 +179,16 @@ export default function CakeForm() {
                         className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     >
                         <option value="">Select size</option>
-                        <option value="8-inch">8" Round (24-28 servings)</option>
-                        <option value="10-inch">10" Round (38-42 servings)</option>
-                        <option value="12-inch">12" Round (54-58 servings)</option>
-                        <option value="double-barrel-6">Double Barrel 6" (28-30 servings)</option>
-                        <option value="2-tier-5-7">2-Tier: 5"+7" (from $350)</option>
-                        <option value="2-tier-6-8">2-Tier: 6"+8" (from $350)</option>
-                        <option value="2-tier-8-10">2-Tier: 8"+10" (from $350)</option>
-                        <option value="3-tier-5-7-9">3-Tier: 5"+7"+9" (from $500)</option>
-                        <option value="3-tier-6-8-10">3-Tier: 6"+8"+10" (from $500)</option>
-                        <option value="3-tier-8-10-12">3-Tier: 8"+10"+12" (from $500)</option>
+                        <option value="8-inch">8-inch Round (24-28 servings)</option>
+                        <option value="10-inch">10-inch Round (38-42 servings)</option>
+                        <option value="12-inch">12-inch Round (54-58 servings)</option>
+                        <option value="double-barrel-6">Double Barrel 6-inch (28-30 servings)</option>
+                        <option value="2-tier-5-7">2-Tier: 5-inch+7-inch (from $350)</option>
+                        <option value="2-tier-6-8">2-Tier: 6-inch+8-inch (from $350)</option>
+                        <option value="2-tier-8-10">2-Tier: 8-inch+10-inch (from $350)</option>
+                        <option value="3-tier-5-7-9">3-Tier: 5-inch+7-inch+9-inch (from $500)</option>
+                        <option value="3-tier-6-8-10">3-Tier: 6-inch+8-inch+10-inch (from $500)</option>
+                        <option value="3-tier-8-10-12">3-Tier: 8-inch+10-inch+12-inch (from $500)</option>
                     </select>
                 </div>
 
@@ -252,6 +258,7 @@ export default function CakeForm() {
                         <span className="text-base">Delivery</span>
                     </label>
                 </div>
+                <p className="text-sm text-gray-500 mt-2">Delivery fees are calculated based on distance and are recommended for 2-tier cakes or larger.</p>
             </div>
 
             {/* Delivery Address (conditional) */}
@@ -328,14 +335,61 @@ export default function CakeForm() {
                     className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 >
                     <option value="">Select payment method</option>
-                    <option value="credit-card">Credit Card</option>
-                    <option value="cash">Zelle</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="venmo">Venmo</option>
+                    <option value="credit-debit-card">Credit/Debit Card</option>
                     <option value="zelle">Zelle</option>
-                    <option value="bank-transfer">Bank Transfer</option>
-                    <option value="cash">Cash</option>
                 </select>
+            </div>
+
+            {/* Inscription */}
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Inscription needed?</label>
+                <textarea
+                    name="inscription"
+                    rows={2}
+                    value={formData.inscription}
+                    onChange={handleChange}
+                    placeholder="Enter inscription text, or leave blank if no inscription needed"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                />
+            </div>
+
+            {/* Topper */}
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-3">Topper?</label>
+                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-6">
+                    <label className="flex items-center cursor-pointer">
+                        <input
+                            type="radio"
+                            name="topper"
+                            value="yes"
+                            checked={formData.topper === 'yes'}
+                            onChange={handleChange}
+                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                        />
+                        <span className="text-base">Yes</span>
+                    </label>
+                    <label className="flex items-center cursor-pointer">
+                        <input
+                            type="radio"
+                            name="topper"
+                            value="no"
+                            checked={formData.topper === 'no'}
+                            onChange={handleChange}
+                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                        />
+                        <span className="text-base">No</span>
+                    </label>
+                </div>
+                <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <p className="text-sm font-semibold text-gray-900 mb-2">Flavor Selection Guidelines:</p>
+                    <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                        <li>Allow 2 flavors for 8-inch</li>
+                        <li>Allow 2 flavors for 9-inch</li>
+                        <li>Allow 3 flavors for 10-inch</li>
+                        <li>Allow 3 flavors for 12-inch</li>
+                        <li>4 to 5 flavors for orders over $450 (restrictions apply)</li>
+                    </ul>
+                </div>
             </div>
 
             {/* Description */}
@@ -346,7 +400,7 @@ export default function CakeForm() {
                     rows={4}
                     value={formData.description}
                     onChange={handleChange}
-                    placeholder="Describe your cake design, flavors, colors, etc."
+                    placeholder="Describe your cake design, colors, decorations, etc."
                     className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 />
             </div>
@@ -365,6 +419,13 @@ export default function CakeForm() {
             </div>
 
             <div className="text-center">
+                <p className="text-sm text-gray-600 mb-4">
+                    By submitting this form, you agree to our{' '}
+                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">
+                        Terms & Conditions
+                    </a>
+                    .
+                </p>
                 <button
                     type="submit"
                     className="btn-primary"

@@ -191,7 +191,7 @@ body {
 }
 
 .navbar-solid {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.823);
   backdrop-filter: blur(12px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
@@ -298,10 +298,10 @@ body {
 .navbar-logo-bg {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  border-radius: 48%;
-  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.1);
+  /* background: rgba(255, 255, 255, 0.33);
+  backdrop-filter: blur(4px); */
+  /* border-radius: 48%;
+  box-shadow: 0 10px 10px 0px rgba(0, 0, 0, 0.1); */
   opacity: 1;
   transition: opacity 0.3s ease;
   margin: -1rem;
@@ -317,8 +317,8 @@ body {
 .navbar-logo-img {
   position: relative;
   z-index: 10;
-  width: 9.375rem;
-  height: 9.375rem;
+  width: 14rem;
+  height: 14rem;
   object-fit: contain;
 }
 

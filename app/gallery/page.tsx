@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { supabase } from '@/app/lib/supabaseClient';
 import GalleryLightbox from '@/app/components/GalleryLightbox';
 
@@ -88,6 +89,13 @@ export default function GalleryPage() {
     return (
         <div className="min-h-screen bg-gray-50 pt-20">
             <div className="gallery-page-mobile container mx-auto px-4 py-8">
+                {/* Back to Home */}
+                <div className="mb-6">
+                    <a href="/" className="btn-secondary inline-block">
+                        ← Back to Home
+                    </a>
+                </div>
+
                 {/* Header */}
                 <div className="text-center mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -135,12 +143,15 @@ export default function GalleryPage() {
                                 onClick={() => openLightbox(index)}
                             >
                                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:scale-105">
-                                    <div className="relative aspect-[4/3]">
-                                        <img
+                                    <div className="relative aspect-[3/4] w-full">
+                                        <Image
                                             src={image.image_url}
                                             alt={`${image.category} cake`}
-                                            className="w-full h-full object-cover block"
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                                            className="object-cover"
                                             loading="lazy"
+                                            quality={85}
                                         />
                                         {/* Hover veil */}
                                         <div className="pointer-events-none absolute inset-0 bg-transparent group-hover:bg-black/10 transition-colors duration-300" />
@@ -166,13 +177,6 @@ export default function GalleryPage() {
                         ))}
                     </div>
                 )}
-
-                {/* Back to Home */}
-                <div className="text-center mt-16">
-                    <a href="/" className="btn-secondary">
-                        ← Back to Home
-                    </a>
-                </div>
             </div>
 
             {/* Lightbox */}

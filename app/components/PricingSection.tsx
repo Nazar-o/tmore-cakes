@@ -4,28 +4,28 @@ import { useState } from 'react';
 
 const cakeSizes = [
     {
-        name: '8" Round',
+        name: '8-inch Round',
         servings: '24-28',
         basePrice: 216,
-        description: 'Perfect for intimate gatherings',
+        description: 'Great for small gatherings',
         type: 'single'
     },
     {
-        name: '10" Round',
+        name: '10-inch Round',
         servings: '38-42',
         basePrice: 342,
         description: 'Great for medium-sized parties',
         type: 'single'
     },
     {
-        name: '12" Round',
+        name: '12-inch Round',
         servings: '54-58',
         basePrice: 486,
         description: 'Ideal for larger celebrations',
         type: 'single'
     },
     {
-        name: 'Double Barrel 6"',
+        name: 'Double Barrel 6-inch',
         servings: '28-30',
         basePrice: 270,
         description: 'Elegant height, perfect portions',
@@ -36,14 +36,14 @@ const cakeSizes = [
 const tierSuggestions = [
     {
         name: '2-Tier Cakes',
-        tiers: ['5"+7"', '6"+8"', '8"+10"'],
+        tiers: ['5-inch+7-inch', '6-inch+8-inch', '8-inch+10-inch'],
         startingPrice: 350,
         description: 'Perfect for medium celebrations',
         icon: '🎂'
     },
     {
         name: '3-Tier Cakes',
-        tiers: ['5"+7"+9"', '6"+8"+10"', '8"+10"+12"'],
+        tiers: ['5-inch+7-inch+9-inch', '6-inch+8-inch+10-inch', '8-inch+10-inch+12-inch'],
         startingPrice: 500,
         description: 'Grand celebrations and weddings',
         icon: '🏰'
@@ -134,8 +134,11 @@ export default function PricingSection() {
                             {/* Frostings */}
                             <div className="flavors-card-mobile card w-140">
                                 <h3 className="pricing-card-title">Frostings & Fillings</h3>
-                                <p className="text-gray-600 mb-6 text-center">
-                                    All frostings are Swiss Meringue Buttercream based
+                                <p className="text-gray-600 mb-2 text-center font-medium">
+                                    Tmore's Signature silk Buttercream/frosting
+                                </p>
+                                <p className="text-sm text-gray-500 mb-6 text-center italic">
+                                    (A smooth, stable Swiss meringue-style buttercream with a hint of white chocolate)
                                 </p>
                                 <div className="frostings-list-mobile flex flex-col items-center gap-3">
                                     {frostings.map((frosting, index) => (
@@ -156,7 +159,8 @@ export default function PricingSection() {
                                     <div className="service-card-mobile text-center">
                                         <div className="text-2xl mb-2">🚚</div>
                                         <h4 className="font-semibold mb-2">Delivery</h4>
-                                        <p className="text-gray-600">$35 - $85</p>
+                                        <p className="text-gray-600 mb-2">$35 - $85</p>
+                                        <p className="text-sm text-gray-500">Delivery fees are calculated based on distance and are recommended for 2-tier cakes or larger.</p>
                                     </div>
                                     <div className="service-card-mobile text-center">
                                         <div className="text-2xl mb-2">🎨</div>
@@ -191,7 +195,7 @@ export default function PricingSection() {
                                         <span className="text-md font-semibold text-gray-900">8-inch (24-28 servings)</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2">
-                                        <span className="text-gray-700">Double Barrel 6":</span>
+                                        <span className="text-gray-700">Double Barrel 6-inch:</span>
                                         <span className="text-md font-semibold text-gray-900">28-30 servings</span>
                                     </div>
                                 </div>
@@ -209,7 +213,7 @@ export default function PricingSection() {
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
                                         <p className="text-gray-600 text-sm mb-4">{size.description}</p>
                                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                            <p className="text-sm text-yellow-800 font-medium">Perfect for intimate celebrations</p>
+                                            <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -219,6 +223,7 @@ export default function PricingSection() {
                         {/* Tiered Cakes */}
                         <div>
                             <h3 className="pricing-card-title">Tiered Cakes</h3>
+                            <p className="text-center text-gray-600 mb-6">Tier combinations and sizes vary depending on the number of servings required.</p>
                             <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-items-center">
                                 {tierSuggestions.map((tier, index) => (
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
