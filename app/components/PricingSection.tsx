@@ -78,7 +78,7 @@ export default function PricingSection() {
 
                         <button
                             onClick={() => setActiveTab('sizes')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'sizes'
+                            className={`px-6 py-3 rounded-full font-small transition-all ${activeTab === 'sizes'
                                 ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
@@ -87,7 +87,7 @@ export default function PricingSection() {
                         </button>
                         <button
                             onClick={() => setActiveTab('flavors')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'flavors'
+                            className={`px-6 py-3 rounded-full font-small transition-all ${activeTab === 'flavors'
                                 ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
