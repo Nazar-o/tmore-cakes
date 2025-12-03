@@ -15,7 +15,8 @@ interface CakeOrder {
     occasion?: string;
     description?: string;
     date_needed: string;
-    dietary_restrictions?: string;
+    inscription?: string;
+    topper?: string;
     delivery_option?: string;
     delivery_address?: string;
     target_budget?: string;
@@ -388,7 +389,7 @@ export default function AdminDashboard() {
     const exportToCSV = () => {
         const headers = [
             'ID', 'Name', 'Email', 'Phone', 'Cake Type', 'Size', 'Occasion',
-            'Description', 'Date Needed', 'Dietary Restrictions', 'Delivery Option',
+            'Description', 'Date Needed', 'Inscription', 'Topper', 'Delivery Option',
             'Delivery Address', 'Target Budget', 'Contact Method', 'Contact Time',
             'Payment Method', 'Status', 'Final Price', 'Created At', 'Updated At'
         ];
@@ -403,7 +404,8 @@ export default function AdminDashboard() {
             order.occasion || '',
             order.description || '',
             order.date_needed,
-            order.dietary_restrictions || '',
+            order.inscription || '',
+            order.topper || '',
             order.delivery_option || '',
             order.delivery_address || '',
             order.target_budget || '',
@@ -1113,7 +1115,8 @@ export default function AdminDashboard() {
                                 occasion: formData.get('occasion') as string,
                                 description: formData.get('description') as string,
                                 date_needed: formData.get('date_needed') as string,
-                                dietary_restrictions: formData.get('dietary_restrictions') as string,
+                                inscription: formData.get('inscription') as string,
+                                topper: formData.get('topper') as string,
                                 delivery_option: formData.get('delivery_option') as string,
                                 delivery_address: formData.get('delivery_address') as string,
                                 target_budget: formData.get('target_budget') as string,
@@ -1287,13 +1290,27 @@ export default function AdminDashboard() {
                             </div>
 
                             <div className="mt-4">
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Dietary Restrictions</label>
-                                <input
-                                    type="text"
-                                    name="dietary_restrictions"
-                                    defaultValue={editingOrder.dietary_restrictions || ''}
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Inscription</label>
+                                <textarea
+                                    name="inscription"
+                                    rows={2}
+                                    defaultValue={editingOrder.inscription || ''}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter inscription text, or leave blank if no inscription needed"
                                 />
+                            </div>
+
+                            <div className="mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Topper</label>
+                                <select
+                                    name="topper"
+                                    defaultValue={editingOrder.topper || ''}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <option value="">Select</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </select>
                             </div>
 
                             <div className="mt-4">
@@ -1403,11 +1420,20 @@ export default function AdminDashboard() {
                                     </div>
                                 </div>
 
-                                {viewingOrder.dietary_restrictions && (
+                                {viewingOrder.inscription && (
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Dietary Restrictions</label>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Inscription</label>
                                         <div className="bg-gray-50 p-3 rounded-md">
-                                            {viewingOrder.dietary_restrictions}
+                                            {viewingOrder.inscription}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {viewingOrder.topper && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Topper</label>
+                                        <div className="bg-gray-50 p-3 rounded-md">
+                                            {viewingOrder.topper === 'yes' ? 'Yes' : viewingOrder.topper === 'no' ? 'No' : viewingOrder.topper}
                                         </div>
                                     </div>
                                 )}
