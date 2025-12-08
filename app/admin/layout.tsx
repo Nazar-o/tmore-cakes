@@ -14,12 +14,15 @@ export default function AdminLayout({
         password: ''
     });
     const [error, setError] = useState('');
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     useEffect(() => {
         // Check if user is authenticated
         const authStatus = sessionStorage.getItem('adminAuthenticated');
-        if (authStatus === 'true') {
+        const adminEmail = sessionStorage.getItem('adminEmail');
+        if (authStatus === 'true' && adminEmail) {
             setIsAuthenticated(true);
+            setCredentials({ ...credentials, email: adminEmail });
         }
         setIsLoading(false);
     }, []);
@@ -27,18 +30,43 @@ export default function AdminLayout({
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setIsLoggingIn(true);
 
-        // Check credentials
-        if (credentials.email === 'admin@tmorescakes.com' && credentials.password === 'admin123') {
+        try {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: credentials.email,
+                    password: credentials.password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError(data.message || 'Invalid credentials. Please try again.');
+                setIsLoggingIn(false);
+                return;
+            }
+
+            // Store authentication status and email
             sessionStorage.setItem('adminAuthenticated', 'true');
+            sessionStorage.setItem('adminEmail', credentials.email);
             setIsAuthenticated(true);
-        } else {
-            setError('Invalid credentials. Please try again.');
+        } catch (error) {
+            console.error('Login error:', error);
+            setError('An error occurred. Please try again.');
+        } finally {
+            setIsLoggingIn(false);
         }
     };
 
     const handleLogout = () => {
         sessionStorage.removeItem('adminAuthenticated');
+        sessionStorage.removeItem('adminEmail');
         setIsAuthenticated(false);
         setCredentials({ email: '', password: '' });
     };
@@ -88,7 +116,7 @@ export default function AdminLayout({
                                         onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                                         required
                                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
-                                        placeholder="admin@tmorescakes.com"
+                                        placeholder="Enter your email"
                                     />
                                 </div>
 
@@ -109,9 +137,10 @@ export default function AdminLayout({
 
                                 <button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-yellow-500 to-yellow-300 text-white py-3 text-lg rounded-xl font-semibold hover:shadow-lg transition-all"
+                                    disabled={isLoggingIn}
+                                    className="w-full bg-gradient-to-r from-yellow-500 to-yellow-300 text-white py-3 text-lg rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Sign In
+                                    {isLoggingIn ? 'Signing In...' : 'Sign In'}
                                 </button>
                             </form>
                         </div>

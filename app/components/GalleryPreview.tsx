@@ -25,6 +25,11 @@ const galleryCategories = [
         name: 'Specialty Cakes',
         icon: '✨',
         description: 'Unique sculpted and themed designs'
+    },
+    {
+        name: 'Baby Shower',
+        icon: '👶',
+        description: 'Sweet celebrations for expecting parents'
     }
 ];
 

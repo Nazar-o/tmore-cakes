@@ -14,7 +14,7 @@ interface GalleryImage {
     created_at: string;
 }
 
-const categories = ['All', 'Birthday', 'Kids', 'Wedding', 'Specialty'];
+const categories = ['All', 'Birthday', 'Kids', 'Wedding', 'Specialty', 'Baby Shower'];
 
 export default function GalleryPage() {
     const [images, setImages] = useState<GalleryImage[]>([]);

@@ -5,29 +5,36 @@ import { useState } from 'react';
 const cakeSizes = [
     {
         name: '8-inch Round',
-        servings: '24-28',
+        servings: '24–28',
         basePrice: 216,
         description: 'Great for small gatherings',
         type: 'single'
     },
     {
+        name: '9-inch Round',
+        servings: '32–38',
+        basePrice: 288,
+        description: 'Perfect for medium gatherings',
+        type: 'single'
+    },
+    {
         name: '10-inch Round',
-        servings: '38-42',
+        servings: '38–42',
         basePrice: 342,
         description: 'Great for medium-sized parties',
         type: 'single'
     },
     {
         name: '12-inch Round',
-        servings: '54-58',
+        servings: '54–58',
         basePrice: 486,
         description: 'Ideal for larger celebrations',
         type: 'single'
     },
     {
         name: 'Double Barrel 6-inch',
-        servings: '28-30',
-        basePrice: 270,
+        servings: '28–30',
+        basePrice: 252,
         description: 'Elegant height, perfect portions',
         type: 'double'
     }
@@ -36,15 +43,15 @@ const cakeSizes = [
 const tierSuggestions = [
     {
         name: '2-Tier Cakes',
-        tiers: ['5-inch+7-inch', '6-inch+8-inch', '8-inch+10-inch'],
-        startingPrice: 350,
+        tiers: ['5-inch + 7-inch — from $270', '6-inch + 8-inch — from $360', '7-inch + 9-inch — from $468', '8-inch + 10-inch — from $558'],
+        startingPrice: 270,
         description: 'Perfect for medium celebrations',
         icon: '🎂'
     },
     {
         name: '3-Tier Cakes',
-        tiers: ['5-inch+7-inch+9-inch', '6-inch+8-inch+10-inch', '8-inch+10-inch+12-inch'],
-        startingPrice: 500,
+        tiers: ['4-inch + 6-inch + 8-inch — from $450', '5-inch + 7-inch + 9-inch — from $558', '6-inch + 8-inch + 10-inch — from $702', '8-inch + 10-inch + 12-inch — from $1,044'],
+        startingPrice: 450,
         description: 'Grand celebrations and weddings',
         icon: '🏰'
     }
@@ -191,11 +198,11 @@ export default function PricingSection() {
                                     </div>
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Minimum order:</span>
-                                        <span className="text-md font-semibold text-gray-900">8-inch (24-28 servings)</span>
+                                        <span className="text-md font-semibold text-gray-900">8-inch (24–28 servings)</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2">
                                         <span className="text-gray-700">Double Barrel 6-inch:</span>
-                                        <span className="text-md font-semibold text-gray-900">28-30 servings</span>
+                                        <span className="text-md font-semibold text-gray-900">28–30 servings</span>
                                     </div>
                                 </div>
                             </div>
@@ -203,12 +210,32 @@ export default function PricingSection() {
 
                         {/* Single Cakes */}
                         <div className="mb-12">
-                            <h3 className="pricing-card-title">Single Cakes</h3>
-                            <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 justify-items-center">
+                            <h3 className="pricing-card-title text-center">Single Cakes</h3>
+                            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
                                 {cakeSizes.filter(size => size.type === 'single').map((size, index) => (
-                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-sm w-full">
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
+                                        <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
+                                        <p className="text-gray-600 text-sm mb-4">{size.description}</p>
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                            <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Double Barrel Cakes */}
+                        <div className="mb-12">
+                            <h3 className="pricing-card-title text-center">Double Barrel Cakes</h3>
+                            <p className="text-center text-gray-600 mb-6">5-6 layers of cake (12 to 14 inches tall)</p>
+                            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+                                {cakeSizes.filter(size => size.type === 'double').map((size, index) => (
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-80 sm:flex-shrink-0">
+                                        <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
+                                        <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
+                                        <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
                                         <p className="text-gray-600 text-sm mb-4">{size.description}</p>
                                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
                                             <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
@@ -220,25 +247,25 @@ export default function PricingSection() {
 
                         {/* Tiered Cakes */}
                         <div>
-                            <h3 className="pricing-card-title">Tiered Cakes</h3>
+                            <h3 className="pricing-card-title text-center">Tiered Cakes</h3>
                             <p className="text-center text-gray-600 mb-6">Tier combinations and sizes vary depending on the number of servings required.</p>
-                            <div className="pricing-grid-mobile grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-items-center">
+                            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
                                 {tierSuggestions.map((tier, index) => (
-                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 max-w-md w-full">
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-96 sm:flex-shrink-0">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{tier.name}</h3>
                                         <p className="text-gray-600 text-sm mb-4">{tier.description}</p>
                                         <div className="space-y-2">
                                             <h4 className="font-semibold text-gray-700 text-center">Available Combinations:</h4>
                                             <div className="flex flex-col items-center gap-2">
                                                 {tier.tiers.map((combination, idx) => (
-                                                    <div key={idx} className="text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full">
+                                                    <div key={idx} className="text-sm text-gray-700 bg-gray-50 px-3 py-2 rounded-full">
                                                         {combination}
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                            <p className="text-sm text-purple-800 font-medium">Custom pricing based on design complexity</p>
+                                            <p className="text-sm text-purple-800 font-medium">Other size combinations available: contact for pricing.</p>
                                         </div>
                                     </div>
                                 ))}

@@ -18,17 +18,37 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
         e.preventDefault();
         setIsLoading(true);
 
-        // Simulate authentication
-        setTimeout(() => {
-            setIsLoading(false);
-            // Here you would typically authenticate with your backend
-            if (credentials.email === 'admin@tmorescakes.com' && credentials.password === 'admin123') {
-                // Redirect to admin dashboard
-                window.location.href = '/admin';
-            } else {
-                alert('Invalid credentials');
+        try {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: credentials.email,
+                    password: credentials.password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || 'Invalid credentials');
+                setIsLoading(false);
+                return;
             }
-        }, 1000);
+
+            // Store authentication status and email
+            sessionStorage.setItem('adminAuthenticated', 'true');
+            sessionStorage.setItem('adminEmail', credentials.email);
+            
+            // Redirect to admin dashboard
+            window.location.href = '/admin';
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred. Please try again.');
+            setIsLoading(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

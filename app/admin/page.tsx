@@ -17,6 +17,8 @@ interface CakeOrder {
     date_needed: string;
     inscription?: string;
     topper?: string;
+    flavors?: string;
+    frostings?: string;
     delivery_option?: string;
     delivery_address?: string;
     target_budget?: string;
@@ -52,13 +54,23 @@ export default function AdminDashboard() {
     const [showPriceModal, setShowPriceModal] = useState(false);
     const [selectedOrderForPrice, setSelectedOrderForPrice] = useState<CakeOrder | null>(null);
 
+    // Password change state
+    const [passwordChangeData, setPasswordChangeData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [passwordChangeError, setPasswordChangeError] = useState('');
+    const [passwordChangeSuccess, setPasswordChangeSuccess] = useState('');
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
+
     // Gallery state
     const [galleryImages, setGalleryImages] = useState<any[]>([]);
     const [galleryLoading, setGalleryLoading] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [showCategoryPicker, setShowCategoryPicker] = useState(false);
     const [pendingUploadFile, setPendingUploadFile] = useState<File | null>(null);
-    const categoryOptions = ['Birthday', 'Kids', 'Wedding', 'Specialty'];
+    const categoryOptions = ['Birthday', 'Kids', 'Wedding', 'Specialty', 'Baby Shower'];
 
     // Fetch orders from database
     useEffect(() => {
@@ -389,7 +401,7 @@ export default function AdminDashboard() {
     const exportToCSV = () => {
         const headers = [
             'ID', 'Name', 'Email', 'Phone', 'Cake Type', 'Size', 'Occasion',
-            'Description', 'Date Needed', 'Inscription', 'Topper', 'Delivery Option',
+            'Description', 'Date Needed', 'Inscription', 'Topper', 'Flavors', 'Frostings', 'Delivery Option',
             'Delivery Address', 'Target Budget', 'Contact Method', 'Contact Time',
             'Payment Method', 'Status', 'Final Price', 'Created At', 'Updated At'
         ];
@@ -406,6 +418,8 @@ export default function AdminDashboard() {
             order.date_needed,
             order.inscription || '',
             order.topper || '',
+            order.flavors ? (typeof order.flavors === 'string' ? order.flavors : JSON.stringify(order.flavors)) : '',
+            order.frostings ? (typeof order.frostings === 'string' ? order.frostings : JSON.stringify(order.frostings)) : '',
             order.delivery_option || '',
             order.delivery_address || '',
             order.target_budget || '',
@@ -462,6 +476,75 @@ export default function AdminDashboard() {
         }
     };
 
+    const handlePasswordChange = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setPasswordChangeError('');
+        setPasswordChangeSuccess('');
+
+        // Validation
+        if (!passwordChangeData.currentPassword || !passwordChangeData.newPassword || !passwordChangeData.confirmPassword) {
+            setPasswordChangeError('All fields are required');
+            return;
+        }
+
+        if (passwordChangeData.newPassword.length < 6) {
+            setPasswordChangeError('New password must be at least 6 characters long');
+            return;
+        }
+
+        if (passwordChangeData.newPassword !== passwordChangeData.confirmPassword) {
+            setPasswordChangeError('New passwords do not match');
+            return;
+        }
+
+        if (passwordChangeData.currentPassword === passwordChangeData.newPassword) {
+            setPasswordChangeError('New password must be different from current password');
+            return;
+        }
+
+        setIsChangingPassword(true);
+
+        try {
+            const adminEmail = sessionStorage.getItem('adminEmail') || '';
+            const response = await fetch('/api/admin/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: adminEmail,
+                    currentPassword: passwordChangeData.currentPassword,
+                    newPassword: passwordChangeData.newPassword
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setPasswordChangeError(data.message || 'Failed to change password');
+                setIsChangingPassword(false);
+                return;
+            }
+
+            setPasswordChangeSuccess('Password changed successfully!');
+            setPasswordChangeData({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            });
+
+            // Clear success message after 5 seconds
+            setTimeout(() => {
+                setPasswordChangeSuccess('');
+            }, 5000);
+        } catch (error) {
+            console.error('Password change error:', error);
+            setPasswordChangeError('An error occurred. Please try again.');
+        } finally {
+            setIsChangingPassword(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 pt-20">
             <div className="container mx-auto px-4 py-8">
@@ -511,6 +594,15 @@ export default function AdminDashboard() {
                         >
                             Document Vault
                         </button>
+                        <button
+                            onClick={() => setActiveTab('settings')}
+                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'settings'
+                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                                : 'text-gray-600 hover:text-gray-900'
+                                }`}
+                        >
+                            Account Settings
+                        </button>
                     </div>
                 </div>
 
@@ -532,10 +624,28 @@ export default function AdminDashboard() {
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                         >
                                             <option value="">Select size</option>
-                                            <option value="8">8" Round</option>
-                                            <option value="10">10" Round</option>
-                                            <option value="12">12" Round</option>
-                                            <option value="double">Double Barrel 6"</option>
+                                            <optgroup label="Single Tier (Round)">
+                                                <option value="8-inch">8-inch (24–28 servings) — from $216</option>
+                                                <option value="9-inch">9-inch (32–38 servings) — from $288</option>
+                                                <option value="10-inch">10-inch (38–42 servings) — from $342</option>
+                                                <option value="12-inch">12-inch (54–58 servings) — from $486</option>
+                                            </optgroup>
+                                            <optgroup label="Double Barrel">
+                                                <option value="double-barrel-6">Double Barrel 6-inch (28–30 servings) — from $252</option>
+                                            </optgroup>
+                                            <optgroup label="2-Tier Cakes">
+                                                <option value="2-tier-5-7">2-Tier: 5-inch + 7-inch — from $270</option>
+                                                <option value="2-tier-6-8">2-Tier: 6-inch + 8-inch — from $360</option>
+                                                <option value="2-tier-7-9">2-Tier: 7-inch + 9-inch — from $468</option>
+                                                <option value="2-tier-8-10">2-Tier: 8-inch + 10-inch — from $558</option>
+                                            </optgroup>
+                                            <optgroup label="3-Tier Cakes">
+                                                <option value="3-tier-4-6-8">3-Tier: 4-inch + 6-inch + 8-inch — from $450</option>
+                                                <option value="3-tier-5-7-9">3-Tier: 5-inch + 7-inch + 9-inch — from $558</option>
+                                                <option value="3-tier-6-8-10">3-Tier: 6-inch + 8-inch + 10-inch — from $702</option>
+                                                <option value="3-tier-8-10-12">3-Tier: 8-inch + 10-inch + 12-inch — from $1,044</option>
+                                            </optgroup>
+                                            <option value="other">Other size combinations available: contact for pricing.</option>
                                         </select>
                                     </div>
 
@@ -1050,6 +1160,99 @@ export default function AdminDashboard() {
                     </div>
                 )}
 
+                {activeTab === 'settings' && (
+                    <div className="max-w-2xl mx-auto">
+                        <div className="card">
+                            <h3 className="text-2xl font-bold mb-6">Account Settings</h3>
+
+                            <div className="mb-6">
+                                <h4 className="text-lg font-semibold mb-4">Change Password</h4>
+                                <p className="text-sm text-gray-600 mb-4">
+                                    Update your password to keep your account secure.
+                                </p>
+
+                                {passwordChangeError && (
+                                    <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4">
+                                        {passwordChangeError}
+                                    </div>
+                                )}
+
+                                {passwordChangeSuccess && (
+                                    <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm mb-4">
+                                        {passwordChangeSuccess}
+                                    </div>
+                                )}
+
+                                <form onSubmit={handlePasswordChange} className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Current Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            value={passwordChangeData.currentPassword}
+                                            onChange={(e) => setPasswordChangeData({ ...passwordChangeData, currentPassword: e.target.value })}
+                                            required
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            placeholder="Enter your current password"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            New Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            value={passwordChangeData.newPassword}
+                                            onChange={(e) => setPasswordChangeData({ ...passwordChangeData, newPassword: e.target.value })}
+                                            required
+                                            minLength={6}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            placeholder="Enter your new password (min. 6 characters)"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Confirm New Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            value={passwordChangeData.confirmPassword}
+                                            onChange={(e) => setPasswordChangeData({ ...passwordChangeData, confirmPassword: e.target.value })}
+                                            required
+                                            minLength={6}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            placeholder="Confirm your new password"
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isChangingPassword}
+                                        className="w-full bg-gradient-to-r from-yellow-500 to-yellow-300 text-white py-3 text-lg rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isChangingPassword ? 'Changing Password...' : 'Change Password'}
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div className="border-t pt-6">
+                                <h4 className="text-lg font-semibold mb-4">Account Information</h4>
+                                <div className="bg-gray-50 p-4 rounded-lg">
+                                    <div className="mb-2">
+                                        <span className="text-sm font-medium text-gray-700">Email:</span>
+                                        <span className="ml-2 text-sm text-gray-600">
+                                            {sessionStorage.getItem('adminEmail') || 'Not available'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Back to Home */}
                 <div className="text-center mt-12">
                     <Link href="/" className="btn-secondary">
@@ -1117,6 +1320,8 @@ export default function AdminDashboard() {
                                 date_needed: formData.get('date_needed') as string,
                                 inscription: formData.get('inscription') as string,
                                 topper: formData.get('topper') as string,
+                                flavors: formData.get('flavors') as string,
+                                frostings: formData.get('frostings') as string,
                                 delivery_option: formData.get('delivery_option') as string,
                                 delivery_address: formData.get('delivery_address') as string,
                                 target_budget: formData.get('target_budget') as string,
@@ -1179,10 +1384,29 @@ export default function AdminDashboard() {
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required
                                     >
-                                        <option value="small">Small (6-8 servings)</option>
-                                        <option value="medium">Medium (10-12 servings)</option>
-                                        <option value="large">Large (15-20 servings)</option>
-                                        <option value="extra-large">Extra Large (25+ servings)</option>
+                                        <option value="">Select size</option>
+                                        <optgroup label="Single Tier (Round)">
+                                            <option value="8-inch">8-inch (24–28 servings) — from $216</option>
+                                            <option value="9-inch">9-inch (32–38 servings) — from $288</option>
+                                            <option value="10-inch">10-inch (38–42 servings) — from $342</option>
+                                            <option value="12-inch">12-inch (54–58 servings) — from $486</option>
+                                        </optgroup>
+                                        <optgroup label="Double Barrel">
+                                            <option value="double-barrel-6">Double Barrel 6-inch (28–30 servings) — from $252</option>
+                                        </optgroup>
+                                        <optgroup label="2-Tier Cakes">
+                                            <option value="2-tier-5-7">2-Tier: 5-inch + 7-inch — from $270</option>
+                                            <option value="2-tier-6-8">2-Tier: 6-inch + 8-inch — from $360</option>
+                                            <option value="2-tier-7-9">2-Tier: 7-inch + 9-inch — from $468</option>
+                                            <option value="2-tier-8-10">2-Tier: 8-inch + 10-inch — from $558</option>
+                                        </optgroup>
+                                        <optgroup label="3-Tier Cakes">
+                                            <option value="3-tier-4-6-8">3-Tier: 4-inch + 6-inch + 8-inch — from $450</option>
+                                            <option value="3-tier-5-7-9">3-Tier: 5-inch + 7-inch + 9-inch — from $558</option>
+                                            <option value="3-tier-6-8-10">3-Tier: 6-inch + 8-inch + 10-inch — from $702</option>
+                                            <option value="3-tier-8-10-12">3-Tier: 8-inch + 10-inch + 12-inch — from $1,044</option>
+                                        </optgroup>
+                                        <option value="other">Other size combinations available: contact for pricing.</option>
                                     </select>
                                 </div>
                                 <div>
@@ -1314,6 +1538,30 @@ export default function AdminDashboard() {
                             </div>
 
                             <div className="mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Flavors</label>
+                                <textarea
+                                    name="flavors"
+                                    rows={3}
+                                    defaultValue={editingOrder.flavors ? (typeof editingOrder.flavors === 'string' ? editingOrder.flavors : JSON.stringify(editingOrder.flavors)) : ''}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter flavors as JSON array or comma-separated list"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Format: ["Vanilla", "Chocolate"] or Vanilla, Chocolate</p>
+                            </div>
+
+                            <div className="mt-4">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Frostings</label>
+                                <textarea
+                                    name="frostings"
+                                    rows={3}
+                                    defaultValue={editingOrder.frostings ? (typeof editingOrder.frostings === 'string' ? editingOrder.frostings : JSON.stringify(editingOrder.frostings)) : ''}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter frostings as JSON array or comma-separated list"
+                                />
+                                <p className="text-xs text-gray-500 mt-1">Format: ["Chocolate", "Vanilla"] or Chocolate, Vanilla</p>
+                            </div>
+
+                            <div className="mt-4">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Delivery Address</label>
                                 <textarea
                                     name="delivery_address"
@@ -1434,6 +1682,46 @@ export default function AdminDashboard() {
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Topper</label>
                                         <div className="bg-gray-50 p-3 rounded-md">
                                             {viewingOrder.topper === 'yes' ? 'Yes' : viewingOrder.topper === 'no' ? 'No' : viewingOrder.topper}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {viewingOrder.flavors && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Flavors</label>
+                                        <div className="bg-gray-50 p-3 rounded-md">
+                                            {(() => {
+                                                try {
+                                                    const flavors = typeof viewingOrder.flavors === 'string'
+                                                        ? JSON.parse(viewingOrder.flavors)
+                                                        : viewingOrder.flavors;
+                                                    return Array.isArray(flavors)
+                                                        ? flavors.join(', ')
+                                                        : viewingOrder.flavors;
+                                                } catch {
+                                                    return viewingOrder.flavors;
+                                                }
+                                            })()}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {viewingOrder.frostings && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Frostings</label>
+                                        <div className="bg-gray-50 p-3 rounded-md">
+                                            {(() => {
+                                                try {
+                                                    const frostings = typeof viewingOrder.frostings === 'string'
+                                                        ? JSON.parse(viewingOrder.frostings)
+                                                        : viewingOrder.frostings;
+                                                    return Array.isArray(frostings)
+                                                        ? frostings.join(', ')
+                                                        : viewingOrder.frostings;
+                                                } catch {
+                                                    return viewingOrder.frostings;
+                                                }
+                                            })()}
                                         </div>
                                     </div>
                                 )}

@@ -2,6 +2,37 @@
 
 import { useState } from 'react';
 
+const standardFlavors = [
+    'Vanilla',
+    'Red Velvet',
+    'Dark Chocolate',
+    'Zesty Lemon',
+    'Classic Wedding Cake',
+    'Almond'
+];
+
+const specialtyFlavors = [
+    'Carrot',
+    'Strawberry',
+    'Cookies & Cream',
+    'Raspberry',
+    'Piña Colada',
+    'Guinness Chocolate Fudge',
+    'Italian Cream Cake'
+];
+
+const frostingOptions = [
+    'Chocolate',
+    'Mocha',
+    'Mint Chocolate Chip',
+    'Strawberry',
+    'Cookies & Cream',
+    'Zesty Lemon',
+    'Almond',
+    'Vanilla',
+    'Cream Cheese'
+];
+
 export default function CakeForm() {
     const [formData, setFormData] = useState({
         name: '',
@@ -20,7 +51,9 @@ export default function CakeForm() {
         contactTime: '',
         paymentMethod: '',
         inscription: '',
-        topper: ''
+        topper: '',
+        flavors: [] as string[],
+        frostings: [] as string[]
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +78,8 @@ export default function CakeForm() {
             submitData.append('paymentMethod', formData.paymentMethod);
             submitData.append('inscription', formData.inscription);
             submitData.append('topper', formData.topper);
+            submitData.append('flavors', JSON.stringify(formData.flavors));
+            submitData.append('frostings', JSON.stringify(formData.frostings));
 
             if (formData.inspirationPhoto) {
                 submitData.append('inspirationPhoto', formData.inspirationPhoto);
@@ -76,7 +111,9 @@ export default function CakeForm() {
                     contactTime: '',
                     paymentMethod: '',
                     inscription: '',
-                    topper: ''
+                    topper: '',
+                    flavors: [],
+                    frostings: []
                 });
             } else {
                 const error = await response.json();
@@ -102,6 +139,59 @@ export default function CakeForm() {
                 inspirationPhoto: e.target.files[0]
             });
         }
+    };
+
+    const getMaxFlavors = () => {
+        const size = formData.size;
+        if (size === '8-inch' || size === '9-inch') return 2;
+        if (size === '10-inch') return 3;
+        if (size === '12-inch') return 3;
+        if (size.startsWith('2-tier') || size.startsWith('3-tier')) return 3; // Tiered cakes: 1 per tier OR 2-3 total
+        if (size === 'double-barrel-6') return 2;
+        return 0;
+    };
+
+    const handleFlavorChange = (flavor: string, checked: boolean) => {
+        const maxFlavors = getMaxFlavors();
+        if (checked) {
+            if (formData.flavors.length < maxFlavors) {
+                setFormData({
+                    ...formData,
+                    flavors: [...formData.flavors, flavor]
+                });
+            }
+        } else {
+            setFormData({
+                ...formData,
+                flavors: formData.flavors.filter(f => f !== flavor)
+            });
+        }
+    };
+
+    const handleFrostingChange = (frosting: string, checked: boolean) => {
+        const maxFrostings = 2;
+        if (checked) {
+            if (formData.frostings.length < maxFrostings) {
+                setFormData({
+                    ...formData,
+                    frostings: [...formData.frostings, frosting]
+                });
+            }
+        } else {
+            setFormData({
+                ...formData,
+                frostings: formData.frostings.filter(f => f !== frosting)
+            });
+        }
+    };
+
+    // Reset flavors when size changes
+    const handleSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setFormData({
+            ...formData,
+            size: e.target.value,
+            flavors: [] // Reset flavors when size changes
+        });
     };
 
     return (
@@ -172,20 +262,32 @@ export default function CakeForm() {
                         name="size"
                         required
                         value={formData.size}
-                        onChange={handleChange}
+                        onChange={handleSizeChange}
                         className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                     >
                         <option value="">Select size</option>
-                        <option value="8-inch">8-inch Round (24-28 servings)</option>
-                        <option value="10-inch">10-inch Round (38-42 servings)</option>
-                        <option value="12-inch">12-inch Round (54-58 servings)</option>
-                        <option value="double-barrel-6">Double Barrel 6-inch (28-30 servings)</option>
-                        <option value="2-tier-5-7">2-Tier: 5-inch+7-inch (from $350)</option>
-                        <option value="2-tier-6-8">2-Tier: 6-inch+8-inch (from $350)</option>
-                        <option value="2-tier-8-10">2-Tier: 8-inch+10-inch (from $350)</option>
-                        <option value="3-tier-5-7-9">3-Tier: 5-inch+7-inch+9-inch (from $500)</option>
-                        <option value="3-tier-6-8-10">3-Tier: 6-inch+8-inch+10-inch (from $500)</option>
-                        <option value="3-tier-8-10-12">3-Tier: 8-inch+10-inch+12-inch (from $500)</option>
+                        <optgroup label="Single Tier (Round)">
+                            <option value="8-inch">8-inch (24–28 servings) — from $216</option>
+                            <option value="9-inch">9-inch (32–38 servings) — from $288</option>
+                            <option value="10-inch">10-inch (38–42 servings) — from $342</option>
+                            <option value="12-inch">12-inch (54–58 servings) — from $486</option>
+                        </optgroup>
+                        <optgroup label="Double Barrel">
+                            <option value="double-barrel-6">Double Barrel 6-inch (28–30 servings) — from $252</option>
+                        </optgroup>
+                        <optgroup label="2-Tier Cakes">
+                            <option value="2-tier-5-7">2-Tier: 5-inch + 7-inch — from $270</option>
+                            <option value="2-tier-6-8">2-Tier: 6-inch + 8-inch — from $360</option>
+                            <option value="2-tier-7-9">2-Tier: 7-inch + 9-inch — from $468</option>
+                            <option value="2-tier-8-10">2-Tier: 8-inch + 10-inch — from $558</option>
+                        </optgroup>
+                        <optgroup label="3-Tier Cakes">
+                            <option value="3-tier-4-6-8">3-Tier: 4-inch + 6-inch + 8-inch — from $450</option>
+                            <option value="3-tier-5-7-9">3-Tier: 5-inch + 7-inch + 9-inch — from $558</option>
+                            <option value="3-tier-6-8-10">3-Tier: 6-inch + 8-inch + 10-inch — from $702</option>
+                            <option value="3-tier-8-10-12">3-Tier: 8-inch + 10-inch + 12-inch — from $1,044</option>
+                        </optgroup>
+                        <option value="other">Other size combinations available: contact for pricing.</option>
                     </select>
                 </div>
 
@@ -200,6 +302,131 @@ export default function CakeForm() {
                         placeholder="Birthday party, wedding, etc."
                     />
                 </div>
+            </div>
+
+            {/* Flavor Selection */}
+            <div className={`mb-6 sm:mb-8 ${!formData.size || formData.size === 'other' ? 'opacity-50 pointer-events-none' : ''}`}>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Select Flavors * {formData.size && formData.size !== 'other' ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
+                    {formData.size && (formData.size.startsWith('2-tier') || formData.size.startsWith('3-tier')) && (
+                        <span className="text-xs text-gray-500 block mt-1">1 flavor per tier OR 2-3 total (your choice)</span>
+                    )}
+                </label>
+
+                {/* Standard Flavors */}
+                <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Standard Flavors (Included)</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {standardFlavors.map((flavor) => (
+                            <label key={flavor} className={`flex items-center p-2 rounded ${!formData.size || formData.size === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                                <input
+                                    type="checkbox"
+                                    checked={formData.flavors.includes(flavor)}
+                                    onChange={(e) => handleFlavorChange(flavor, e.target.checked)}
+                                    disabled={!formData.size || formData.size === 'other' || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
+                                    className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                />
+                                <span className="text-sm text-gray-700">{flavor}</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Specialty Flavors */}
+                <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Specialty Flavors (+$15 each)</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        {specialtyFlavors.map((flavor) => (
+                            <label key={flavor} className={`flex items-center p-2 rounded ${!formData.size || formData.size === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                                <input
+                                    type="checkbox"
+                                    checked={formData.flavors.includes(flavor)}
+                                    onChange={(e) => handleFlavorChange(flavor, e.target.checked)}
+                                    disabled={!formData.size || formData.size === 'other' || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
+                                    className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                />
+                                <span className="text-sm text-gray-700">{flavor}</span>
+                                <span className="text-xs text-purple-600 ml-2">(+$15)</span>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Selected Flavors Display */}
+                {formData.flavors.length > 0 && formData.size && formData.size !== 'other' && (
+                    <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p className="text-sm font-semibold text-gray-900 mb-2">Selected Flavors ({formData.flavors.length}/{getMaxFlavors()}):</p>
+                        <div className="flex flex-wrap gap-2">
+                            {formData.flavors.map((flavor) => (
+                                <span
+                                    key={flavor}
+                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800"
+                                >
+                                    {flavor}
+                                    {specialtyFlavors.includes(flavor) && (
+                                        <span className="ml-1 text-xs">(+$15)</span>
+                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={() => handleFlavorChange(flavor, false)}
+                                        className="ml-2 text-yellow-600 hover:text-yellow-800"
+                                    >
+                                        ×
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Frosting/Filling Selection */}
+            <div className="mb-6 sm:mb-8">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Frosting/Filling Selection * (Up to 2 choices)
+                </label>
+                <div className="mb-3 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <p className="text-sm font-semibold text-gray-900 mb-1">Tmore's Signature Silk Buttercream/Frosting</p>
+                    <p className="text-xs text-gray-600 italic">(A smooth, stable Swiss meringue–style buttercream with a hint of white chocolate ganache.)</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {frostingOptions.map((frosting) => (
+                        <label key={frosting} className="flex items-center cursor-pointer p-2 rounded hover:bg-gray-50">
+                            <input
+                                type="checkbox"
+                                checked={formData.frostings.includes(frosting)}
+                                onChange={(e) => handleFrostingChange(frosting, e.target.checked)}
+                                disabled={!formData.frostings.includes(frosting) && formData.frostings.length >= 2}
+                                className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                            />
+                            <span className="text-sm text-gray-700">{frosting}</span>
+                        </label>
+                    ))}
+                </div>
+
+                {/* Selected Frostings Display */}
+                {formData.frostings.length > 0 && (
+                    <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p className="text-sm font-semibold text-gray-900 mb-2">Selected Frostings ({formData.frostings.length}/2):</p>
+                        <div className="flex flex-wrap gap-2">
+                            {formData.frostings.map((frosting) => (
+                                <span
+                                    key={frosting}
+                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800"
+                                >
+                                    {frosting}
+                                    <button
+                                        type="button"
+                                        onClick={() => handleFrostingChange(frosting, false)}
+                                        className="ml-2 text-yellow-600 hover:text-yellow-800"
+                                    >
+                                        ×
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Inspiration Photo */}
@@ -334,7 +561,7 @@ export default function CakeForm() {
                     rows={2}
                     value={formData.inscription}
                     onChange={handleChange}
-                    placeholder="Enter inscription text, or leave blank if no inscription needed"
+                    placeholder="Enter inscription details (name, age, short message) or leave blank if no inscription is needed."
                     className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                 />
             </div>
@@ -365,16 +592,6 @@ export default function CakeForm() {
                         />
                         <span className="text-base">No</span>
                     </label>
-                </div>
-                <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                    <p className="text-sm font-semibold text-gray-900 mb-2">Flavor Selection Guidelines:</p>
-                    <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
-                        <li>Allow 2 flavors for 8-inch</li>
-                        <li>Allow 2 flavors for 9-inch</li>
-                        <li>Allow 3 flavors for 10-inch</li>
-                        <li>Allow 3 flavors for 12-inch</li>
-                        <li>4 to 5 flavors for orders over $450 (restrictions apply)</li>
-                    </ul>
                 </div>
             </div>
 
