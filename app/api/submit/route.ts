@@ -26,11 +26,11 @@ interface OrderNotificationData {
 
 async function sendOrderNotification(data: OrderNotificationData) {
     const recipientEmail = 'tmorescakes@gmail.com';
-    
+
     // Format flavors and frostings
     const flavorsText = data.flavors.length > 0 ? data.flavors.join(', ') : 'Not specified';
     const frostingsText = data.frostings.length > 0 ? data.frostings.join(', ') : 'Not specified';
-    
+
     // Build email HTML
     const emailHtml = `
         <!DOCTYPE html>
@@ -148,7 +148,7 @@ async function sendOrderNotification(data: OrderNotificationData) {
             subject: `New Cake Order from ${data.name}`,
             orderId: data.orderId
         });
-        
+
         // Alternative: You can use other email services here
         // For now, we'll just log it. Set RESEND_API_KEY in your .env file to enable email sending
     }

@@ -35,9 +35,42 @@ interface CakeOrder {
 export default function AdminDashboard() {
     const [activeTab, setActiveTab] = useState('calendar');
     const [orderFilter, setOrderFilter] = useState('all');
+    // Flavor and frosting options (matching CakeForm)
+    const standardFlavors = [
+        'Vanilla',
+        'Red Velvet',
+        'Dark Chocolate',
+        'Zesty Lemon',
+        'Classic Wedding Cake',
+        'Almond'
+    ];
+
+    const specialtyFlavors = [
+        'Carrot',
+        'Strawberry',
+        'Cookies & Cream',
+        'Raspberry',
+        'Piña Colada',
+        'Guinness Chocolate Fudge',
+        'Italian Cream Cake'
+    ];
+
+    const frostingOptions = [
+        'Chocolate',
+        'Mocha',
+        'Mint Chocolate Chip',
+        'Strawberry',
+        'Cookies & Cream',
+        'Zesty Lemon',
+        'Almond',
+        'Vanilla',
+        'Cream Cheese'
+    ];
+
     const [calculatorData, setCalculatorData] = useState({
         cakeSize: '',
-        flavorType: 'standard',
+        flavors: [] as string[],
+        frostings: [] as string[],
         laborHours: 0,
         delivery: false,
         setup: false,
@@ -230,44 +263,112 @@ export default function AdminDashboard() {
         }
     };
 
+    // Get max flavors based on size (matching CakeForm logic)
+    const getMaxFlavors = () => {
+        const size = calculatorData.cakeSize;
+        if (size === '8-inch' || size === '9-inch') return 2;
+        if (size === '10-inch') return 3;
+        if (size === '12-inch') return 3;
+        if (size.startsWith('2-tier') || size.startsWith('3-tier')) return 3;
+        if (size === 'double-barrel-6') return 2;
+        return 0;
+    };
+
+    // Extract base price from size option text
+    const getBasePriceFromSize = (size: string): number => {
+        const priceMap: { [key: string]: number } = {
+            '8-inch': 216,
+            '9-inch': 288,
+            '10-inch': 342,
+            '12-inch': 486,
+            'double-barrel-6': 252,
+            '2-tier-5-7': 270,
+            '2-tier-6-8': 360,
+            '2-tier-7-9': 468,
+            '2-tier-8-10': 558,
+            '3-tier-4-6-8': 450,
+            '3-tier-5-7-9': 558,
+            '3-tier-6-8-10': 702,
+            '3-tier-8-10-12': 1044
+        };
+        return priceMap[size] || 0;
+    };
+
     const calculateCost = () => {
-        let baseCost = 0;
+        let baseCost = getBasePriceFromSize(calculatorData.cakeSize);
         let laborCost = calculatorData.laborHours * 25; // $25/hour
         let decorCost = calculatorData.decor;
         let deliveryCost = calculatorData.delivery ? 50 : 0;
         let setupCost = calculatorData.setup ? 75 : 0;
 
-        // Base cake cost based on size
-        switch (calculatorData.cakeSize) {
-            case '8':
-                baseCost = 216;
-                break;
-            case '10':
-                baseCost = 342;
-                break;
-            case '12':
-                baseCost = 486;
-                break;
-            case 'double':
-                baseCost = 270;
-                break;
-            default:
-                baseCost = 200;
-        }
+        // Calculate specialty flavor cost (+$15 each)
+        const specialtyFlavorCount = calculatorData.flavors.filter(f => specialtyFlavors.includes(f)).length;
+        const specialtyFlavorCost = specialtyFlavorCount * 15;
 
-        // Premium flavor cost
-        if (calculatorData.flavorType === 'premium') {
-            baseCost += 15;
-        }
-
-        const totalCost = baseCost + laborCost + decorCost + deliveryCost + setupCost;
+        const totalCost = baseCost + specialtyFlavorCost + laborCost + decorCost + deliveryCost + setupCost;
         const profit = totalCost * 0.3; // 30% profit margin
         const finalPrice = totalCost + profit;
 
-        return { totalCost, profit, finalPrice };
+        return { totalCost, profit, finalPrice, baseCost, specialtyFlavorCost };
     };
 
-    const { totalCost, profit, finalPrice } = calculateCost();
+    const handleCalculatorFlavorChange = (flavor: string, checked: boolean) => {
+        const maxFlavors = getMaxFlavors();
+        if (checked) {
+            if (calculatorData.flavors.length < maxFlavors) {
+                setCalculatorData({
+                    ...calculatorData,
+                    flavors: [...calculatorData.flavors, flavor]
+                });
+            }
+        } else {
+            setCalculatorData({
+                ...calculatorData,
+                flavors: calculatorData.flavors.filter(f => f !== flavor)
+            });
+        }
+    };
+
+    const handleCalculatorFrostingChange = (frosting: string, checked: boolean) => {
+        const maxFrostings = 2;
+        if (checked) {
+            if (calculatorData.frostings.length < maxFrostings) {
+                setCalculatorData({
+                    ...calculatorData,
+                    frostings: [...calculatorData.frostings, frosting]
+                });
+            }
+        } else {
+            setCalculatorData({
+                ...calculatorData,
+                frostings: calculatorData.frostings.filter(f => f !== frosting)
+            });
+        }
+    };
+
+    const handleCalculatorSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setCalculatorData({
+            ...calculatorData,
+            cakeSize: e.target.value,
+            flavors: [] // Reset flavors when size changes
+        });
+    };
+
+    const { totalCost, profit, finalPrice, baseCost, specialtyFlavorCost } = calculateCost();
+
+    // Helper function to format date strings correctly (avoiding timezone issues)
+    const formatDate = (dateString: string): string => {
+        // Parse date string as local date (YYYY-MM-DD format)
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        return date.toLocaleDateString();
+    };
+
+    // Helper function to create a date object from date string (local timezone)
+    const parseDateString = (dateString: string): Date => {
+        const [year, month, day] = dateString.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    };
 
     // Filter orders based on selected filter
     const getFilteredOrders = () => {
@@ -277,7 +378,7 @@ export default function AdminDashboard() {
         switch (orderFilter) {
             case 'upcoming':
                 return orders.filter(order => {
-                    const orderDate = new Date(order.date_needed);
+                    const orderDate = parseDateString(order.date_needed);
                     orderDate.setHours(0, 0, 0, 0);
                     return orderDate >= today && ['pending', 'approved', 'in_progress'].includes(order.status);
                 });
@@ -620,7 +721,7 @@ export default function AdminDashboard() {
                                         </label>
                                         <select
                                             value={calculatorData.cakeSize}
-                                            onChange={(e) => setCalculatorData({ ...calculatorData, cakeSize: e.target.value })}
+                                            onChange={handleCalculatorSizeChange}
                                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                         >
                                             <option value="">Select size</option>
@@ -649,18 +750,101 @@ export default function AdminDashboard() {
                                         </select>
                                     </div>
 
+                                    {/* Flavor Selection */}
+                                    <div className={`${!calculatorData.cakeSize || calculatorData.cakeSize === 'other' ? 'opacity-50 pointer-events-none' : ''}`}>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Select Flavors {calculatorData.cakeSize && calculatorData.cakeSize !== 'other' ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
+                                        </label>
+
+                                        {/* Standard Flavors */}
+                                        <div className="mb-3">
+                                            <h4 className="text-xs font-semibold text-gray-700 mb-2">Standard Flavors (Included)</h4>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {standardFlavors.map((flavor) => (
+                                                    <label key={flavor} className={`flex items-center p-2 rounded text-sm ${!calculatorData.cakeSize || calculatorData.cakeSize === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={calculatorData.flavors.includes(flavor)}
+                                                            onChange={(e) => handleCalculatorFlavorChange(flavor, e.target.checked)}
+                                                            disabled={!calculatorData.cakeSize || calculatorData.cakeSize === 'other' || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
+                                                            className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                        />
+                                                        <span className="text-sm text-gray-700">{flavor}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Specialty Flavors */}
+                                        <div className="mb-3">
+                                            <h4 className="text-xs font-semibold text-gray-700 mb-2">Specialty Flavors (+$15 each)</h4>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {specialtyFlavors.map((flavor) => (
+                                                    <label key={flavor} className={`flex items-center p-2 rounded text-sm ${!calculatorData.cakeSize || calculatorData.cakeSize === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={calculatorData.flavors.includes(flavor)}
+                                                            onChange={(e) => handleCalculatorFlavorChange(flavor, e.target.checked)}
+                                                            disabled={!calculatorData.cakeSize || calculatorData.cakeSize === 'other' || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
+                                                            className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                        />
+                                                        <span className="text-sm text-gray-700">{flavor}</span>
+                                                        <span className="text-xs text-purple-600 ml-1">(+$15)</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Selected Flavors Display */}
+                                        {calculatorData.flavors.length > 0 && calculatorData.cakeSize && calculatorData.cakeSize !== 'other' && (
+                                            <div className="mt-2 bg-blue-50 border border-blue-200 rounded-lg p-2">
+                                                <p className="text-xs font-semibold text-gray-900 mb-1">Selected: {calculatorData.flavors.length}/{getMaxFlavors()}</p>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {calculatorData.flavors.map((flavor) => (
+                                                        <span
+                                                            key={flavor}
+                                                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-800"
+                                                        >
+                                                            {flavor}
+                                                            {specialtyFlavors.includes(flavor) && <span className="ml-1 text-xs">(+$15)</span>}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Frosting Selection */}
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Flavor Type
+                                            Frosting/Filling Selection (Up to 2 choices)
                                         </label>
-                                        <select
-                                            value={calculatorData.flavorType}
-                                            onChange={(e) => setCalculatorData({ ...calculatorData, flavorType: e.target.value })}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                                        >
-                                            <option value="standard">Standard</option>
-                                            <option value="premium">Premium (+$15)</option>
-                                        </select>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {frostingOptions.map((frosting) => (
+                                                <label key={frosting} className="flex items-center p-2 rounded text-sm cursor-pointer hover:bg-gray-50">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={calculatorData.frostings.includes(frosting)}
+                                                        onChange={(e) => handleCalculatorFrostingChange(frosting, e.target.checked)}
+                                                        disabled={!calculatorData.frostings.includes(frosting) && calculatorData.frostings.length >= 2}
+                                                        className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                    />
+                                                    <span className="text-sm text-gray-700">{frosting}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                        {calculatorData.frostings.length > 0 && (
+                                            <div className="mt-2 flex flex-wrap gap-1">
+                                                {calculatorData.frostings.map((frosting) => (
+                                                    <span
+                                                        key={frosting}
+                                                        className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-purple-100 text-purple-800"
+                                                    >
+                                                        {frosting}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <div>
@@ -718,22 +902,36 @@ export default function AdminDashboard() {
                             <div className="card">
                                 <h3 className="text-2xl font-bold mb-6">Cost Breakdown</h3>
                                 <div className="space-y-4">
+                                    {calculatorData.cakeSize && calculatorData.cakeSize !== 'other' && (
+                                        <>
+                                            <div className="flex justify-between py-2 border-b">
+                                                <span className="text-gray-600">Base Cost:</span>
+                                                <span className="font-semibold">${baseCost.toFixed(2)}</span>
+                                            </div>
+                                            {specialtyFlavorCost > 0 && (
+                                                <div className="flex justify-between py-2 border-b">
+                                                    <span className="text-gray-600">Specialty Flavors ({calculatorData.flavors.filter(f => specialtyFlavors.includes(f)).length} × $15):</span>
+                                                    <span className="font-semibold">${specialtyFlavorCost.toFixed(2)}</span>
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
                                     <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Base Cost:</span>
-                                        <span className="font-semibold">${totalCost.toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Labor:</span>
+                                        <span className="text-gray-600">Labor ({calculatorData.laborHours} hrs × $25):</span>
                                         <span className="font-semibold">${(calculatorData.laborHours * 25).toFixed(2)}</span>
                                     </div>
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Decorations:</span>
-                                        <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Delivery & Setup:</span>
-                                        <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
-                                    </div>
+                                    {calculatorData.decor > 0 && (
+                                        <div className="flex justify-between py-2 border-b">
+                                            <span className="text-gray-600">Decorations:</span>
+                                            <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
+                                        </div>
+                                    )}
+                                    {((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)) > 0 && (
+                                        <div className="flex justify-between py-2 border-b">
+                                            <span className="text-gray-600">Delivery & Setup:</span>
+                                            <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
+                                        </div>
+                                    )}
                                     <div className="flex justify-between py-2 border-b border-gray-300">
                                         <span className="text-gray-600">Total Cost:</span>
                                         <span className="font-semibold text-blue-600">${totalCost.toFixed(2)}</span>
@@ -783,7 +981,7 @@ export default function AdminDashboard() {
                                         {orders.filter(order => {
                                             const today = new Date();
                                             today.setHours(0, 0, 0, 0);
-                                            const orderDate = new Date(order.date_needed);
+                                            const orderDate = parseDateString(order.date_needed);
                                             orderDate.setHours(0, 0, 0, 0);
                                             return orderDate >= today && ['pending', 'approved', 'in_progress'].includes(order.status);
                                         }).length}
@@ -813,7 +1011,7 @@ export default function AdminDashboard() {
                                     Upcoming ({orders.filter(order => {
                                         const today = new Date();
                                         today.setHours(0, 0, 0, 0);
-                                        const orderDate = new Date(order.date_needed);
+                                        const orderDate = parseDateString(order.date_needed);
                                         orderDate.setHours(0, 0, 0, 0);
                                         return orderDate >= today && ['pending', 'approved', 'in_progress'].includes(order.status);
                                     }).length})
@@ -889,7 +1087,7 @@ export default function AdminDashboard() {
                                                         </div>
                                                     </td>
                                                     <td className="py-3 px-4">{order.email}</td>
-                                                    <td className="py-3 px-4">{new Date(order.date_needed).toLocaleDateString()}</td>
+                                                    <td className="py-3 px-4">{formatDate(order.date_needed)}</td>
                                                     <td className="py-3 px-4">{order.cake_type}</td>
                                                     <td className="py-3 px-4">{order.size}</td>
                                                     <td className="py-3 px-4">
@@ -1093,7 +1291,7 @@ export default function AdminDashboard() {
                         <div className="card">
                             <h3 className="text-2xl font-bold mb-6">Document Vault</h3>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="max-w-md mx-auto">
                                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-yellow-400 transition-colors">
                                     <div className="text-4xl mb-4">📊</div>
                                     <h4 className="text-lg font-semibold mb-2">Export Order History</h4>
@@ -1104,13 +1302,6 @@ export default function AdminDashboard() {
                                     >
                                         Export CSV
                                     </button>
-                                </div>
-
-                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-yellow-400 transition-colors">
-                                    <div className="text-4xl mb-4">📤</div>
-                                    <h4 className="text-lg font-semibold mb-2">Upload Expenses</h4>
-                                    <p className="text-gray-600 mb-4">Upload expense reports and receipts</p>
-                                    <button className="btn-secondary">Upload Files</button>
                                 </div>
                             </div>
 
@@ -1302,8 +1493,21 @@ export default function AdminDashboard() {
             {/* Edit Order Modal */}
             {showEditModal && editingOrder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                        <h3 className="text-2xl font-bold mb-4">Edit Order</h3>
+                    <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto relative">
+                        {/* Back Button */}
+                        <button
+                            onClick={() => {
+                                setShowEditModal(false);
+                                setEditingOrder(null);
+                            }}
+                            className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+                        >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            <span className="text-sm font-medium">Back</span>
+                        </button>
+                        <h3 className="text-2xl font-bold mb-4 text-center">Edit Order</h3>
 
                         <form onSubmit={(e) => {
                             e.preventDefault();
@@ -1627,7 +1831,7 @@ export default function AdminDashboard() {
                                         <div><strong>Type:</strong> {viewingOrder.cake_type}</div>
                                         <div><strong>Size:</strong> {viewingOrder.size}</div>
                                         {viewingOrder.occasion && <div><strong>Occasion:</strong> {viewingOrder.occasion}</div>}
-                                        <div><strong>Date Needed:</strong> {new Date(viewingOrder.date_needed).toLocaleDateString()}</div>
+                                        <div><strong>Date Needed:</strong> {formatDate(viewingOrder.date_needed)}</div>
                                     </div>
                                 </div>
 
