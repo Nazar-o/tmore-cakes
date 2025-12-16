@@ -185,13 +185,13 @@ export default function GalleryPreview() {
                                     >
                                         <div className="group cursor-pointer">
                                             <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 group-hover:shadow-xl group-hover:scale-105">
-                                                <div className="relative aspect-[3/4] w-full">
+                                                <div className="relative w-full" style={{ aspectRatio: '4/5' }}>
                                                     <Image
                                                         src={image.image_url}
                                                         alt={`${image.category} cake`}
                                                         fill
                                                         sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                                                        className="object-cover"
+                                                        className="object-cover rounded-lg"
                                                         loading="lazy"
                                                         quality={85}
                                                     />

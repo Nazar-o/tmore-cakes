@@ -644,3 +644,69 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/* ========================================
+   GALLERY STYLES
+   ======================================== */
+
+/* Gallery images - consistent layout showing whole image */
+.gallery img,
+.gallery-page-mobile img,
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Consistent grid shape for gallery items */
+.gallery-item img,
+.gallery-page-mobile .relative img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Hero image styles */
+.hero-image {
+  width: 100%;
+  height: 60vh;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Desktop and larger screens - show whole image */
+@media (min-width: 900px) {
+  .hero-image {
+    width: auto;
+    max-width: 100%;
+    max-height: 600px;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
+.hero-banner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 60vh;
+}
+
+/* Desktop: not so tall */
+@media (min-width: 900px) {
+  .hero-banner {
+    height: 65vh;
+    max-height: 650px;
+  }
+}
+
+/* Gallery grid items - ensure consistent aspect ratio */
+.gallery-page-mobile .relative img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

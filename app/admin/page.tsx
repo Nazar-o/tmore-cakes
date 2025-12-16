@@ -266,6 +266,20 @@ export default function AdminDashboard() {
     // Get max flavors based on size (matching CakeForm logic)
     const getMaxFlavors = () => {
         const size = calculatorData.cakeSize;
+        
+        // "Other" size allows up to 5 flavors
+        if (size === 'other') {
+            return 5;
+        }
+        
+        const basePrice = getBasePriceFromSize(size);
+        
+        // Orders over $400 allow 4-5 flavors
+        if (basePrice >= 400) {
+            return 5;
+        }
+        
+        // Standard limits based on size
         if (size === '8-inch' || size === '9-inch') return 2;
         if (size === '10-inch') return 3;
         if (size === '12-inch') return 3;
@@ -751,9 +765,12 @@ export default function AdminDashboard() {
                                     </div>
 
                                     {/* Flavor Selection */}
-                                    <div className={`${!calculatorData.cakeSize || calculatorData.cakeSize === 'other' ? 'opacity-50 pointer-events-none' : ''}`}>
+                                    <div className={`${!calculatorData.cakeSize ? 'opacity-50 pointer-events-none' : ''}`}>
                                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Select Flavors {calculatorData.cakeSize && calculatorData.cakeSize !== 'other' ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
+                                            Select Flavors {calculatorData.cakeSize ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
+                                            {calculatorData.cakeSize === 'other' && (
+                                                <span className="text-xs text-yellow-600 font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
+                                            )}
                                         </label>
 
                                         {/* Standard Flavors */}
@@ -761,12 +778,12 @@ export default function AdminDashboard() {
                                             <h4 className="text-xs font-semibold text-gray-700 mb-2">Standard Flavors (Included)</h4>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {standardFlavors.map((flavor) => (
-                                                    <label key={flavor} className={`flex items-center p-2 rounded text-sm ${!calculatorData.cakeSize || calculatorData.cakeSize === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                                                    <label key={flavor} className={`flex items-center p-2 rounded text-sm ${!calculatorData.cakeSize ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
                                                         <input
                                                             type="checkbox"
                                                             checked={calculatorData.flavors.includes(flavor)}
                                                             onChange={(e) => handleCalculatorFlavorChange(flavor, e.target.checked)}
-                                                            disabled={!calculatorData.cakeSize || calculatorData.cakeSize === 'other' || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
+                                                            disabled={!calculatorData.cakeSize || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
                                                             className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
                                                         />
                                                         <span className="text-sm text-gray-700">{flavor}</span>
@@ -796,7 +813,7 @@ export default function AdminDashboard() {
                                         </div>
 
                                         {/* Selected Flavors Display */}
-                                        {calculatorData.flavors.length > 0 && calculatorData.cakeSize && calculatorData.cakeSize !== 'other' && (
+                                        {calculatorData.flavors.length > 0 && calculatorData.cakeSize && (
                                             <div className="mt-2 bg-blue-50 border border-blue-200 rounded-lg p-2">
                                                 <p className="text-xs font-semibold text-gray-900 mb-1">Selected: {calculatorData.flavors.length}/{getMaxFlavors()}</p>
                                                 <div className="flex flex-wrap gap-1">

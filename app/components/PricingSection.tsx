@@ -35,7 +35,7 @@ const cakeSizes = [
         name: 'Double Barrel 6-inch',
         servings: '28–30',
         basePrice: 252,
-        description: 'Elegant height, perfect portions',
+        description: '',
         type: 'double'
     }
 ];
@@ -217,10 +217,11 @@ export default function PricingSection() {
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
                                         <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
-                                        <p className="text-gray-600 text-sm mb-4">{size.description}</p>
-                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                            <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
-                                        </div>
+                                        {size.description && (
+                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                                <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -232,14 +233,15 @@ export default function PricingSection() {
                             <p className="text-center text-gray-600 mb-6">5-6 layers of cake (12 to 14 inches tall)</p>
                             <div className="flex flex-wrap justify-center gap-4 md:gap-8">
                                 {cakeSizes.filter(size => size.type === 'double').map((size, index) => (
-                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-80 sm:flex-shrink-0">
+                                    <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
                                         <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
-                                        <p className="text-gray-600 text-sm mb-4">{size.description}</p>
-                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                            <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
-                                        </div>
+                                        {size.description && (
+                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                                <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>

@@ -43,7 +43,7 @@ export default function CakeForm() {
         occasion: '',
         description: '',
         date: '',
-        inspirationPhoto: null as File | null,
+        inspirationPhotos: [] as File[],
         deliveryOption: '',
         deliveryAddress: '',
         targetBudget: '',
@@ -81,9 +81,11 @@ export default function CakeForm() {
             submitData.append('flavors', JSON.stringify(formData.flavors));
             submitData.append('frostings', JSON.stringify(formData.frostings));
 
-            if (formData.inspirationPhoto) {
-                submitData.append('inspirationPhoto', formData.inspirationPhoto);
-            }
+            // Append multiple inspiration photos
+            formData.inspirationPhotos.forEach((photo, index) => {
+                submitData.append(`inspirationPhoto_${index}`, photo);
+            });
+            submitData.append('inspirationPhotoCount', formData.inspirationPhotos.length.toString());
 
             const response = await fetch('/api/submit', {
                 method: 'POST',
@@ -103,7 +105,7 @@ export default function CakeForm() {
                     occasion: '',
                     description: '',
                     date: '',
-                    inspirationPhoto: null,
+                    inspirationPhotos: [],
                     deliveryOption: '',
                     deliveryAddress: '',
                     targetBudget: '',
@@ -133,16 +135,51 @@ export default function CakeForm() {
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
+        if (e.target.files && e.target.files.length > 0) {
+            const files = Array.from(e.target.files);
             setFormData({
                 ...formData,
-                inspirationPhoto: e.target.files[0]
+                inspirationPhotos: files
             });
         }
     };
 
+    // Get base price from size
+    const getBasePriceFromSize = (size: string): number => {
+        const priceMap: { [key: string]: number } = {
+            '8-inch': 216,
+            '9-inch': 288,
+            '10-inch': 342,
+            '12-inch': 486,
+            'double-barrel-6': 252,
+            '2-tier-5-7': 270,
+            '2-tier-6-8': 360,
+            '2-tier-7-9': 468,
+            '2-tier-8-10': 558,
+            '3-tier-4-6-8': 450,
+            '3-tier-5-7-9': 558,
+            '3-tier-6-8-10': 702,
+            '3-tier-8-10-12': 1044
+        };
+        return priceMap[size] || 0;
+    };
+
     const getMaxFlavors = () => {
         const size = formData.size;
+        
+        // "Other" size allows up to 5 flavors
+        if (size === 'other') {
+            return 5;
+        }
+        
+        const basePrice = getBasePriceFromSize(size);
+        
+        // Orders over $400 allow 4-5 flavors
+        if (basePrice >= 400) {
+            return 5;
+        }
+        
+        // Standard limits based on size
         if (size === '8-inch' || size === '9-inch') return 2;
         if (size === '10-inch') return 3;
         if (size === '12-inch') return 3;
@@ -305,11 +342,14 @@ export default function CakeForm() {
             </div>
 
             {/* Flavor Selection */}
-            <div className={`mb-6 sm:mb-8 ${!formData.size || formData.size === 'other' ? 'opacity-50 pointer-events-none' : ''}`}>
+            <div className={`mb-6 sm:mb-8 ${!formData.size ? 'opacity-50 pointer-events-none' : ''}`}>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Select Flavors * {formData.size && formData.size !== 'other' ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
+                    Select Flavors * {formData.size ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
                     {formData.size && (formData.size.startsWith('2-tier') || formData.size.startsWith('3-tier')) && (
                         <span className="text-xs text-gray-500 block mt-1">1 flavor per tier OR 2-3 total (your choice)</span>
+                    )}
+                    {formData.size === 'other' && (
+                        <span className="text-xs text-yellow-600 font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
                     )}
                 </label>
 
@@ -318,12 +358,12 @@ export default function CakeForm() {
                     <h4 className="text-sm font-semibold text-gray-700 mb-2">Standard Flavors (Included)</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                         {standardFlavors.map((flavor) => (
-                            <label key={flavor} className={`flex items-center p-2 rounded ${!formData.size || formData.size === 'other' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
+                            <label key={flavor} className={`flex items-center p-2 rounded ${!formData.size ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}>
                                 <input
                                     type="checkbox"
                                     checked={formData.flavors.includes(flavor)}
                                     onChange={(e) => handleFlavorChange(flavor, e.target.checked)}
-                                    disabled={!formData.size || formData.size === 'other' || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
+                                    disabled={!formData.size || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
                                     className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
                                 />
                                 <span className="text-sm text-gray-700">{flavor}</span>
@@ -353,7 +393,7 @@ export default function CakeForm() {
                 </div>
 
                 {/* Selected Flavors Display */}
-                {formData.flavors.length > 0 && formData.size && formData.size !== 'other' && (
+                {formData.flavors.length > 0 && formData.size && (
                     <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <p className="text-sm font-semibold text-gray-900 mb-2">Selected Flavors ({formData.flavors.length}/{getMaxFlavors()}):</p>
                         <div className="flex flex-wrap gap-2">
@@ -429,17 +469,46 @@ export default function CakeForm() {
                 )}
             </div>
 
-            {/* Inspiration Photo */}
+            {/* Inspiration Photos */}
             <div className="mb-6 sm:mb-8">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Inspiration Photo</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Inspiration Photos</label>
                 <input
                     type="file"
-                    name="inspirationPhoto"
+                    name="inspirationPhotos"
                     accept="image/*"
+                    multiple
                     onChange={handleFileChange}
                     className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100"
                 />
-                <p className="text-sm text-gray-500 mt-2">Upload an image that inspires your cake design</p>
+                <p className="text-sm text-gray-500 mt-2">Upload one or more images that inspire your cake design</p>
+                {formData.inspirationPhotos.length > 0 && (
+                    <div className="mt-3">
+                        <p className="text-sm font-medium text-gray-700 mb-2">
+                            Selected: {formData.inspirationPhotos.length} {formData.inspirationPhotos.length === 1 ? 'image' : 'images'}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {formData.inspirationPhotos.map((photo, index) => (
+                                <div key={index} className="relative">
+                                    <img
+                                        src={URL.createObjectURL(photo)}
+                                        alt={`Preview ${index + 1}`}
+                                        className="w-20 h-20 object-cover rounded border border-gray-300"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const newPhotos = formData.inspirationPhotos.filter((_, i) => i !== index);
+                                            setFormData({ ...formData, inspirationPhotos: newPhotos });
+                                        }}
+                                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Delivery/Pickup Options */}

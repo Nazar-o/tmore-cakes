@@ -22,6 +22,7 @@ interface OrderNotificationData {
     contactTime?: string;
     paymentMethod?: string;
     photoUrl?: string | null;
+    photoUrls?: string[];
 }
 
 async function sendOrderNotification(data: OrderNotificationData) {
@@ -109,10 +110,13 @@ async function sendOrderNotification(data: OrderNotificationData) {
                         ${data.targetBudget ? `<p><span class="label">Target Budget:</span><span class="value">${data.targetBudget}</span></p>` : ''}
                     </div>
                     
-                    ${data.photoUrl ? `
+                    ${(data.photoUrls && data.photoUrls.length > 0) || data.photoUrl ? `
                     <div class="section">
-                        <h3>Inspiration Photo</h3>
-                        <p><a href="${data.photoUrl}" target="_blank">View Photo</a></p>
+                        <h3>Inspiration Photo${(data.photoUrls && data.photoUrls.length > 1) ? 's' : ''}</h3>
+                        ${data.photoUrls && data.photoUrls.length > 0 ?
+                data.photoUrls.map((url, index) => `<p><a href="${url}" target="_blank">View Photo ${index + 1}</a></p>`).join('') :
+                data.photoUrl ? `<p><a href="${data.photoUrl}" target="_blank">View Photo</a></p>` : ''
+            }
                     </div>
                     ` : ''}
                 </div>
@@ -179,7 +183,7 @@ export async function POST(request: NextRequest) {
         const contactMethod = formData.get('contactMethod') as string;
         const contactTime = formData.get('contactTime') as string;
         const paymentMethod = formData.get('paymentMethod') as string;
-        const inspirationPhoto = formData.get('inspirationPhoto') as File;
+        const inspirationPhotoCount = parseInt(formData.get('inspirationPhotoCount') as string) || 0;
 
         // Validate required fields
         if (!name || !email || !cakeType || !size || !date) {
@@ -189,29 +193,37 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Handle file upload to Supabase Storage (optional)
-        let photoUrl = null;
-        if (inspirationPhoto && inspirationPhoto.size > 0) {
+        // Handle multiple file uploads to Supabase Storage (optional)
+        const photoUrls: string[] = [];
+        if (inspirationPhotoCount > 0) {
             try {
-                const fileExt = inspirationPhoto.name.split('.').pop();
-                const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                for (let i = 0; i < inspirationPhotoCount; i++) {
+                    const inspirationPhoto = formData.get(`inspirationPhoto_${i}`) as File;
+                    if (inspirationPhoto && inspirationPhoto.size > 0) {
+                        const fileExt = inspirationPhoto.name.split('.').pop();
+                        const fileName = `${Date.now()}-${i}-${Math.random().toString(36).substring(2)}.${fileExt}`;
 
-                const { data: uploadData, error: uploadError } = await supabase.storage
-                    .from('inspiration-photos')
-                    .upload(fileName, inspirationPhoto);
+                        const { data: uploadData, error: uploadError } = await supabase.storage
+                            .from('inspiration-photos')
+                            .upload(fileName, inspirationPhoto);
 
-                if (uploadError) {
-                    console.error('File upload error:', uploadError);
-                } else {
-                    const { data: { publicUrl } } = supabase.storage
-                        .from('inspiration-photos')
-                        .getPublicUrl(fileName);
-                    photoUrl = publicUrl;
+                        if (uploadError) {
+                            console.error('File upload error:', uploadError);
+                        } else {
+                            const { data: { publicUrl } } = supabase.storage
+                                .from('inspiration-photos')
+                                .getPublicUrl(fileName);
+                            photoUrls.push(publicUrl);
+                        }
+                    }
                 }
             } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error('Error uploading files:', error);
             }
         }
+
+        // For backward compatibility, use first photo URL or null
+        const photoUrl = photoUrls.length > 0 ? photoUrls[0] : null;
 
         // Save to Supabase database
         const { data, error } = await supabase
@@ -274,7 +286,8 @@ export async function POST(request: NextRequest) {
                 contactMethod,
                 contactTime,
                 paymentMethod,
-                photoUrl
+                photoUrl,
+                photoUrls: photoUrls.length > 0 ? photoUrls : undefined
             });
         } catch (emailError) {
             console.error('Error sending email notification:', emailError);
