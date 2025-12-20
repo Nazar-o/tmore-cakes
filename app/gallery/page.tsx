@@ -135,7 +135,7 @@ export default function GalleryPage() {
                         </p>
                     </div>
                 ) : (
-                    <div className="gallery-page-mobile grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <div className="gallery-page-mobile grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {filteredImages.map((image, index) => (
                             <button
                                 key={image.id}
@@ -148,7 +148,7 @@ export default function GalleryPage() {
                                             src={image.image_url}
                                             alt={`${image.category} cake`}
                                             fill
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                                             className="object-cover rounded-lg"
                                             loading="lazy"
                                             quality={85}

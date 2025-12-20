@@ -334,7 +334,7 @@ export default function AdminDashboard() {
                     ...calculatorData,
                     flavors: [...calculatorData.flavors, flavor]
                 });
-            }
+        }
         } else {
             setCalculatorData({
                 ...calculatorData,
@@ -921,12 +921,12 @@ export default function AdminDashboard() {
                                 <div className="space-y-4">
                                     {calculatorData.cakeSize && calculatorData.cakeSize !== 'other' && (
                                         <>
-                                            <div className="flex justify-between py-2 border-b">
-                                                <span className="text-gray-600">Base Cost:</span>
+                                    <div className="flex justify-between py-2 border-b">
+                                        <span className="text-gray-600">Base Cost:</span>
                                                 <span className="font-semibold">${baseCost.toFixed(2)}</span>
-                                            </div>
+                                    </div>
                                             {specialtyFlavorCost > 0 && (
-                                                <div className="flex justify-between py-2 border-b">
+                                    <div className="flex justify-between py-2 border-b">
                                                     <span className="text-gray-600">Specialty Flavors ({calculatorData.flavors.filter(f => specialtyFlavors.includes(f)).length} × $15):</span>
                                                     <span className="font-semibold">${specialtyFlavorCost.toFixed(2)}</span>
                                                 </div>
@@ -938,16 +938,16 @@ export default function AdminDashboard() {
                                         <span className="font-semibold">${(calculatorData.laborHours * 25).toFixed(2)}</span>
                                     </div>
                                     {calculatorData.decor > 0 && (
-                                        <div className="flex justify-between py-2 border-b">
-                                            <span className="text-gray-600">Decorations:</span>
-                                            <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
-                                        </div>
+                                    <div className="flex justify-between py-2 border-b">
+                                        <span className="text-gray-600">Decorations:</span>
+                                        <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
+                                    </div>
                                     )}
                                     {((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)) > 0 && (
-                                        <div className="flex justify-between py-2 border-b">
-                                            <span className="text-gray-600">Delivery & Setup:</span>
-                                            <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
-                                        </div>
+                                    <div className="flex justify-between py-2 border-b">
+                                        <span className="text-gray-600">Delivery & Setup:</span>
+                                        <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
+                                    </div>
                                     )}
                                     <div className="flex justify-between py-2 border-b border-gray-300">
                                         <span className="text-gray-600">Total Cost:</span>

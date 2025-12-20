@@ -28,15 +28,14 @@ export default function HeroSection() {
     return (
         <section className="hero-section relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] max-h-[90vh] flex items-center justify-center overflow-hidden">
             {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 bg-white">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30 z-10" />
                 {heroImages.map((src, idx) => (
                     <div
                         key={src}
-                        className="absolute inset-0 bg-cover transition-opacity duration-700 ease-in-out"
+                        className="absolute inset-0 bg-contain bg-no-repeat bg-center transition-opacity duration-700 ease-in-out"
                         style={{
                             backgroundImage: `url(${src})`,
-                            backgroundPosition: heroPositions[idx],
                             opacity: idx === currentImage ? 1.0 : 0,
                         }}
                     />
