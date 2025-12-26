@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const standardFlavors = [
     'Vanilla',
@@ -134,14 +134,24 @@ export default function CakeForm() {
         });
     };
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const files = Array.from(e.target.files);
             setFormData({
                 ...formData,
-                inspirationPhotos: files
+                inspirationPhotos: [...formData.inspirationPhotos, ...files]
             });
+            // Reset the input so the same file can be selected again if needed
+            if (e.target) {
+                e.target.value = '';
+            }
         }
+    };
+
+    const handleAddMorePhotos = () => {
+        fileInputRef.current?.click();
     };
 
     // Get base price from size
@@ -473,13 +483,21 @@ export default function CakeForm() {
             <div className="mb-6 sm:mb-8">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Inspiration Photos</label>
                 <input
+                    ref={fileInputRef}
                     type="file"
                     name="inspirationPhotos"
                     accept="image/*"
                     multiple
                     onChange={handleFileChange}
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100"
+                    className="hidden"
                 />
+                <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full px-4 py-3 text-base border-2 border-dashed border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors hover:border-yellow-400 hover:bg-yellow-50 text-gray-700 font-medium"
+                >
+                    {formData.inspirationPhotos.length === 0 ? 'Choose Images' : 'Add More Images'}
+                </button>
                 <p className="text-sm text-gray-500 mt-2">Upload one or more images that inspire your cake design</p>
                 {formData.inspirationPhotos.length > 0 && (
                     <div className="mt-3">
@@ -507,6 +525,13 @@ export default function CakeForm() {
                                 </div>
                             ))}
                         </div>
+                        <button
+                            type="button"
+                            onClick={handleAddMorePhotos}
+                            className="mt-3 px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 border border-yellow-300 rounded-lg hover:bg-yellow-50 transition-colors"
+                        >
+                            + Add More Photos
+                        </button>
                     </div>
                 )}
             </div>

@@ -62,10 +62,10 @@ export default function AboutPage() {
                                     Let's create something sweet together for your next celebration!
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                                    <a href="#order-form" className="btn-primary text-lg px-10 py-4">
+                                    <a href="/#order-form" className="btn-primary text-lg px-10 py-4">
                                         Order Your Cake
                                     </a>
-                                    <a href="#gallery" className="btn-primary text-lg px-10 py-4">
+                                    <a href="/gallery" className="btn-primary text-lg px-10 py-4">
                                         View Gallery
                                     </a>
                                 </div>
