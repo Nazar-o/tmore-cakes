@@ -131,7 +131,7 @@ export default function AdminDashboard() {
                                     processedPhotoUrls = [order.inspiration_photo_urls];
                                 }
                             } else if (Array.isArray(order.inspiration_photo_urls)) {
-                                processedPhotoUrls = order.inspiration_photo_urls.filter(url => url && url.trim() !== '');
+                                processedPhotoUrls = order.inspiration_photo_urls.filter((url: string) => url && url.trim() !== '');
                             }
                         }
                         
@@ -2014,7 +2014,7 @@ export default function AdminDashboard() {
                                                 photoUrls = [viewingOrder.inspiration_photo_urls];
                                             }
                                         } else if (Array.isArray(viewingOrder.inspiration_photo_urls)) {
-                                            photoUrls = viewingOrder.inspiration_photo_urls.filter(url => url && url.trim() !== '');
+                                            photoUrls = viewingOrder.inspiration_photo_urls.filter((url: string) => url && url.trim() !== '');
                                         }
                                     }
                                     
