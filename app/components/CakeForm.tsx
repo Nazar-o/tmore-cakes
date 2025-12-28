@@ -88,7 +88,7 @@ export default function CakeForm() {
                 submitData.append(`inspirationPhoto_${index}`, photo);
             });
             submitData.append('inspirationPhotoCount', formData.inspirationPhotos.length.toString());
-            console.log('FormData entries:', Array.from(submitData.entries()).map(([key, value]) => 
+            console.log('FormData entries:', Array.from(submitData.entries()).map(([key, value]) =>
                 [key, value instanceof File ? `${value.name} (${value.size} bytes)` : value]
             ));
 
@@ -123,8 +123,21 @@ export default function CakeForm() {
                     frostings: []
                 });
             } else {
-                const error = await response.json();
-                alert(`Error: ${error.message}`);
+                // Handle both JSON and non-JSON error responses
+                let errorMessage = 'An error occurred while submitting your request.';
+                try {
+                    const error = await response.json();
+                    errorMessage = error.message || errorMessage;
+                } catch (e) {
+                    // If response is not JSON, try to get text
+                    const text = await response.text();
+                    if (text) {
+                        errorMessage = `Server error (${response.status}): ${text.substring(0, 100)}`;
+                    } else {
+                        errorMessage = `Server error (${response.status}): ${response.statusText}`;
+                    }
+                }
+                alert(`Error: ${errorMessage}`);
             }
         } catch (error) {
             console.error('Error submitting form:', error);
@@ -181,19 +194,19 @@ export default function CakeForm() {
 
     const getMaxFlavors = () => {
         const size = formData.size;
-        
+
         // "Other" size allows up to 5 flavors
         if (size === 'other') {
             return 5;
         }
-        
+
         const basePrice = getBasePriceFromSize(size);
-        
+
         // Orders over $400 allow 4-5 flavors
         if (basePrice >= 400) {
             return 5;
         }
-        
+
         // Standard limits based on size
         if (size === '8-inch' || size === '9-inch') return 2;
         if (size === '10-inch') return 3;

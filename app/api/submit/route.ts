@@ -183,6 +183,15 @@ async function sendOrderNotification(data: OrderNotificationData) {
 
 export async function POST(request: NextRequest) {
     try {
+        // Check if Supabase is configured
+        if (!supabaseUrl || !supabaseServiceKey) {
+            console.error('Supabase configuration missing');
+            return NextResponse.json(
+                { message: 'Server configuration error. Please contact support.' },
+                { status: 500 }
+            );
+        }
+
         const formData = await request.formData();
 
         // Extract form fields
@@ -376,8 +385,14 @@ export async function POST(request: NextRequest) {
         });
     } catch (error) {
         console.error('Error submitting cake request:', error);
+
+        // Ensure we always return JSON, even for unexpected errors
+        const errorMessage = error instanceof Error ? error.message : 'Internal server error';
         return NextResponse.json(
-            { message: 'Internal server error' },
+            {
+                message: 'Internal server error',
+                error: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+            },
             { status: 500 }
         );
     }
