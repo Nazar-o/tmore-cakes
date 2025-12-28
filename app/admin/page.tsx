@@ -25,7 +25,7 @@ interface CakeOrder {
     contact_method?: string;
     contact_time?: string;
     payment_method?: string;
-    inspiration_photo_url?: string;
+    inspiration_photo_urls?: string[] | null;
     final_price?: number;
     status: 'pending' | 'approved' | 'in_progress' | 'completed' | 'cancelled';
     created_at: string;
@@ -117,7 +117,30 @@ export default function AdminDashboard() {
                 if (error) {
                     console.error('Error fetching orders:', error);
                 } else {
-                    setOrders(data || []);
+                    // Ensure inspiration_photo_urls is parsed correctly if it's a string
+                    const processedData = (data || []).map(order => {
+                        let processedPhotoUrls: string[] | null = null;
+                        
+                        if (order.inspiration_photo_urls) {
+                            if (typeof order.inspiration_photo_urls === 'string') {
+                                try {
+                                    const parsed = JSON.parse(order.inspiration_photo_urls);
+                                    processedPhotoUrls = Array.isArray(parsed) ? parsed : [parsed];
+                                } catch (e) {
+                                    console.error('Error parsing inspiration_photo_urls in fetchOrders:', e);
+                                    processedPhotoUrls = [order.inspiration_photo_urls];
+                                }
+                            } else if (Array.isArray(order.inspiration_photo_urls)) {
+                                processedPhotoUrls = order.inspiration_photo_urls.filter(url => url && url.trim() !== '');
+                            }
+                        }
+                        
+                        return {
+                            ...order,
+                            inspiration_photo_urls: processedPhotoUrls
+                        };
+                    });
+                    setOrders(processedData);
                 }
             } catch (error) {
                 console.error('Error fetching orders:', error);
@@ -469,7 +492,33 @@ export default function AdminDashboard() {
     };
 
     const viewOrder = (order: CakeOrder) => {
-        setViewingOrder(order);
+        // Ensure inspiration_photo_urls is parsed correctly if it's a string
+        let processedPhotoUrls: string[] | null = null;
+        
+        if (order.inspiration_photo_urls) {
+            if (typeof order.inspiration_photo_urls === 'string') {
+                try {
+                    const parsed = JSON.parse(order.inspiration_photo_urls);
+                    processedPhotoUrls = Array.isArray(parsed) ? parsed : [parsed];
+                } catch (e) {
+                    console.error('Error parsing inspiration_photo_urls:', e);
+                    // If parsing fails, try treating it as a single URL
+                    processedPhotoUrls = [order.inspiration_photo_urls];
+                }
+            } else if (Array.isArray(order.inspiration_photo_urls)) {
+                processedPhotoUrls = order.inspiration_photo_urls.filter(url => url && url.trim() !== '');
+            }
+        }
+        
+        const processedOrder = {
+            ...order,
+            inspiration_photo_urls: processedPhotoUrls
+        };
+        
+        console.log('View order - Original:', order.inspiration_photo_urls);
+        console.log('View order - Processed:', processedPhotoUrls);
+        
+        setViewingOrder(processedOrder);
         setShowViewModal(true);
     };
 
@@ -1207,7 +1256,7 @@ export default function AdminDashboard() {
                 )}
 
                 {activeTab === 'gallery' && (
-                    <div className="max-w-6xl mx-auto">
+                    <div className="max-w-7xl mx-auto">
                         <div className="card">
                             <div className="flex justify-between items-center mb-6">
                                 <h3 className="text-2xl font-bold">Gallery Management</h3>
@@ -1828,7 +1877,7 @@ export default function AdminDashboard() {
             {/* View Order Modal */}
             {showViewModal && viewingOrder && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div className="bg-white rounded-lg p-6 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                         <h3 className="text-2xl font-bold mb-4">Order Details</h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1947,18 +1996,85 @@ export default function AdminDashboard() {
                                     </div>
                                 )}
 
-                                {viewingOrder.inspiration_photo_url && (
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Inspiration Photo</label>
-                                        <div className="bg-gray-50 p-3 rounded-md">
-                                            <img
-                                                src={viewingOrder.inspiration_photo_url}
-                                                alt="Inspiration"
-                                                className="max-w-full h-32 object-cover rounded"
-                                            />
+                                {(() => {
+                                    // Parse inspiration_photo_urls if it's a string or ensure it's an array
+                                    let photoUrls: string[] = [];
+                                    
+                                    // Debug logging
+                                    console.log('Viewing order inspiration_photo_urls:', viewingOrder.inspiration_photo_urls);
+                                    console.log('Type:', typeof viewingOrder.inspiration_photo_urls);
+                                    
+                                    if (viewingOrder.inspiration_photo_urls) {
+                                        if (typeof viewingOrder.inspiration_photo_urls === 'string') {
+                                            try {
+                                                const parsed = JSON.parse(viewingOrder.inspiration_photo_urls);
+                                                photoUrls = Array.isArray(parsed) ? parsed : [parsed];
+                                            } catch {
+                                                // If parsing fails, try treating it as a single URL
+                                                photoUrls = [viewingOrder.inspiration_photo_urls];
+                                            }
+                                        } else if (Array.isArray(viewingOrder.inspiration_photo_urls)) {
+                                            photoUrls = viewingOrder.inspiration_photo_urls.filter(url => url && url.trim() !== '');
+                                        }
+                                    }
+                                    
+                                    console.log('Processed photoUrls:', photoUrls);
+                                    
+                                    if (photoUrls.length === 0) {
+                                        // Show a message if no photos are available
+                                        return (
+                                            <div>
+                                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                    Inspiration Photos
+                                                </label>
+                                                <div className="bg-gray-50 p-3 rounded-md">
+                                                    <p className="text-gray-500 text-sm">No inspiration photos uploaded</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    }
+                                    
+                                    return (
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                                Inspiration Photo{photoUrls.length > 1 ? 's' : ''} ({photoUrls.length})
+                                            </label>
+                                            <div className="bg-gray-50 p-3 rounded-md">
+                                                <div className={`grid gap-3 ${photoUrls.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                                                    {photoUrls.map((url, index) => (
+                                                        <div key={index} className="relative group">
+                                                            <img
+                                                                src={url}
+                                                                alt={`Inspiration ${index + 1}`}
+                                                                className="w-full h-64 object-contain rounded border border-gray-200 bg-white"
+                                                                onError={(e) => {
+                                                                    console.error('Failed to load image:', url);
+                                                                    const target = e.target as HTMLImageElement;
+                                                                    const parent = target.parentElement;
+                                                                    if (parent) {
+                                                                        parent.innerHTML = `<div class="w-full h-64 flex items-center justify-center bg-red-50 border border-red-200 rounded text-red-600 text-sm p-4 text-center">Failed to load image<br/><span class="text-xs text-gray-500 mt-2 break-all">${url.substring(0, 50)}...</span></div>`;
+                                                                    }
+                                                                }}
+                                                                onLoad={() => {
+                                                                    console.log('Successfully loaded image:', url);
+                                                                }}
+                                                            />
+                                                            <a 
+                                                                href={url} 
+                                                                target="_blank" 
+                                                                rel="noopener noreferrer"
+                                                                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity rounded"
+                                                                title="Click to view full size"
+                                                            >
+                                                                <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">View Full Size</span>
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    );
+                                })()}
                             </div>
                         </div>
 

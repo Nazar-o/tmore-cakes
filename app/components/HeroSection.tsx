@@ -15,6 +15,12 @@ const heroPositions = [
     '50% 90%',
 ];
 
+// Easy to adjust: Change these values to modify overlay opacity
+// Range: 0 (transparent) to 1 (fully opaque)
+const HERO_OVERLAY_OPACITY = 0.4; // Current: 40% opacity (0.4)
+const HERO_OVERLAY_GRADIENT_START = 0.2; // Start of gradient opacity
+const HERO_OVERLAY_GRADIENT_END = 0.2; // End of gradient opacity
+
 export default function HeroSection() {
     const [currentImage, setCurrentImage] = useState(0);
 
@@ -29,7 +35,12 @@ export default function HeroSection() {
         <section className="hero-section relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] max-h-[90vh] flex items-center justify-center overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0 bg-white">
-                <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30 z-10" />
+                <div
+                    className="absolute inset-0 z-10"
+                    style={{
+                        background: `linear-gradient(to right, rgba(0, 0, 0, ${HERO_OVERLAY_GRADIENT_START}), rgba(0, 0, 0, ${HERO_OVERLAY_GRADIENT_END}))`
+                    }}
+                />
                 {heroImages.map((src, idx) => (
                     <div
                         key={src}

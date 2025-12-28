@@ -82,10 +82,15 @@ export default function CakeForm() {
             submitData.append('frostings', JSON.stringify(formData.frostings));
 
             // Append multiple inspiration photos
+            console.log('Submitting form with inspiration photos:', formData.inspirationPhotos.length);
             formData.inspirationPhotos.forEach((photo, index) => {
+                console.log(`Appending photo ${index}:`, photo.name, photo.size, photo.type);
                 submitData.append(`inspirationPhoto_${index}`, photo);
             });
             submitData.append('inspirationPhotoCount', formData.inspirationPhotos.length.toString());
+            console.log('FormData entries:', Array.from(submitData.entries()).map(([key, value]) => 
+                [key, value instanceof File ? `${value.name} (${value.size} bytes)` : value]
+            ));
 
             const response = await fetch('/api/submit', {
                 method: 'POST',

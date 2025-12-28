@@ -1,5 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/app/lib/supabaseClient';
+import { createClient } from '@supabase/supabase-js';
+
+// Use service role key for server-side operations (if available)
+// This bypasses RLS and allows file uploads
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+// Create a Supabase client with service role key for server-side operations
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+        autoRefreshToken: false,
+        persistSession: false
+    }
+});
 
 interface OrderNotificationData {
     orderId: string;
@@ -21,7 +34,6 @@ interface OrderNotificationData {
     contactMethod?: string;
     contactTime?: string;
     paymentMethod?: string;
-    photoUrl?: string | null;
     photoUrls?: string[];
 }
 
@@ -46,6 +58,7 @@ async function sendOrderNotification(data: OrderNotificationData) {
                 .label { font-weight: bold; color: #1f2937; }
                 .value { color: #4b5563; margin-left: 10px; }
                 .highlight { background: #fef3c7; padding: 15px; border-radius: 6px; margin: 10px 0; }
+                img { max-width: 100%; height: auto; display: block; }
             </style>
         </head>
         <body>
@@ -110,13 +123,23 @@ async function sendOrderNotification(data: OrderNotificationData) {
                         ${data.targetBudget ? `<p><span class="label">Target Budget:</span><span class="value">${data.targetBudget}</span></p>` : ''}
                     </div>
                     
-                    ${(data.photoUrls && data.photoUrls.length > 0) || data.photoUrl ? `
+                    ${data.photoUrls && data.photoUrls.length > 0 ? `
                     <div class="section">
-                        <h3>Inspiration Photo${(data.photoUrls && data.photoUrls.length > 1) ? 's' : ''}</h3>
-                        ${data.photoUrls && data.photoUrls.length > 0 ?
-                data.photoUrls.map((url, index) => `<p><a href="${url}" target="_blank">View Photo ${index + 1}</a></p>`).join('') :
-                data.photoUrl ? `<p><a href="${data.photoUrl}" target="_blank">View Photo</a></p>` : ''
-            }
+                        <h3>Inspiration Photo${data.photoUrls.length > 1 ? 's' : ''}</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                            ${data.photoUrls.map((url, index) => `
+                                <div style="border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; background: #fff;">
+                                    <img src="${url}" alt="Inspiration Photo ${index + 1}" style="width: 100%; height: auto; display: block; max-height: 300px; object-fit: contain;" />
+                                    <div style="padding: 10px; text-align: center; background: #f9fafb;">
+                                        <a href="${url}" target="_blank" style="color: #f59e0b; text-decoration: none; font-size: 12px; font-weight: 600;">View Full Size</a>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <p style="margin-top: 15px; font-size: 12px; color: #6b7280;">
+                            ${data.photoUrls.length === 1 ? 'If the image above does not display, ' : 'If the images above do not display, '}
+                            <a href="${data.photoUrls[0]}" target="_blank" style="color: #f59e0b;">click here to view the photo${data.photoUrls.length > 1 ? 's' : ''}</a>
+                        </p>
                     </div>
                     ` : ''}
                 </div>
@@ -193,76 +216,129 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Handle multiple file uploads to Supabase Storage (optional)
+        // Handle multiple file uploads to Supabase Storage
         const photoUrls: string[] = [];
+        console.log('Inspiration photo count:', inspirationPhotoCount);
+
         if (inspirationPhotoCount > 0) {
             try {
+                // First, verify the storage bucket exists
+                const { data: buckets, error: bucketError } = await supabase.storage.listBuckets();
+                if (bucketError) {
+                    console.error('Error listing buckets:', bucketError);
+                } else {
+                    const bucketExists = buckets?.some(bucket => bucket.id === 'inspiration-photos');
+                    console.log('Storage bucket exists:', bucketExists);
+                    if (!bucketExists) {
+                        console.warn('Storage bucket "inspiration-photos" does not exist. Please create it in Supabase dashboard.');
+                    }
+                }
+
                 for (let i = 0; i < inspirationPhotoCount; i++) {
                     const inspirationPhoto = formData.get(`inspirationPhoto_${i}`) as File;
+                    console.log(`Processing photo ${i}:`, {
+                        exists: !!inspirationPhoto,
+                        name: inspirationPhoto?.name,
+                        size: inspirationPhoto?.size,
+                        type: inspirationPhoto?.type
+                    });
+
                     if (inspirationPhoto && inspirationPhoto.size > 0) {
-                        const fileExt = inspirationPhoto.name.split('.').pop();
+                        const fileExt = inspirationPhoto.name.split('.').pop() || 'jpg';
                         const fileName = `${Date.now()}-${i}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                        console.log(`Uploading file: ${fileName}`);
+
+                        // Convert File to ArrayBuffer for upload
+                        const fileBuffer = await inspirationPhoto.arrayBuffer();
 
                         const { data: uploadData, error: uploadError } = await supabase.storage
                             .from('inspiration-photos')
-                            .upload(fileName, inspirationPhoto);
+                            .upload(fileName, fileBuffer, {
+                                contentType: inspirationPhoto.type || 'image/jpeg',
+                                upsert: false
+                            });
 
                         if (uploadError) {
-                            console.error('File upload error:', uploadError);
+                            console.error(`File upload error for photo ${i}:`, uploadError);
+                            console.error('Upload error details:', {
+                                message: uploadError.message,
+                                name: uploadError.name
+                            });
                         } else {
+                            console.log(`Successfully uploaded: ${fileName}`, uploadData);
                             const { data: { publicUrl } } = supabase.storage
                                 .from('inspiration-photos')
                                 .getPublicUrl(fileName);
+                            console.log(`Public URL for photo ${i}:`, publicUrl);
                             photoUrls.push(publicUrl);
                         }
+                    } else {
+                        console.warn(`Photo ${i} is missing or empty`);
                     }
                 }
+
+                console.log(`Total photos uploaded: ${photoUrls.length} out of ${inspirationPhotoCount}`);
             } catch (error) {
                 console.error('Error uploading files:', error);
+                console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
             }
+        } else {
+            console.log('No inspiration photos to upload');
         }
 
-        // For backward compatibility, use first photo URL or null
-        const photoUrl = photoUrls.length > 0 ? photoUrls[0] : null;
-
         // Save to Supabase database
+        const orderData = {
+            name,
+            email,
+            phone,
+            cake_type: cakeType,
+            size,
+            occasion,
+            description,
+            date_needed: date,
+            delivery_option: deliveryOption,
+            inscription: inscription || null,
+            topper: topper || null,
+            flavors: flavors.length > 0 ? JSON.stringify(flavors) : null,
+            frostings: frostings.length > 0 ? JSON.stringify(frostings) : null,
+            delivery_address: deliveryAddress,
+            target_budget: targetBudget,
+            contact_method: contactMethod,
+            contact_time: contactTime,
+            payment_method: paymentMethod,
+            inspiration_photo_urls: photoUrls.length > 0 ? photoUrls : null, // Store all photos as JSON array
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+
+        console.log('Saving order to database with photo URLs:', photoUrls);
+        console.log('Order data (excluding large fields):', {
+            ...orderData,
+            inspiration_photo_urls: photoUrls.length > 0 ? `${photoUrls.length} photos` : null
+        });
+
         const { data, error } = await supabase
             .from('cake_orders')
-            .insert([{
-                name,
-                email,
-                phone,
-                cake_type: cakeType,
-                size,
-                occasion,
-                description,
-                date_needed: date,
-                delivery_option: deliveryOption,
-                inscription: inscription || null,
-                topper: topper || null,
-                flavors: flavors.length > 0 ? JSON.stringify(flavors) : null,
-                frostings: frostings.length > 0 ? JSON.stringify(frostings) : null,
-                delivery_address: deliveryAddress,
-                target_budget: targetBudget,
-                contact_method: contactMethod,
-                contact_time: contactTime,
-                payment_method: paymentMethod,
-                inspiration_photo_url: photoUrl,
-                status: 'pending',
-                created_at: new Date().toISOString()
-            }])
+            .insert([orderData])
             .select();
 
         if (error) {
             console.error('Database error:', error);
+            console.error('Database error details:', {
+                message: error.message,
+                details: error.details,
+                hint: error.hint,
+                code: error.code
+            });
             return NextResponse.json(
-                { message: 'Failed to save order to database' },
+                { message: 'Failed to save order to database', error: error.message },
                 { status: 500 }
             );
         }
 
         // Log the submission for debugging
         console.log('Cake request saved to database:', data[0]);
+        console.log('Saved inspiration_photo_urls:', data[0]?.inspiration_photo_urls);
 
         // Send email notification
         try {
@@ -286,7 +362,6 @@ export async function POST(request: NextRequest) {
                 contactMethod,
                 contactTime,
                 paymentMethod,
-                photoUrl,
                 photoUrls: photoUrls.length > 0 ? photoUrls : undefined
             });
         } catch (emailError) {

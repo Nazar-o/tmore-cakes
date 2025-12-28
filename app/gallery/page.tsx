@@ -14,12 +14,12 @@ interface GalleryImage {
     created_at: string;
 }
 
-const categories = ['All', 'Birthday', 'Kids', 'Wedding', 'Specialty', 'Baby Shower'];
+const categories = ['Birthday', 'Kids', 'Wedding', 'Specialty', 'Baby Shower'];
 
 export default function GalleryPage() {
     const [images, setImages] = useState<GalleryImage[]>([]);
     const [filteredImages, setFilteredImages] = useState<GalleryImage[]>([]);
-    const [activeCategory, setActiveCategory] = useState('All');
+    const [activeCategory, setActiveCategory] = useState(categories[0]);
     const [loading, setLoading] = useState(true);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -53,11 +53,7 @@ export default function GalleryPage() {
     };
 
     const filterImages = () => {
-        if (activeCategory === 'All') {
-            setFilteredImages(images);
-        } else {
-            setFilteredImages(images.filter(img => img.category === activeCategory));
-        }
+        setFilteredImages(images.filter(img => img.category === activeCategory));
     };
 
     const openLightbox = (index: number) => {
@@ -128,10 +124,7 @@ export default function GalleryPage() {
                         <div className="text-6xl mb-4">🎂</div>
                         <h3 className="text-2xl font-bold text-gray-800 mb-2">No images found</h3>
                         <p className="text-gray-600">
-                            {activeCategory === 'All'
-                                ? 'No images have been uploaded yet.'
-                                : `No ${activeCategory.toLowerCase()} cakes found.`
-                            }
+                            No {activeCategory.toLowerCase()} cakes found.
                         </p>
                     </div>
                 ) : (
