@@ -56,6 +56,8 @@ export default function CakeForm() {
         frostings: [] as string[]
     });
 
+    const [fileSizeErrors, setFileSizeErrors] = useState<string[]>([]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -167,10 +169,37 @@ export default function CakeForm() {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             const files = Array.from(e.target.files);
-            setFormData({
-                ...formData,
-                inspirationPhotos: [...formData.inspirationPhotos, ...files]
+            const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB in bytes
+            const validFiles: File[] = [];
+            const errors: string[] = [];
+
+            files.forEach((file) => {
+                if (file.size > MAX_FILE_SIZE) {
+                    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                    errors.push(`${file.name} (${fileSizeMB} MB) exceeds the 50MB limit`);
+                } else {
+                    validFiles.push(file);
+                }
             });
+
+            if (errors.length > 0) {
+                setFileSizeErrors([...fileSizeErrors, ...errors]);
+                // Show alert for files that are too large
+                alert(`The following image(s) are too large (over 50MB) and cannot be uploaded:\n\n${errors.join('\n')}\n\nPlease compress or resize these images and try again.`);
+            } else {
+                // Clear errors if all new files are valid
+                if (errors.length === 0 && fileSizeErrors.length > 0) {
+                    setFileSizeErrors([]);
+                }
+            }
+
+            if (validFiles.length > 0) {
+                setFormData({
+                    ...formData,
+                    inspirationPhotos: [...formData.inspirationPhotos, ...validFiles]
+                });
+            }
+
             // Reset the input so the same file can be selected again if needed
             if (e.target) {
                 e.target.value = '';
@@ -526,32 +555,57 @@ export default function CakeForm() {
                 >
                     {formData.inspirationPhotos.length === 0 ? 'Choose Images' : 'Add More Images'}
                 </button>
-                <p className="text-sm text-gray-500 mt-2">Upload one or more images that inspire your cake design</p>
+                <p className="text-sm text-gray-500 mt-2">Upload one or more images that inspire your cake design (max 50MB per image)</p>
+                {fileSizeErrors.length > 0 && (
+                    <div className="mt-3 bg-red-50 border border-red-200 rounded-lg p-3">
+                        <p className="text-sm font-semibold text-red-800 mb-2">⚠️ Files Too Large:</p>
+                        <ul className="list-disc list-inside text-sm text-red-700 space-y-1">
+                            {fileSizeErrors.map((error, index) => (
+                                <li key={index}>{error}</li>
+                            ))}
+                        </ul>
+                        <p className="text-xs text-red-600 mt-2">Please compress or resize these images to under 50MB each.</p>
+                    </div>
+                )}
                 {formData.inspirationPhotos.length > 0 && (
                     <div className="mt-3">
                         <p className="text-sm font-medium text-gray-700 mb-2">
                             Selected: {formData.inspirationPhotos.length} {formData.inspirationPhotos.length === 1 ? 'image' : 'images'}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                            {formData.inspirationPhotos.map((photo, index) => (
-                                <div key={index} className="relative">
-                                    <img
-                                        src={URL.createObjectURL(photo)}
-                                        alt={`Preview ${index + 1}`}
-                                        className="w-20 h-20 object-cover rounded border border-gray-300"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            const newPhotos = formData.inspirationPhotos.filter((_, i) => i !== index);
-                                            setFormData({ ...formData, inspirationPhotos: newPhotos });
-                                        }}
-                                        className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                            ))}
+                            {formData.inspirationPhotos.map((photo, index) => {
+                                const fileSizeMB = (photo.size / (1024 * 1024)).toFixed(2);
+                                const isOverLimit = photo.size > 50 * 1024 * 1024;
+                                return (
+                                    <div key={index} className="relative">
+                                        <img
+                                            src={URL.createObjectURL(photo)}
+                                            alt={`Preview ${index + 1}`}
+                                            className={`w-20 h-20 object-cover rounded border ${isOverLimit ? 'border-red-500 border-2' : 'border-gray-300'}`}
+                                        />
+                                        <div className={`absolute bottom-0 left-0 right-0 text-white text-xs px-1 py-0.5 rounded-b text-center ${isOverLimit ? 'bg-red-600' : 'bg-black bg-opacity-60'}`}>
+                                            {fileSizeMB} MB
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const newPhotos = formData.inspirationPhotos.filter((_, i) => i !== index);
+                                                setFormData({ ...formData, inspirationPhotos: newPhotos });
+                                                // Clear errors if all files are removed
+                                                if (newPhotos.length === 0) {
+                                                    setFileSizeErrors([]);
+                                                } else {
+                                                    // Remove error for this file if it exists
+                                                    setFileSizeErrors(fileSizeErrors.filter(err => !err.includes(photo.name)));
+                                                }
+                                            }}
+                                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                );
+                            })}
                         </div>
                         <button
                             type="button"

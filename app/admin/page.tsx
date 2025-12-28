@@ -120,7 +120,7 @@ export default function AdminDashboard() {
                     // Ensure inspiration_photo_urls is parsed correctly if it's a string
                     const processedData = (data || []).map(order => {
                         let processedPhotoUrls: string[] | null = null;
-                        
+
                         if (order.inspiration_photo_urls) {
                             if (typeof order.inspiration_photo_urls === 'string') {
                                 try {
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                                 processedPhotoUrls = order.inspiration_photo_urls.filter((url: string) => url && url.trim() !== '');
                             }
                         }
-                        
+
                         return {
                             ...order,
                             inspiration_photo_urls: processedPhotoUrls
@@ -289,19 +289,19 @@ export default function AdminDashboard() {
     // Get max flavors based on size (matching CakeForm logic)
     const getMaxFlavors = () => {
         const size = calculatorData.cakeSize;
-        
+
         // "Other" size allows up to 5 flavors
         if (size === 'other') {
             return 5;
         }
-        
+
         const basePrice = getBasePriceFromSize(size);
-        
+
         // Orders over $400 allow 4-5 flavors
         if (basePrice >= 400) {
             return 5;
         }
-        
+
         // Standard limits based on size
         if (size === '8-inch' || size === '9-inch') return 2;
         if (size === '10-inch') return 3;
@@ -357,7 +357,7 @@ export default function AdminDashboard() {
                     ...calculatorData,
                     flavors: [...calculatorData.flavors, flavor]
                 });
-        }
+            }
         } else {
             setCalculatorData({
                 ...calculatorData,
@@ -494,7 +494,7 @@ export default function AdminDashboard() {
     const viewOrder = (order: CakeOrder) => {
         // Ensure inspiration_photo_urls is parsed correctly if it's a string
         let processedPhotoUrls: string[] | null = null;
-        
+
         if (order.inspiration_photo_urls) {
             if (typeof order.inspiration_photo_urls === 'string') {
                 try {
@@ -509,15 +509,15 @@ export default function AdminDashboard() {
                 processedPhotoUrls = order.inspiration_photo_urls.filter(url => url && url.trim() !== '');
             }
         }
-        
+
         const processedOrder = {
             ...order,
             inspiration_photo_urls: processedPhotoUrls
         };
-        
+
         console.log('View order - Original:', order.inspiration_photo_urls);
         console.log('View order - Processed:', processedPhotoUrls);
-        
+
         setViewingOrder(processedOrder);
         setShowViewModal(true);
     };
@@ -970,12 +970,12 @@ export default function AdminDashboard() {
                                 <div className="space-y-4">
                                     {calculatorData.cakeSize && calculatorData.cakeSize !== 'other' && (
                                         <>
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Base Cost:</span>
+                                            <div className="flex justify-between py-2 border-b">
+                                                <span className="text-gray-600">Base Cost:</span>
                                                 <span className="font-semibold">${baseCost.toFixed(2)}</span>
-                                    </div>
+                                            </div>
                                             {specialtyFlavorCost > 0 && (
-                                    <div className="flex justify-between py-2 border-b">
+                                                <div className="flex justify-between py-2 border-b">
                                                     <span className="text-gray-600">Specialty Flavors ({calculatorData.flavors.filter(f => specialtyFlavors.includes(f)).length} × $15):</span>
                                                     <span className="font-semibold">${specialtyFlavorCost.toFixed(2)}</span>
                                                 </div>
@@ -987,16 +987,16 @@ export default function AdminDashboard() {
                                         <span className="font-semibold">${(calculatorData.laborHours * 25).toFixed(2)}</span>
                                     </div>
                                     {calculatorData.decor > 0 && (
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Decorations:</span>
-                                        <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
-                                    </div>
+                                        <div className="flex justify-between py-2 border-b">
+                                            <span className="text-gray-600">Decorations:</span>
+                                            <span className="font-semibold">${calculatorData.decor.toFixed(2)}</span>
+                                        </div>
                                     )}
                                     {((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)) > 0 && (
-                                    <div className="flex justify-between py-2 border-b">
-                                        <span className="text-gray-600">Delivery & Setup:</span>
-                                        <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
-                                    </div>
+                                        <div className="flex justify-between py-2 border-b">
+                                            <span className="text-gray-600">Delivery & Setup:</span>
+                                            <span className="font-semibold">${((calculatorData.delivery ? 50 : 0) + (calculatorData.setup ? 75 : 0)).toFixed(2)}</span>
+                                        </div>
                                     )}
                                     <div className="flex justify-between py-2 border-b border-gray-300">
                                         <span className="text-gray-600">Total Cost:</span>
@@ -1999,11 +1999,11 @@ export default function AdminDashboard() {
                                 {(() => {
                                     // Parse inspiration_photo_urls if it's a string or ensure it's an array
                                     let photoUrls: string[] = [];
-                                    
+
                                     // Debug logging
                                     console.log('Viewing order inspiration_photo_urls:', viewingOrder.inspiration_photo_urls);
                                     console.log('Type:', typeof viewingOrder.inspiration_photo_urls);
-                                    
+
                                     if (viewingOrder.inspiration_photo_urls) {
                                         if (typeof viewingOrder.inspiration_photo_urls === 'string') {
                                             try {
@@ -2017,9 +2017,9 @@ export default function AdminDashboard() {
                                             photoUrls = viewingOrder.inspiration_photo_urls.filter((url: string) => url && url.trim() !== '');
                                         }
                                     }
-                                    
+
                                     console.log('Processed photoUrls:', photoUrls);
-                                    
+
                                     if (photoUrls.length === 0) {
                                         // Show a message if no photos are available
                                         return (
@@ -2033,7 +2033,7 @@ export default function AdminDashboard() {
                                             </div>
                                         );
                                     }
-                                    
+
                                     return (
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -2042,11 +2042,21 @@ export default function AdminDashboard() {
                                             <div className="bg-gray-50 p-3 rounded-md">
                                                 <div className={`grid gap-3 ${photoUrls.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
                                                     {photoUrls.map((url, index) => (
-                                                        <div key={index} className="relative group">
+                                                        <div key={index} className="relative group overflow-hidden rounded border border-gray-200 bg-gray-100" style={{ minHeight: '256px' }}>
                                                             <img
                                                                 src={url}
                                                                 alt={`Inspiration ${index + 1}`}
-                                                                className="w-full h-64 object-contain rounded border border-gray-200 bg-white"
+                                                                className="w-full h-64 object-contain"
+                                                                style={{
+                                                                    display: 'block',
+                                                                    backgroundColor: '#f9fafb',
+                                                                    minHeight: '256px',
+                                                                    width: '100%',
+                                                                    height: 'auto',
+                                                                    maxHeight: '256px'
+                                                                }}
+                                                                loading="eager"
+                                                                crossOrigin="anonymous"
                                                                 onError={(e) => {
                                                                     console.error('Failed to load image:', url);
                                                                     const target = e.target as HTMLImageElement;
@@ -2055,18 +2065,31 @@ export default function AdminDashboard() {
                                                                         parent.innerHTML = `<div class="w-full h-64 flex items-center justify-center bg-red-50 border border-red-200 rounded text-red-600 text-sm p-4 text-center">Failed to load image<br/><span class="text-xs text-gray-500 mt-2 break-all">${url.substring(0, 50)}...</span></div>`;
                                                                     }
                                                                 }}
-                                                                onLoad={() => {
+                                                                onLoad={(e) => {
                                                                     console.log('Successfully loaded image:', url);
+                                                                    const target = e.target as HTMLImageElement;
+                                                                    target.style.opacity = '1';
+                                                                    target.style.visibility = 'visible';
                                                                 }}
                                                             />
-                                                            <a 
-                                                                href={url} 
-                                                                target="_blank" 
+                                                            <a
+                                                                href={url}
+                                                                target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity rounded"
+                                                                className="absolute inset-0 flex items-center justify-center transition-opacity z-10"
+                                                                style={{
+                                                                    backgroundColor: 'transparent',
+                                                                    pointerEvents: 'auto'
+                                                                }}
+                                                                onMouseEnter={(e) => {
+                                                                    e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
+                                                                }}
+                                                                onMouseLeave={(e) => {
+                                                                    e.currentTarget.style.backgroundColor = 'transparent';
+                                                                }}
                                                                 title="Click to view full size"
                                                             >
-                                                                <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium">View Full Size</span>
+                                                                <span className="text-white opacity-0 group-hover:opacity-100 text-sm font-medium bg-black bg-opacity-70 px-3 py-1 rounded transition-opacity">View Full Size</span>
                                                             </a>
                                                         </div>
                                                     ))}
