@@ -10,9 +10,9 @@ interface CakeOrder {
     name: string;
     email: string;
     phone?: string;
-    cake_type: string;
     size: string;
     occasion?: string;
+    occasion_other?: string;
     description?: string;
     date_needed: string;
     inscription?: string;
@@ -564,7 +564,7 @@ export default function AdminDashboard() {
 
     const exportToCSV = () => {
         const headers = [
-            'ID', 'Name', 'Email', 'Phone', 'Cake Type', 'Size', 'Occasion',
+            'ID', 'Name', 'Email', 'Phone', 'Occasion', 'Size',
             'Description', 'Date Needed', 'Inscription', 'Topper', 'Flavors', 'Frostings', 'Delivery Option',
             'Delivery Address', 'Target Budget', 'Contact Method', 'Contact Time',
             'Payment Method', 'Status', 'Final Price', 'Created At', 'Updated At'
@@ -575,9 +575,8 @@ export default function AdminDashboard() {
             order.name,
             order.email,
             order.phone || '',
-            order.cake_type,
+            order.occasion === 'other' ? (order.occasion_other || 'Other') : (order.occasion || 'N/A'),
             order.size,
-            order.occasion || '',
             order.description || '',
             order.date_needed,
             order.inscription || '',
@@ -1133,7 +1132,7 @@ export default function AdminDashboard() {
                                                 <th className="text-left py-3 px-4 font-semibold">Customer</th>
                                                 <th className="text-left py-3 px-4 font-semibold">Email</th>
                                                 <th className="text-left py-3 px-4 font-semibold">Event Date</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Cake Type</th>
+                                                <th className="text-left py-3 px-4 font-semibold">Occasion</th>
                                                 <th className="text-left py-3 px-4 font-semibold">Size</th>
                                                 <th className="text-left py-3 px-4 font-semibold">Budget</th>
                                                 <th className="text-left py-3 px-4 font-semibold">Delivery</th>
@@ -1154,7 +1153,7 @@ export default function AdminDashboard() {
                                                     </td>
                                                     <td className="py-3 px-4">{order.email}</td>
                                                     <td className="py-3 px-4">{formatDate(order.date_needed)}</td>
-                                                    <td className="py-3 px-4">{order.cake_type}</td>
+                                                    <td className="py-3 px-4">{order.occasion === 'other' ? (order.occasion_other || 'Other') : (order.occasion || 'N/A')}</td>
                                                     <td className="py-3 px-4">{order.size}</td>
                                                     <td className="py-3 px-4">
                                                         {order.target_budget && (
@@ -1583,7 +1582,7 @@ export default function AdminDashboard() {
                                 name: formData.get('name') as string,
                                 email: formData.get('email') as string,
                                 phone: formData.get('phone') as string,
-                                cake_type: formData.get('cake_type') as string,
+                                occasion_other: formData.get('occasion_other') as string,
                                 size: formData.get('size') as string,
                                 occasion: formData.get('occasion') as string,
                                 description: formData.get('description') as string,
@@ -1633,18 +1632,43 @@ export default function AdminDashboard() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Cake Type</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Occasion</label>
                                     <select
-                                        name="cake_type"
-                                        defaultValue={editingOrder.cake_type}
+                                        name="occasion"
+                                        defaultValue={editingOrder.occasion || ''}
+                                        onChange={(e) => {
+                                            const newOccasion = e.target.value;
+                                            setEditingOrder({
+                                                ...editingOrder,
+                                                occasion: newOccasion,
+                                                occasion_other: newOccasion !== 'other' ? '' : editingOrder.occasion_other
+                                            });
+                                        }}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         required
                                     >
-                                        <option value="birthday">Birthday Cake</option>
-                                        <option value="wedding">Wedding Cake</option>
-                                        <option value="anniversary">Anniversary Cake</option>
+                                        <option value="">Select occasion</option>
+                                        <option value="birthday">Birthday</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="anniversary">Anniversary</option>
                                         <option value="custom">Custom Design</option>
+                                        <option value="other">Other</option>
                                     </select>
+                                    {editingOrder.occasion === 'other' && (
+                                        <input
+                                            type="text"
+                                            name="occasion_other"
+                                            defaultValue={editingOrder.occasion_other || ''}
+                                            onChange={(e) => {
+                                                setEditingOrder({
+                                                    ...editingOrder,
+                                                    occasion_other: e.target.value
+                                                });
+                                            }}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2"
+                                            placeholder="Please specify the occasion"
+                                        />
+                                    )}
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Size</label>
@@ -1894,7 +1918,7 @@ export default function AdminDashboard() {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">Cake Details</label>
                                     <div className="bg-gray-50 p-3 rounded-md">
-                                        <div><strong>Type:</strong> {viewingOrder.cake_type}</div>
+                                        <div><strong>Occasion:</strong> {viewingOrder.occasion === 'other' ? (viewingOrder.occasion_other || 'Other') : (viewingOrder.occasion || 'N/A')}</div>
                                         <div><strong>Size:</strong> {viewingOrder.size}</div>
                                         {viewingOrder.occasion && <div><strong>Occasion:</strong> {viewingOrder.occasion}</div>}
                                         <div><strong>Date Needed:</strong> {formatDate(viewingOrder.date_needed)}</div>

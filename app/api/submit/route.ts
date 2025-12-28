@@ -19,9 +19,9 @@ interface OrderNotificationData {
     name: string;
     email: string;
     phone?: string;
-    cakeType: string;
     size: string;
-    occasion?: string;
+    occasion: string;
+    occasionOther?: string;
     description?: string;
     date: string;
     deliveryOption?: string;
@@ -77,9 +77,8 @@ async function sendOrderNotification(data: OrderNotificationData) {
                     
                     <div class="section">
                         <h3>Order Details</h3>
-                        <p><span class="label">Cake Type:</span><span class="value">${data.cakeType}</span></p>
+                        <p><span class="label">Occasion:</span><span class="value">${data.occasion === 'other' ? (data.occasionOther || 'Other') : data.occasion}</span></p>
                         <p><span class="label">Size:</span><span class="value">${data.size}</span></p>
-                        ${data.occasion ? `<p><span class="label">Occasion:</span><span class="value">${data.occasion}</span></p>` : ''}
                         <p><span class="label">Date Needed:</span><span class="value">${new Date(data.date).toLocaleDateString()}</span></p>
                     </div>
                     
@@ -158,9 +157,9 @@ async function sendOrderNotification(data: OrderNotificationData) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    from: 'Tmore\'s Cakes <onboarding@resend.dev>', // Use Resend's test domain or verify your own domain
+                    from: 'Tmore\'s Cakes <noreply@tmorescakes.com>',
                     to: [recipientEmail],
-                    subject: `New Cake Order from ${data.name} - ${data.cakeType}`,
+                    subject: `New Cake Order from ${data.name} - ${data.occasion === 'other' ? (data.occasionOther || 'Other') : data.occasion}`,
                     html: emailHtml,
                 }),
             });
@@ -216,9 +215,9 @@ export async function POST(request: NextRequest) {
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
         const phone = formData.get('phone') as string;
-        const cakeType = formData.get('cakeType') as string;
         const size = formData.get('size') as string;
         const occasion = formData.get('occasion') as string;
+        const occasionOther = formData.get('occasionOther') as string;
         const description = formData.get('description') as string;
         const date = formData.get('date') as string;
         const deliveryOption = formData.get('deliveryOption') as string;
@@ -236,9 +235,17 @@ export async function POST(request: NextRequest) {
         const inspirationPhotoCount = parseInt(formData.get('inspirationPhotoCount') as string) || 0;
 
         // Validate required fields
-        if (!name || !email || !cakeType || !size || !date) {
+        if (!name || !email || !occasion || !size || !date) {
             return NextResponse.json(
                 { message: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
+
+        // If occasion is "other", ensure occasionOther is provided
+        if (occasion === 'other' && !occasionOther) {
+            return NextResponse.json(
+                { message: 'Please specify the occasion' },
                 { status: 400 }
             );
         }
@@ -314,13 +321,16 @@ export async function POST(request: NextRequest) {
         }
 
         // Save to Supabase database
+        // Use occasionOther if occasion is "other", otherwise use occasion
+        const finalOccasion = occasion === 'other' ? (occasionOther || 'other') : occasion;
+
         const orderData = {
             name,
             email,
             phone,
-            cake_type: cakeType,
             size,
-            occasion,
+            occasion: finalOccasion,
+            occasion_other: occasion === 'other' ? occasionOther : null,
             description,
             date_needed: date,
             delivery_option: deliveryOption,
@@ -374,9 +384,9 @@ export async function POST(request: NextRequest) {
                 name,
                 email,
                 phone,
-                cakeType,
                 size,
-                occasion,
+                occasion: finalOccasion,
+                occasionOther: occasion === 'other' ? occasionOther : undefined,
                 description,
                 date,
                 deliveryOption,

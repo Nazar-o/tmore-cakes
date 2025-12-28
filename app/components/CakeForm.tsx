@@ -38,9 +38,9 @@ export default function CakeForm() {
         name: '',
         email: '',
         phone: '',
-        cakeType: '',
         size: '',
         occasion: '',
+        occasionOther: '', // For "other" option
         description: '',
         date: '',
         inspirationPhotos: [] as File[],
@@ -67,9 +67,11 @@ export default function CakeForm() {
             submitData.append('name', formData.name);
             submitData.append('email', formData.email);
             submitData.append('phone', formData.phone);
-            submitData.append('cakeType', formData.cakeType);
             submitData.append('size', formData.size);
             submitData.append('occasion', formData.occasion);
+            if (formData.occasion === 'other' && formData.occasionOther) {
+                submitData.append('occasionOther', formData.occasionOther);
+            }
             submitData.append('description', formData.description);
             submitData.append('date', formData.date);
             submitData.append('deliveryOption', formData.deliveryOption);
@@ -107,9 +109,9 @@ export default function CakeForm() {
                     name: '',
                     email: '',
                     phone: '',
-                    cakeType: '',
                     size: '',
                     occasion: '',
+                    occasionOther: '',
                     description: '',
                     date: '',
                     inspirationPhotos: [],
@@ -344,23 +346,6 @@ export default function CakeForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Cake Type *</label>
-                    <select
-                        name="cakeType"
-                        required
-                        value={formData.cakeType}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
-                    >
-                        <option value="">Select cake type</option>
-                        <option value="birthday">Birthday Cake</option>
-                        <option value="wedding">Wedding Cake</option>
-                        <option value="anniversary">Anniversary Cake</option>
-                        <option value="custom">Custom Design</option>
-                    </select>
-                </div>
-
-                <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Size *</label>
                     <select
                         name="size"
@@ -396,15 +381,32 @@ export default function CakeForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Occasion</label>
-                    <input
-                        type="text"
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Occasion *</label>
+                    <select
                         name="occasion"
+                        required
                         value={formData.occasion}
                         onChange={handleChange}
                         className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
-                        placeholder="Birthday party, wedding, etc."
-                    />
+                    >
+                        <option value="">Select occasion</option>
+                        <option value="birthday">Birthday</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="anniversary">Anniversary</option>
+                        <option value="custom">Custom Design</option>
+                        <option value="other">Other</option>
+                    </select>
+                    {formData.occasion === 'other' && (
+                        <input
+                            type="text"
+                            name="occasionOther"
+                            required
+                            value={formData.occasionOther}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors mt-2"
+                            placeholder="Please specify the occasion"
+                        />
+                    )}
                 </div>
             </div>
 
