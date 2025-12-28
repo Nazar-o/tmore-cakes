@@ -125,16 +125,26 @@ export default function CakeForm() {
             } else {
                 // Handle both JSON and non-JSON error responses
                 let errorMessage = 'An error occurred while submitting your request.';
+
+                // Clone the response so we can read it multiple times if needed
+                const responseClone = response.clone();
+
                 try {
+                    // Try to parse as JSON first
                     const error = await response.json();
                     errorMessage = error.message || errorMessage;
                 } catch (e) {
-                    // If response is not JSON, try to get text
-                    const text = await response.text();
-                    if (text) {
-                        errorMessage = `Server error (${response.status}): ${text.substring(0, 100)}`;
-                    } else {
-                        errorMessage = `Server error (${response.status}): ${response.statusText}`;
+                    // If JSON parsing fails, try to get text from the clone
+                    try {
+                        const text = await responseClone.text();
+                        if (text) {
+                            errorMessage = `Server error (${response.status}): ${text.substring(0, 100)}`;
+                        } else {
+                            errorMessage = `Server error (${response.status}): ${response.statusText}`;
+                        }
+                    } catch (textError) {
+                        // If both fail, use status text
+                        errorMessage = `Server error (${response.status}): ${response.statusText || 'Unknown error'}`;
                     }
                 }
                 alert(`Error: ${errorMessage}`);

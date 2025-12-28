@@ -150,22 +150,40 @@ async function sendOrderNotification(data: OrderNotificationData) {
 
     // Try using Resend API (if API key is set)
     if (process.env.RESEND_API_KEY) {
-        const resendResponse = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                from: 'Tmore\'s Cakes <onboarding@resend.dev>', // Use Resend's test domain or verify your own domain
-                to: [recipientEmail],
-                subject: `New Cake Order from ${data.name} - ${data.cakeType}`,
-                html: emailHtml,
-            }),
-        });
+        try {
+            const resendResponse = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from: 'Tmore\'s Cakes <onboarding@resend.dev>', // Use Resend's test domain or verify your own domain
+                    to: [recipientEmail],
+                    subject: `New Cake Order from ${data.name} - ${data.cakeType}`,
+                    html: emailHtml,
+                }),
+            });
 
-        if (!resendResponse.ok) {
-            throw new Error('Failed to send email via Resend');
+            if (!resendResponse.ok) {
+                // Get the actual error from Resend
+                const errorData = await resendResponse.json().catch(() => ({ message: 'Unknown error' }));
+                console.error('Resend API error:', {
+                    status: resendResponse.status,
+                    statusText: resendResponse.statusText,
+                    error: errorData
+                });
+                throw new Error(`Failed to send email via Resend: ${errorData.message || resendResponse.statusText} (Status: ${resendResponse.status})`);
+            } else {
+                const responseData = await resendResponse.json();
+                console.log('Email sent successfully via Resend:', responseData);
+            }
+        } catch (error) {
+            // Re-throw with more context
+            if (error instanceof Error) {
+                throw error;
+            }
+            throw new Error(`Resend API error: ${String(error)}`);
         }
     } else {
         // Fallback: Use a simple email service or log
