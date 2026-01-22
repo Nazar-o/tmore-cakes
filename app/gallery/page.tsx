@@ -107,7 +107,7 @@ export default function GalleryPage() {
                 {/* Header */}
                 <FadeInSection>
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#6B2E5F]">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#2E2E2E]">
                             Cake Gallery
                         </h1>
                         <p className="text-xl text-[#2E2E2E] max-w-3xl mx-auto">
@@ -124,8 +124,8 @@ export default function GalleryPage() {
                                 key={category}
                                 onClick={() => setActiveCategory(category)}
                                 className={`px-6 py-3 rounded-full font-medium transition-all ${activeCategory === category
-                                    ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
-                                    : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm border border-gray-200'
+                                    ? 'bg-white text-[#2E2E2E] shadow-sm border border-[#6B2E5F]/30 hover:border-[#6B2E5F]/50'
+                                    : 'bg-white text-gray-600 hover:bg-gray-50 shadow-sm border border-gray-200'
                                     }`}
                             >
                                 {category}

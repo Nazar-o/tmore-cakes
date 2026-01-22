@@ -153,7 +153,7 @@ export default function GalleryPreview() {
         <section id="gallery" className="py-20 bg-white">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#6B2E5F]">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#2E2E2E]">
                         Cake Gallery
                     </h2>
                     <p className="text-xl text-[#2E2E2E] max-w-3xl mx-auto">
@@ -222,7 +222,7 @@ export default function GalleryPreview() {
                                     aria-label="Previous images"
                                 >
                                     <svg
-                                        className="w-6 h-6 text-gray-700 group-hover:text-[#6B2E5F] transition-colors"
+                                        className="w-6 h-6 text-gray-700 group-hover:text-[#2E2E2E] transition-colors"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -238,7 +238,7 @@ export default function GalleryPreview() {
                                     aria-label="Next images"
                                 >
                                     <svg
-                                        className="w-6 h-6 text-gray-700 group-hover:text-[#6B2E5F] transition-colors"
+                                        className="w-6 h-6 text-gray-700 group-hover:text-[#2E2E2E] transition-colors"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"

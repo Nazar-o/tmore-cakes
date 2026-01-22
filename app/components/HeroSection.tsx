@@ -62,14 +62,14 @@ export default function HeroSection() {
             </div>
 
             {/* Call to Action Button - Positioned above arrow */}
-            <div className="absolute bottom-25 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="absolute bottom-15 left-1/2 transform -translate-x-1/2 z-20">
                 <Link href="#order-form" className="btn-primary hero-button text-2xl lg:text-2xl md:text-xl sm:text-lg px-8 py-4 inline-block">
                     Order a Custom Cake
                 </Link>
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20">
                 <div className="animate-bounce">
                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 14l-7 7m0 0l-7-7m7 7V3" />

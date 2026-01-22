@@ -71,7 +71,7 @@ export default function PricingSection() {
         <section id="pricing" className="py-20 gradient-bg">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#6B2E5F]">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#2E2E2E]">
                         Our Cake Collection
                     </h2>
                     <p className="text-xl text-[#2E2E2E] max-w-3xl mx-auto pricing-section-text">
@@ -85,8 +85,8 @@ export default function PricingSection() {
                         <button
                             onClick={() => setActiveTab('sizes')}
                             className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'sizes'
-                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F] font-bold'
-                                : 'text-gray-600 hover:text-gray-900 font-bold'
+                                ? 'bg-white text-[#2E2E2E] shadow-sm border border-gray-200 hover:border-[#6B2E5F]/30 font-semibold'
+                                : 'text-gray-600 hover:text-gray-900 font-semibold bg-transparent'
                                 }`}
                         >
                             Cake Sizes & Styles
@@ -94,8 +94,8 @@ export default function PricingSection() {
                         <button
                             onClick={() => setActiveTab('flavors')}
                             className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'flavors'
-                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F] font-bold'
-                                : 'text-gray-600 hover:text-gray-900 font-bold'
+                                ? 'bg-white text-[#2E2E2E] shadow-sm border border-gray-200 hover:border-[#6B2E5F]/30 font-semibold'
+                                : 'text-gray-600 hover:text-gray-900 font-semibold bg-transparent'
                                 }`}
                         >
                             Flavors & Frostings
@@ -125,11 +125,11 @@ export default function PricingSection() {
                                 </div>
 
                                 <div>
-                                    <h4 className="text-xl font-semibold mb-4 text-[#6B2E5F] text-center">Premium Flavors (+$15)</h4>
+                                    <h4 className="text-xl font-semibold mb-4 text-[#2E2E2E] text-center">Premium Flavors (+$15)</h4>
                                     <div className="flavors-grid-mobile grid grid-cols-2 gap-3">
                                         {flavors.premium.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
-                                                <div className="w-2 h-2 bg-[#6B2E5F] rounded-full"></div>
+                                                <div className="w-2 h-2 bg-gray-600 rounded-full"></div>
                                                 <span className="text-gray-700">{flavor}</span>
                                             </div>
                                         ))}
@@ -194,7 +194,7 @@ export default function PricingSection() {
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Starting at:</span>
-                                        <span className="text-xl font-bold text-[#6B2E5F]">$9/serving</span>
+                                        <span className="text-xl font-bold text-[#2E2E2E]">$9/serving</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Minimum order:</span>
@@ -216,10 +216,10 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
-                                        <div className="text-lg font-bold text-[#6B2E5F] mb-3">from ${size.basePrice}</div>
+                                        <div className="text-lg font-bold text-[#2E2E2E] mb-3">from ${size.basePrice}</div>
                                         {size.description && (
-                                            <div className="bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
-                                                <p className="text-sm text-[#6B2E5F] font-medium">{size.description}</p>
+                                            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                                                <p className="text-sm text-gray-700 font-medium">{size.description}</p>
                                             </div>
                                         )}
                                     </div>
@@ -236,10 +236,10 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
-                                        <div className="text-lg font-bold text-[#6B2E5F] mb-3">from ${size.basePrice}</div>
+                                        <div className="text-lg font-bold text-[#2E2E2E] mb-3">from ${size.basePrice}</div>
                                         {size.description && (
-                                            <div className="bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
-                                                <p className="text-sm text-[#6B2E5F] font-medium">{size.description}</p>
+                                            <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                                                <p className="text-sm text-gray-700 font-medium">{size.description}</p>
                                             </div>
                                         )}
                                     </div>
@@ -266,8 +266,8 @@ export default function PricingSection() {
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="mt-4 bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
-                                            <p className="text-sm text-[#6B2E5F] font-medium">Other size combinations available: contact for pricing.</p>
+                                        <div className="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-3">
+                                            <p className="text-sm text-gray-700 font-medium">Other size combinations available: contact for pricing.</p>
                                         </div>
                                     </div>
                                 ))}

@@ -3,7 +3,7 @@ export default function TermsPage() {
         <div className="min-h-screen bg-gray-50 pt-20">
             <div className="container mx-auto px-4 py-12 max-w-4xl">
                 <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-[#6B2E5F]">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-[#2E2E2E]">
                         Tmore's Cakes – Terms & Acknowledgement
                     </h1>
 
@@ -14,7 +14,7 @@ export default function TermsPage() {
                     <div className="space-y-8">
                         {/* Payment Terms */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">1. Payment Terms</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-[#2E2E2E]">1. Payment Terms</h2>
                             <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
@@ -27,7 +27,7 @@ export default function TermsPage() {
                                 <li className="ml-6 space-y-2">
                                     <div className="flex items-start">
                                         <span className="mr-2">•</span>
-                                        <span>Zelle: <a href="mailto:Tmorescakes@gmail.com" className="text-[#6B2E5F] hover:text-[#C8A2B8] underline">Tmorescakes@gmail.com</a></span>
+                                        <span>Zelle: <a href="mailto:Tmorescakes@gmail.com" className="text-[#2E2E2E] hover:text-[#6B2E5F] underline">Tmorescakes@gmail.com</a></span>
                                     </div>
                                     <div className="flex items-start">
                                         <span className="mr-2">•</span>
@@ -47,7 +47,7 @@ export default function TermsPage() {
 
                         {/* Order Policies */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">2. Order Policies</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-[#2E2E2E]">2. Order Policies</h2>
                             <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
@@ -78,7 +78,7 @@ export default function TermsPage() {
 
                         {/* Pickup, Delivery & Responsibility */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">3. Pickup, Delivery & Responsibility</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-[#2E2E2E]">3. Pickup, Delivery & Responsibility</h2>
                             <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
@@ -95,7 +95,7 @@ export default function TermsPage() {
                             </ul>
 
                             <div className="mt-4 ml-6 bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-4">
-                                <h3 className="font-semibold text-[#6B2E5F] mb-3">Transport Tips:</h3>
+                                <h3 className="font-semibold text-[#2E2E2E] mb-3">Transport Tips:</h3>
                                 <ul className="space-y-2 text-[#2E2E2E]">
                                     <li className="flex items-start">
                                         <span className="mr-2">•</span>

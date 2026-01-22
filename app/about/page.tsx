@@ -31,10 +31,10 @@ export default function AboutPage() {
                     {/* Header */}
                     <FadeInSection>
                         <div className="text-center mb-10">
-                            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#6B2E5F]">
+                            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#2E2E2E]">
                                 <span className="gradient-text">About Me</span>
                             </h1>
-                            <div className="w-32 h-1 bg-gradient-to-r from-[#C8A2B8] to-[#6B2E5F] mx-auto rounded-full"></div>
+                            <div className="w-32 h-0.5 bg-gradient-to-r from-[#C8A2B8] to-[#6B2E5F] mx-auto rounded-full opacity-40"></div>
                         </div>
                     </FadeInSection>
 
