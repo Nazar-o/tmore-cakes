@@ -153,10 +153,10 @@ export default function GalleryPreview() {
         <section id="gallery" className="py-20 bg-white">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        <span className="gradient-text-dark">Cake Gallery</span>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#6B2E5F]">
+                        Cake Gallery
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-xl text-[#2E2E2E] max-w-3xl mx-auto">
                         Take a look at some of our recent creations. Each cake tells a unique story!
                     </p>
                 </div>
@@ -164,7 +164,7 @@ export default function GalleryPreview() {
                 {/* Featured Images Carousel */}
                 {loading ? (
                     <div className="text-center py-12">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C8A2B8] mx-auto"></div>
                         <p className="mt-4 text-gray-600">Loading gallery...</p>
                     </div>
                 ) : featuredImages.length > 0 ? (
@@ -222,7 +222,7 @@ export default function GalleryPreview() {
                                     aria-label="Previous images"
                                 >
                                     <svg
-                                        className="w-6 h-6 text-gray-700 group-hover:text-yellow-500 transition-colors"
+                                        className="w-6 h-6 text-gray-700 group-hover:text-[#6B2E5F] transition-colors"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -238,7 +238,7 @@ export default function GalleryPreview() {
                                     aria-label="Next images"
                                 >
                                     <svg
-                                        className="w-6 h-6 text-gray-700 group-hover:text-yellow-500 transition-colors"
+                                        className="w-6 h-6 text-gray-700 group-hover:text-[#6B2E5F] transition-colors"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -273,7 +273,7 @@ export default function GalleryPreview() {
 
                 {/* CTA */}
                 <div className="text-center">
-                    <div className="bg-gradient-to-r from-yellow-50 to-white rounded-3xl p-12 max-w-4xl mx-auto">
+                    <div className="bg-gradient-to-r from-[#FAF8F6] to-white rounded-3xl p-12 max-w-4xl mx-auto">
                         <h3 className="text-3xl font-bold mb-4 text-gray-800">
                             Want to See More?
                         </h3>

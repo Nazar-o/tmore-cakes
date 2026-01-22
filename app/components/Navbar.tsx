@@ -38,7 +38,7 @@ export default function Navbar() {
                         </Link>
 
                         {/* Right - Desktop Navigation (Pricing, Gallery, Order) */}
-                        <div className="navbar-links-desktop royalty-font xl:navbar-links-xl">
+                        <div className="navbar-links-desktop xl:navbar-links-xl">
                             <Link href="#pricing" className="navbar-link">Pricing</Link>
                             <Link href="/gallery" className="navbar-link">Gallery</Link>
                             {/* <Link href="#order-form" className="btn-primary text-sm xl:text-base px-4 xl:px-6 py-2 xl:py-3">Order Now</Link> */}

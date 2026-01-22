@@ -47,7 +47,7 @@ export default function PriceModal({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-100">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-4 rounded-t-2xl">
+                <div className="bg-[#C8A2B8] px-6 py-4 rounded-t-2xl">
                     <h3 className="text-xl font-bold text-white text-center">
                         Set Order Price
                     </h3>
@@ -79,7 +79,7 @@ export default function PriceModal({
                                     min="0"
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
-                                    className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 text-lg"
+                                    className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] text-lg"
                                     placeholder="0.00"
                                     autoFocus
                                 />
@@ -98,7 +98,7 @@ export default function PriceModal({
                             <button
                                 type="submit"
                                 disabled={!price || isNaN(parseFloat(price)) || parseFloat(price) <= 0}
-                                className="flex-1 px-4 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white rounded-lg hover:from-yellow-500 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold"
+                                className="flex-1 px-4 py-3 bg-[#C8A2B8] text-white rounded-lg hover:bg-[#6B2E5F] focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold"
                             >
                                 Set Price
                             </button>

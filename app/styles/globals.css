@@ -1,21 +1,34 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary Colors */
+  --dusty-mauve: #C8A2B8;
+  --deep-plum: #6B2E5F;
+
+  /* Neutral Colors */
+  --warm-white: #FAF8F6;
+  --light-gray: #F1F1F1;
+  --charcoal: #2E2E2E;
+
+  /* Accent Color (light use only) */
+  --soft-gold: #D4AF37;
+
+  /* Legacy support - keeping for transition */
   --primary-gold: #D4AF37;
-  --accent-gold: #FFD700;
-  --soft-white: #FFF8F0;
-  --warm-white: #FEFEFE;
-  --text-dark: #2D3748;
+  --accent-gold: #D4AF37;
+  --soft-white: #FAF8F6;
+  --text-dark: #2E2E2E;
   --text-light: #718096;
   --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-  --shadow-gold: 0 20px 25px -5px rgba(212, 175, 55, 0.15);
+  --shadow-mauve: 0 20px 25px -5px rgba(200, 162, 184, 0.15);
 }
 
 @theme inline {
   --color-background: var(--warm-white);
   --color-foreground: var(--text-dark);
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
+
 
 @font-face {
   font-family: 'Gabrielle';
@@ -37,36 +50,60 @@
 
 body {
   background: var(--warm-white);
-  color: var(--text-dark);
-  font-family: var(--font-sans);
+  color: var(--charcoal);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Typography Hierarchy */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--deep-plum);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+p,
+span,
+div,
+li,
+a {
+  color: var(--charcoal);
+  font-family: 'Inter', sans-serif;
 }
 
 .nav-link {
   color: #374151;
-  /* gray-700 */
   font-weight: bold;
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .nav-link:hover {
-  color: #D97706;
-  /* yellow-600 */
+  color: var(--deep-plum);
   transform: translateY(-1px);
 }
 
 .norican-font {
-  font-family: 'Norican';
-  font-size: 150px;
-  font-weight: 200;
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
 }
 
 .royalty-font {
-  font-family: 'Royalty';
-  font-size: 60px;
-  font-weight: 200;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
   color: rgb(255, 255, 255);
+  letter-spacing: 0.5px;
 }
 
 
@@ -79,72 +116,80 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold));
+  background: linear-gradient(135deg, var(--dusty-mauve), var(--deep-plum));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-family: 'Gabrielle';
+  font-family: 'Gabrielle', serif;
   font-size: 75px;
+  font-weight: 300;
+  /* Decorative script font - minimal use only for headings */
 }
 
 .gradient-text-dark {
-  background: linear-gradient(180deg, var(--text-dark), var(--text-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-family: 'Gabrielle';
+  color: var(--deep-plum);
+  font-family: 'Inter', sans-serif;
   font-size: 75px;
+  font-weight: 700;
+  /* Using sans-serif for better readability */
 }
 
 .gradient-bg {
-  background: linear-gradient(135deg, var(--soft-white) 0%, #FFF 100%);
+  background: linear-gradient(135deg, var(--warm-white) 0%, #FFF 100%);
 }
 
 .gold-accent {
-  color: var(--primary-gold);
+  color: var(--soft-gold);
 }
 
 .pink-accent {
-  color: var(--primary-gold);
+  color: var(--dusty-mauve);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold));
+  background: var(--dusty-mauve);
   color: white;
-  padding: 12px 32px;
+  padding: 12px 42px;
   border-radius: 25px;
   font-weight: 800;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-gold);
-  font-size: 33px;
-  font-family: 'Gabrielle';
+  box-shadow: var(--shadow-mauve);
+  font-size: 30px;
+  font-family: 'Inter', sans-serif;
   display: inline-block;
   text-decoration: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
 }
 
 
 .btn-primary:hover {
+  background: var(--deep-plum);
   transform: translateY(-3px);
-  box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(107, 46, 95, 0.25);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, var(--primary-gold), var(--accent-gold));
-  color: white;
+  background: transparent;
+  color: var(--deep-plum);
+  border: 2px solid var(--deep-plum);
   padding: 12px 32px;
   border-radius: 50px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-gold);
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-secondary:hover {
+  background: rgba(107, 46, 95, 0.1);
   transform: translateY(-2px);
-  box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.25);
 }
 
 .card {
-  background: white;
+  background: var(--light-gray);
   border-radius: 20px;
   padding: 32px;
   box-shadow: var(--shadow-soft);
@@ -158,18 +203,16 @@ body {
 
 /* Pricing Section Styles */
 .pricing-card-title {
-  font-family: 'Royalty';
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1f2937;
-  font-size: 55px;
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--deep-plum);
   margin-bottom: 0.5rem;
   text-align: center;
 }
 
 .pricing-card-title:hover {
-  color: #d97706;
-  /* yellow-600 */
+  color: var(--deep-plum);
   transition: color 0.3s ease;
 }
 
@@ -238,17 +281,17 @@ body {
 
 .navbar-link {
   color: white;
-  font-weight: bold;
+  font-weight: 800;
   text-decoration: none;
   font-family: 'Royalty';
   font-size: 60px;
   transition: all 0.3s ease;
   position: relative;
+  letter-spacing: 0.5px;
 }
 
 .navbar-link:hover {
-  color: #f9a8d4;
-  /* pink-300 */
+  color: var(--deep-plum);
 }
 
 .navbar-link::after {
@@ -258,7 +301,7 @@ body {
   left: 0;
   width: 0;
   height: 3px;
-  background: #f9a8d4;
+  background: var(--deep-plum);
   transition: width 0.3s ease;
 }
 
@@ -268,18 +311,16 @@ body {
 
 /* Darker text when navbar is solid */
 .navbar-solid .navbar-link {
-  color: #1f2937;
-  /* gray-800 */
+  color: var(--charcoal);
 }
 
 .navbar-solid .navbar-link:hover {
-  color: #ec4899;
-  /* pink-600 */
+  color: var(--deep-plum);
 }
 
 /* Underline for solid navbar */
 .navbar-solid .navbar-link::after {
-  background: #ec4899;
+  background: var(--deep-plum);
 }
 
 .navbar-logo {
@@ -335,20 +376,18 @@ body {
 }
 
 .navbar-mobile-button:hover {
-  color: #f9a8d4;
-  /* pink-300 */
+  color: var(--dusty-mauve);
   background: rgba(255, 255, 255, 0.2);
 }
 
 /* Mobile button darker when navbar is solid (scrolled) */
 .navbar-solid .navbar-mobile-button {
-  color: #1f2937;
-  /* gray-800 - darker color */
+  color: var(--charcoal);
 }
 
 .navbar-solid .navbar-mobile-button:hover {
-  color: #ec4899;
-  background: rgba(31, 41, 55, 0.1);
+  color: var(--deep-plum);
+  background: rgba(107, 46, 95, 0.1);
 }
 
 .navbar-mobile-menu {
@@ -375,27 +414,20 @@ body {
 }
 
 .navbar-mobile-link {
-  color: #1f2937;
-  /* gray-800 */
-  font-size: 1.25rem;
-  /* Reduced from 2rem to 1.25rem */
+  color: var(--charcoal);
+  font-size: 1.125rem;
   padding: 0.5rem 1rem;
-  /* Reduced padding */
   border-radius: 0.75rem;
-  /* Slightly less rounded */
   text-decoration: none;
   transition: all 0.3s ease;
-  font-family: 'Royalty';
-  font-size: 2rem;
-  font-weight: bold;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   text-align: center;
 }
 
 .navbar-mobile-link:hover {
-  color: #ec4899;
-  /* pink-600 */
-  background: #f9fafb;
-  /* gray-50 */
+  color: var(--deep-plum);
+  background: rgba(107, 46, 95, 0.05);
 }
 
 @media (min-width: 1024px) {
@@ -462,12 +494,12 @@ body {
 
   /* Mobile Button Colors */
   .navbar-solid .navbar-mobile-button {
-    color: #1f2937;
+    color: var(--charcoal);
   }
 
   .navbar-solid .navbar-mobile-button:hover {
-    color: #ec4899;
-    background: rgba(31, 41, 55, 0.1);
+    color: var(--deep-plum);
+    background: rgba(107, 46, 95, 0.1);
   }
 
   /* Mobile Menu */
@@ -493,8 +525,8 @@ body {
 
   /* Mobile Button Styling */
   .btn-primary {
-    font-size: 20px;
-    padding: 8px 24px;
+    font-size: 16px;
+    padding: 10px 24px;
   }
 
   .gradient-text {
@@ -524,7 +556,8 @@ body {
 
   @media (min-width: 1024px) {
     .hero-section {
-      min-height: 80vh;
+      min-height: 75vh;
+      max-height: 80vh;
     }
   }
 
@@ -695,11 +728,11 @@ body {
   height: 60vh;
 }
 
-/* Desktop: not so tall */
+/* Desktop: controlled height, not overly tall */
 @media (min-width: 900px) {
   .hero-banner {
-    height: 65vh;
-    max-height: 650px;
+    height: 60vh;
+    max-height: 600px;
   }
 }
 
@@ -709,4 +742,19 @@ body {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+/* ========================================
+   FADE-IN SCROLL ANIMATION
+   ======================================== */
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

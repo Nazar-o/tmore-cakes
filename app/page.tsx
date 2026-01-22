@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import HeroSection from './components/HeroSection';
 import PricingSection from './components/PricingSection';
 import GalleryPreview from './components/GalleryPreview';
+import FadeInSection from './components/FadeInSection';
 import Link from 'next/link';
 
 export default function Home() {
@@ -15,13 +16,14 @@ export default function Home() {
             <HeroSection />
 
             {/* About Section - Mobile optimized */}
-            <section id="about" className="py-12 sm:py-16 lg:py-20 bg-white">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <FadeInSection>
+                <section id="about" className="py-12 sm:py-16 lg:py-20 bg-white">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-6xl mx-auto">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 ">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-[#6B2E5F]">
                             Meet Your <span className="gradient-text">Baker</span>
                         </h2>
-                        <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto mb-6 sm:mb-8 rounded-full"></div>
+                        <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-[#C8A2B8] to-[#6B2E5F] mx-auto mb-6 sm:mb-8 rounded-full"></div>
 
                         {/* Profile Image - Mobile responsive */}
                         <div className="mb-6 sm:mb-8">
@@ -32,7 +34,7 @@ export default function Home() {
                             />
                         </div>
 
-                        <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-medium leading-relaxed px-4">
+                        <p className="text-lg sm:text-xl lg:text-2xl text-[#2E2E2E] max-w-4xl mx-auto mb-8 sm:mb-10 lg:mb-12 font-medium leading-relaxed px-4">
                             Hi, I'm Tari! I've been passionate about baking since I was a little girl,
                             and now I'm turning that passion into creating magical moments for others.
                         </p>
@@ -45,44 +47,52 @@ export default function Home() {
                         </Link>
                     </div>
                 </div>
-            </section>
+                </section>
+            </FadeInSection>
 
             {/* Pricing Section */}
-            <PricingSection />
+            <FadeInSection>
+                <PricingSection />
+            </FadeInSection>
 
             {/* Gallery Preview */}
-            <GalleryPreview />
+            <FadeInSection>
+                <GalleryPreview />
+            </FadeInSection>
 
             {/* Main Order Form - Mobile optimized */}
-            <section id="order-form" className="py-12 sm:py-16 lg:py-20 gradient-bg">
+            <FadeInSection>
+                <section id="order-form" className="py-12 sm:py-16 lg:py-20 gradient-bg">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center mb-8 sm:mb-12">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-[#6B2E5F]">
                             Ready to Order Your <span className="gradient-text">Dream Cake</span>?
                         </h2>
-                        <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+                        <p className="text-lg sm:text-xl text-[#2E2E2E] mb-6 sm:mb-8 leading-relaxed">
                             Fill out the form below and let's create something magical together!
                         </p>
                     </div>
                     <CakeForm />
                 </div>
-            </section>
+                </section>
+            </FadeInSection>
 
             {/* Contact & Social Links Section */}
-            <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-white">
+            <FadeInSection>
+                <section id="contact" className="py-12 sm:py-16 lg:py-20 bg-white">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-                            <span className="gradient-text-dark">📞 Contact & Social Links</span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-[#6B2E5F]">
+                            📞 Contact & Social Links
                         </h2>
-                        <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto mb-8 sm:mb-10 rounded-full"></div>
+                        <div className="w-32 sm:w-40 lg:w-48 h-1 sm:h-1.5 bg-gradient-to-r from-[#C8A2B8] to-[#6B2E5F] mx-auto mb-8 sm:mb-10 rounded-full"></div>
 
                         <div className="space-y-6 mb-8">
                             <div className="flex flex-col items-center space-y-2">
                                 {/* <div className="text-2xl">📧</div> */}
                                 <a
                                     href="mailto:tmorescakes@gmail.com"
-                                    className="text-xl text-gray-700 hover:text-yellow-600 transition-colors font-medium"
+                                    className="text-xl text-gray-700 hover:text-[#6B2E5F] transition-colors font-medium"
                                 >
                                     Tmorescakes@gmail.com
                                 </a>
@@ -90,7 +100,7 @@ export default function Home() {
 
                             <div className="flex flex-col items-center space-y-2">
                                 {/* <div className="text-2xl">💳</div> */}
-                                <span className="text-lg text-gray-600">Zelle: Tmorescakes@gmail.com</span>
+                                <span className="text-lg text-[#2E2E2E]">Zelle: Tmorescakes@gmail.com</span>
                             </div>
                         </div>
 
@@ -100,7 +110,7 @@ export default function Home() {
                                 href="https://www.instagram.com/tmorescakes"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-yellow-600 transition-colors"
+                                className="text-gray-600 hover:text-[#6B2E5F] transition-colors"
                                 aria-label="Instagram"
                             >
                                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -111,7 +121,7 @@ export default function Home() {
                                 href="https://www.facebook.com/profile.php?id=100063474686693&mibextid=wwXIfr&rdid=u0nE7UgD5BNjGL0U&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Bo6Y41LMD%2F%3Fmibextid%3DwwXIfr#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-yellow-600 transition-colors"
+                                className="text-gray-600 hover:text-[#6B2E5F] transition-colors"
                                 aria-label="Facebook"
                             >
                                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -122,7 +132,7 @@ export default function Home() {
                                 href="https://www.tiktok.com/@tmorescakes"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-600 hover:text-yellow-600 transition-colors"
+                                className="text-gray-600 hover:text-[#6B2E5F] transition-colors"
                                 aria-label="TikTok"
                             >
                                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -132,7 +142,8 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+                </section>
+            </FadeInSection>
 
             <Footer />
         </div>

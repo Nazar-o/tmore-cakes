@@ -3,19 +3,19 @@ export default function TermsPage() {
         <div className="min-h-screen bg-gray-50 pt-20">
             <div className="container mx-auto px-4 py-12 max-w-4xl">
                 <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">
-                        <span className="gradient-text-dark">Tmore's Cakes – Terms & Acknowledgement</span>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-[#6B2E5F]">
+                        Tmore's Cakes – Terms & Acknowledgement
                     </h1>
 
-                    <p className="text-lg text-gray-700 mb-8 text-center">
+                    <p className="text-lg text-[#2E2E2E] mb-8 text-center">
                         By proceeding with payment, you acknowledge and agree to the following terms.
                     </p>
 
                     <div className="space-y-8">
                         {/* Payment Terms */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-gray-900">1. Payment Terms</h2>
-                            <ul className="space-y-3 text-gray-700">
+                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">1. Payment Terms</h2>
+                            <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
                                     <span>Last-minute orders (placed within 7 days or less to your event date) require full payment immediately upon invoice receipt — no exceptions.</span>
@@ -27,7 +27,7 @@ export default function TermsPage() {
                                 <li className="ml-6 space-y-2">
                                     <div className="flex items-start">
                                         <span className="mr-2">•</span>
-                                        <span>Zelle: <a href="mailto:Tmorescakes@gmail.com" className="text-yellow-600 hover:text-yellow-700 underline">Tmorescakes@gmail.com</a></span>
+                                        <span>Zelle: <a href="mailto:Tmorescakes@gmail.com" className="text-[#6B2E5F] hover:text-[#C8A2B8] underline">Tmorescakes@gmail.com</a></span>
                                     </div>
                                     <div className="flex items-start">
                                         <span className="mr-2">•</span>
@@ -47,8 +47,8 @@ export default function TermsPage() {
 
                         {/* Order Policies */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-gray-900">2. Order Policies</h2>
-                            <ul className="space-y-3 text-gray-700">
+                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">2. Order Policies</h2>
+                            <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
                                     <span>Orders over $400 may include up to 4 flavors or more, depending on the number of servings (restrictions apply).</span>
@@ -78,8 +78,8 @@ export default function TermsPage() {
 
                         {/* Pickup, Delivery & Responsibility */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4 text-gray-900">3. Pickup, Delivery & Responsibility</h2>
-                            <ul className="space-y-3 text-gray-700">
+                            <h2 className="text-2xl font-bold mb-4 text-[#6B2E5F]">3. Pickup, Delivery & Responsibility</h2>
+                            <ul className="space-y-3 text-[#2E2E2E]">
                                 <li className="flex items-start">
                                     <span className="mr-2">•</span>
                                     <span>Delivery is not included unless requested.</span>
@@ -94,9 +94,9 @@ export default function TermsPage() {
                                 </li>
                             </ul>
 
-                            <div className="mt-4 ml-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                                <h3 className="font-semibold text-gray-900 mb-3">Transport Tips:</h3>
-                                <ul className="space-y-2 text-gray-700">
+                            <div className="mt-4 ml-6 bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-4">
+                                <h3 className="font-semibold text-[#6B2E5F] mb-3">Transport Tips:</h3>
+                                <ul className="space-y-2 text-[#2E2E2E]">
                                     <li className="flex items-start">
                                         <span className="mr-2">•</span>
                                         <span>Do not place the cake on your lap or car seat.</span>
@@ -122,7 +122,7 @@ export default function TermsPage() {
                                         <span>Keep venue temperature at 72°F or lower.</span>
                                     </li>
                                 </ul>
-                                <p className="mt-4 text-gray-700 italic font-medium">
+                                <p className="mt-4 text-[#2E2E2E] italic font-medium">
                                     Drive like it's a baby made of glass — no sudden stops, sharp turns, or slamming brakes.
                                 </p>
                             </div>

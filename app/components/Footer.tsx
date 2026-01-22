@@ -4,18 +4,18 @@ import Link from 'next/link';
 
 export default function Footer() {
     return (
-        <footer className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-16">
+        <footer className="bg-gradient-to-r from-gray-300 to-gray-300 text-white py-16">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
                     {/* Company Info */}
                     <div className="col-span-1 md:col-span-2">
                         <div className="flex items-center space-x-3 mb-4">
                             <div>
-                                <div className="text-2xl font-bold">TMore's Cakes</div>
-                                <div className="text-sm text-gray-400">Sweet Memories</div>
+                                <div className="text-2xl font-bold text-white">TMore's Cakes</div>
+                                <div className="text-sm text-white">Sweet Memories</div>
                             </div>
                         </div>
-                        <p className="text-gray-300 mb-6 max-w-md">
+                        <p className="text-white/90 mb-6 max-w-md">
                             Crafting sweet memories, one slice at a time. From intimate celebrations to grand events,
                             we create custom cakes that taste as amazing as they look.
                         </p>
@@ -23,30 +23,30 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4 text-yellow-400">Quick Links</h3>
+                        <h3 className="text-lg font-semibold mb-4 text-white">Quick Links</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     Home
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#about" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="#about" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     About
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="#pricing" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     Pricing
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#gallery" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="#gallery" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     Gallery
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#order-form" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="#order-form" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     Order Form
                                 </Link>
                             </li>
@@ -55,21 +55,21 @@ export default function Footer() {
 
                     {/* Contact & Social Links */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4 text-yellow-400">📞 Contact & Social Links</h3>
+                        <h3 className="text-lg font-semibold mb-4 text-white"> Contact & Social Links</h3>
                         <div className="space-y-3">
                             <div className="flex items-center space-x-3">
-                                <div className="text-yellow-400">📧</div>
-                                <a href="mailto:tmorescakes@gmail.com" className="text-gray-300 hover:text-white transition-colors">
+                                <div className="text-[#D4AF37]"></div>
+                                <a href="mailto:tmorescakes@gmail.com" className="text-white hover:text-[#C8A2B8] transition-colors">
                                     tmorescakes@gmail.com
                                 </a>
                             </div>
                             <div className="flex items-center space-x-3">
-                                <div className="text-yellow-400">💳</div>
-                                <span className="text-gray-300">Zelle: tmorescakes@gmail.com</span>
+                                <div className="text-[#D4AF37]"></div>
+                                <span className="text-white">Zelle: tmorescakes@gmail.com</span>
                             </div>
                             <div className="flex items-center space-x-3">
-                                <div className="text-yellow-400">📍</div>
-                                <span className="text-gray-300">Pickup & Delivery Available</span>
+                                <div className="text-[#D4AF37]"></div>
+                                <span className="text-white">Pickup & Delivery Available</span>
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@ export default function Footer() {
                                 href="https://www.instagram.com/tmorescakes"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-yellow-400 transition-colors"
+                                className="text-white hover:text-[#D4AF37] transition-colors"
                                 aria-label="Instagram"
                             >
                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ export default function Footer() {
                                 href="https://www.facebook.com/profile.php?id=100063474686693&mibextid=wwXIfr&rdid=u0nE7UgD5BNjGL0U&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Bo6Y41LMD%2F%3Fmibextid%3DwwXIfr#"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-yellow-400 transition-colors"
+                                className="text-white hover:text-[#D4AF37] transition-colors"
                                 aria-label="Facebook"
                             >
                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@ export default function Footer() {
                                 href="https://www.tiktok.com/@tmorescakes"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-yellow-400 transition-colors"
+                                className="text-white hover:text-[#D4AF37] transition-colors"
                                 aria-label="TikTok"
                             >
                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -113,10 +113,10 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="border-t border-gray-700 mt-12 pt-8 text-center">
-                    <p className="text-gray-400">
+                <div className="border-t border-white/20 mt-12 pt-8 text-center">
+                    <p className="text-white/90">
                         &copy; 2024 TMore's Cakes. All rights reserved. |
-                        <Link href="/terms" className="text-gray-400 hover:text-white transition-colors ml-2">
+                        <Link href="/terms" className="text-white/90 hover:text-[#C8A2B8] transition-colors ml-2">
                             Terms & Conditions
                         </Link>
                     </p>

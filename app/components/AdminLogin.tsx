@@ -94,7 +94,7 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
                             value={credentials.email}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                             placeholder="admin@tmorescakes.com"
                         />
                     </div>
@@ -109,7 +109,7 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
                             value={credentials.password}
                             onChange={handleChange}
                             required
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                             placeholder="Enter your password"
                         />
                     </div>
@@ -124,7 +124,7 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
                 </form>
 
                 {/* Demo Credentials */}
-                {/* <div className="mt-6 p-4 bg-yellow-50 rounded-xl">
+                {/* <div className="mt-6 p-4 bg-[#C8A2B8]/10 rounded-xl">
                     <p className="text-sm text-gray-600 text-center">
                         <strong>Demo Credentials:</strong><br />
                         Email: admin@tmorescakes.com<br />
@@ -136,7 +136,7 @@ export default function AdminLogin({ onClose }: AdminLoginProps) {
                 <div className="mt-8 text-center">
                     <p className="text-sm text-gray-500">
                         Need help? Contact{' '}
-                        <a href="mailto:Tmore.debby@gmail.com" className="text-yellow-600 hover:text-yellow-700">
+                        <a href="mailto:Tmore.debby@gmail.com" className="text-[#6B2E5F] hover:text-[#C8A2B8]">
                             Tmore.debby@gmail.com
                         </a>
                     </p>

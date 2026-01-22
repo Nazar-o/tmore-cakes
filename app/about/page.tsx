@@ -1,28 +1,34 @@
 'use client';
 
+import Footer from '@/app/components/Footer';
+import FadeInSection from '@/app/components/FadeInSection';
+
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-white pt-20">
             <div className="container mx-auto px-4">
                 {/* Back to Home - Top Left */}
                 <div className="mb-10">
-                    <a href="/" className="text-yellow-600 hover:text-yellow-700 transition-colors font-medium text-lg">
+                    <a href="/" className="text-[#6B2E5F] hover:text-[#C8A2B8] transition-colors font-medium text-lg">
                         ← Back to Home
                     </a>
                 </div>
 
                 <div className="max-w-5xl mx-auto">
                     {/* Header */}
-                    <div className="text-center mb-10">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                    <FadeInSection>
+                        <div className="text-center mb-10">
+                        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-[#6B2E5F]">
                             <span className="gradient-text">About Me</span>
                         </h1>
-                        <div className="w-32 h-1 bg-gradient-to-r from-yellow-500 to-yellow-300 mx-auto rounded-full"></div>
-                    </div>
+                        <div className="w-32 h-1 bg-gradient-to-r from-[#C8A2B8] to-[#6B2E5F] mx-auto rounded-full"></div>
+                        </div>
+                    </FadeInSection>
 
                     {/* About Content */}
-                    <div className="space-y-12">
-                        <div className="text-center mb-10">
+                    <FadeInSection delay={100}>
+                        <div className="space-y-12">
+                            <div className="text-center mb-10">
                             <img src="/images/tari.JPG" alt="Image of Tari, the baker." className="w-100 rounded-full mx-auto mb-6" />
                             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                                 Hi, I'm Tari. <br /> The baker behind Tmore's Cakes!
@@ -51,10 +57,13 @@ export default function AboutPage() {
                                 </div>
                             </div>
                         </div>
+                        </div>
+                    </FadeInSection>
 
-                        {/* Call to Action */}
+                    {/* Call to Action */}
+                    <FadeInSection delay={200}>
                         <div className="text-center mt-20">
-                            <div className="bg-gradient-to-r from-yellow-50 to-white rounded-3xl p-16 shadow-lg">
+                            <div className="bg-gradient-to-r from-[#FAF8F6] to-white rounded-3xl p-16 shadow-lg">
                                 <h3 className="text-3xl font-bold text-gray-900 mb-3">
                                     Ready to Taste the Difference?
                                 </h3>
@@ -71,9 +80,12 @@ export default function AboutPage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </FadeInSection>
                 </div>
             </div>
+            <br />
+            <br />
+            <Footer />
         </div>
     );
 } 

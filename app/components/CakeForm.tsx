@@ -314,7 +314,7 @@ export default function CakeForm() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                         placeholder="Your full name"
                     />
                 </div>
@@ -327,7 +327,7 @@ export default function CakeForm() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                         placeholder="your.email@example.com"
                     />
                 </div>
@@ -340,7 +340,7 @@ export default function CakeForm() {
                         required
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                         placeholder="(555) 123-4567"
                     />
                 </div>
@@ -352,7 +352,7 @@ export default function CakeForm() {
                         required
                         value={formData.size}
                         onChange={handleSizeChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                     >
                         <option value="">Select size</option>
                         <optgroup label="Single Tier (Round)">
@@ -387,7 +387,7 @@ export default function CakeForm() {
                         required
                         value={formData.occasion}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                     >
                         <option value="">Select occasion</option>
                         <option value="birthday">Birthday</option>
@@ -403,7 +403,7 @@ export default function CakeForm() {
                             required
                             value={formData.occasionOther}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors mt-2"
+                            className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors mt-2"
                             placeholder="Please specify the occasion"
                         />
                     )}
@@ -418,7 +418,7 @@ export default function CakeForm() {
                         <span className="text-xs text-gray-500 block mt-1">1 flavor per tier OR 2-3 total (your choice)</span>
                     )}
                     {formData.size === 'other' && (
-                        <span className="text-xs text-yellow-600 font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
+                                        <span className="text-xs text-[#6B2E5F] font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
                     )}
                 </label>
 
@@ -433,7 +433,7 @@ export default function CakeForm() {
                                     checked={formData.flavors.includes(flavor)}
                                     onChange={(e) => handleFlavorChange(flavor, e.target.checked)}
                                     disabled={!formData.size || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
-                                    className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                    className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                                 />
                                 <span className="text-sm text-gray-700">{flavor}</span>
                             </label>
@@ -452,10 +452,10 @@ export default function CakeForm() {
                                     checked={formData.flavors.includes(flavor)}
                                     onChange={(e) => handleFlavorChange(flavor, e.target.checked)}
                                     disabled={!formData.size || formData.size === 'other' || (!formData.flavors.includes(flavor) && formData.flavors.length >= getMaxFlavors())}
-                                    className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                    className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                                 />
                                 <span className="text-sm text-gray-700">{flavor}</span>
-                                <span className="text-xs text-purple-600 ml-2">(+$15)</span>
+                                <span className="text-xs text-[#6B2E5F] ml-2">(+$15)</span>
                             </label>
                         ))}
                     </div>
@@ -469,7 +469,7 @@ export default function CakeForm() {
                             {formData.flavors.map((flavor) => (
                                 <span
                                     key={flavor}
-                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800"
+                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#C8A2B8]/20 text-[#6B2E5F]"
                                 >
                                     {flavor}
                                     {specialtyFlavors.includes(flavor) && (
@@ -478,7 +478,7 @@ export default function CakeForm() {
                                     <button
                                         type="button"
                                         onClick={() => handleFlavorChange(flavor, false)}
-                                        className="ml-2 text-yellow-600 hover:text-yellow-800"
+                                        className="ml-2 text-[#6B2E5F] hover:text-[#C8A2B8]"
                                     >
                                         ×
                                     </button>
@@ -506,7 +506,7 @@ export default function CakeForm() {
                                 checked={formData.frostings.includes(frosting)}
                                 onChange={(e) => handleFrostingChange(frosting, e.target.checked)}
                                 disabled={!formData.frostings.includes(frosting) && formData.frostings.length >= 2}
-                                className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                    className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                             />
                             <span className="text-sm text-gray-700">{frosting}</span>
                         </label>
@@ -521,13 +521,13 @@ export default function CakeForm() {
                             {formData.frostings.map((frosting) => (
                                 <span
                                     key={frosting}
-                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800"
+                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-[#C8A2B8]/20 text-[#6B2E5F]"
                                 >
                                     {frosting}
                                     <button
                                         type="button"
                                         onClick={() => handleFrostingChange(frosting, false)}
-                                        className="ml-2 text-yellow-600 hover:text-yellow-800"
+                                        className="ml-2 text-[#6B2E5F] hover:text-[#C8A2B8]"
                                     >
                                         ×
                                     </button>
@@ -553,7 +553,7 @@ export default function CakeForm() {
                 <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full px-4 py-3 text-base border-2 border-dashed border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors hover:border-yellow-400 hover:bg-yellow-50 text-gray-700 font-medium"
+                    className="w-full px-4 py-3 text-base border-2 border-dashed border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors hover:border-[#C8A2B8] hover:bg-[#C8A2B8]/5 text-gray-700 font-medium"
                 >
                     {formData.inspirationPhotos.length === 0 ? 'Choose Images' : 'Add More Images'}
                 </button>
@@ -612,7 +612,7 @@ export default function CakeForm() {
                         <button
                             type="button"
                             onClick={handleAddMorePhotos}
-                            className="mt-3 px-4 py-2 text-sm font-medium text-yellow-600 hover:text-yellow-700 border border-yellow-300 rounded-lg hover:bg-yellow-50 transition-colors"
+                            className="mt-3 px-4 py-2 text-sm font-medium text-[#6B2E5F] hover:text-[#C8A2B8] border border-[#C8A2B8] rounded-lg hover:bg-[#C8A2B8]/10 transition-colors"
                         >
                             + Add More Photos
                         </button>
@@ -631,7 +631,7 @@ export default function CakeForm() {
                             value="pickup"
                             checked={formData.deliveryOption === 'pickup'}
                             onChange={handleChange}
-                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                            className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8]"
                         />
                         <span className="text-base">Pickup</span>
                     </label>
@@ -642,7 +642,7 @@ export default function CakeForm() {
                             value="delivery"
                             checked={formData.deliveryOption === 'delivery'}
                             onChange={handleChange}
-                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                            className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8]"
                         />
                         <span className="text-base">Delivery</span>
                     </label>
@@ -660,7 +660,7 @@ export default function CakeForm() {
                         value={formData.deliveryAddress}
                         onChange={handleChange}
                         rows={3}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                         placeholder="Please provide complete delivery address including city, state, and zip code"
                     />
                 </div>
@@ -673,7 +673,7 @@ export default function CakeForm() {
                     name="targetBudget"
                     value={formData.targetBudget}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                 >
                     <option value="">Select budget range</option>
                     <option value="200-300">$200 - $300</option>
@@ -692,7 +692,7 @@ export default function CakeForm() {
                         name="contactMethod"
                         value={formData.contactMethod}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                     >
                         <option value="">Select preferred method</option>
                         <option value="phone">Phone Call</option>
@@ -709,7 +709,7 @@ export default function CakeForm() {
                         value={formData.contactTime}
                         onChange={handleChange}
                         placeholder="e.g., After 5 PM, Weekends only"
-                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                     />
                 </div>
             </div>
@@ -721,7 +721,7 @@ export default function CakeForm() {
                     name="paymentMethod"
                     value={formData.paymentMethod}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                 >
                     <option value="">Select payment method</option>
                     <option value="credit-debit-card">Credit/Debit Card</option>
@@ -740,7 +740,7 @@ export default function CakeForm() {
                     value={formData.inscription}
                     onChange={handleChange}
                     placeholder="Enter inscription details (name, age, short message) or leave blank if no inscription is needed."
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                 />
             </div>
 
@@ -755,7 +755,7 @@ export default function CakeForm() {
                             value="yes"
                             checked={formData.topper === 'yes'}
                             onChange={handleChange}
-                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                            className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8]"
                         />
                         <span className="text-base">Yes</span>
                     </label>
@@ -766,7 +766,7 @@ export default function CakeForm() {
                             value="no"
                             checked={formData.topper === 'no'}
                             onChange={handleChange}
-                            className="mr-3 w-4 h-4 text-yellow-600 focus:ring-yellow-500"
+                            className="mr-3 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8]"
                         />
                         <span className="text-base">No</span>
                     </label>
@@ -782,7 +782,7 @@ export default function CakeForm() {
                     value={formData.description}
                     onChange={handleChange}
                     placeholder="Describe your cake design, colors, decorations, etc."
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                 />
             </div>
 
@@ -795,14 +795,14 @@ export default function CakeForm() {
                     required
                     value={formData.date}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
+                        className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C8A2B8] focus:border-[#C8A2B8] transition-colors"
                 />
             </div>
 
             <div className="text-center">
                 <p className="text-sm text-gray-600 mb-4">
                     By submitting this form, you agree to our{' '}
-                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-yellow-600 hover:text-yellow-700 underline">
+                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-[#6B2E5F] hover:text-[#C8A2B8] underline">
                         Terms & Conditions
                     </a>
                     .

@@ -713,18 +713,18 @@ export default function AdminDashboard() {
             <div className="container mx-auto px-4 py-8">
                 {/* Header */}
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                        Admin <span className="gradient-text">Dashboard</span>
+                    <h1 className="text-6xl font-bold text-gray-900 mb-4">
+                        Admin Dashboard
                     </h1>
                 </div>
 
                 {/* Tab Navigation */}
-                <div className="flex justify-center mb-8">
-                    <div className="bg-white rounded-full p-2 shadow-lg">
+                <div className="flex justify-center mb-8 overflow-x-auto">
+                    <div className="bg-white rounded-full p-2 shadow-lg flex flex-nowrap items-center">
                         <button
                             onClick={() => setActiveTab('calculator')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'calculator'
-                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                            className={`px-4 sm:px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'calculator'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
@@ -732,8 +732,8 @@ export default function AdminDashboard() {
                         </button>
                         <button
                             onClick={() => setActiveTab('calendar')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'calendar'
-                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                            className={`px-4 sm:px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'calendar'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
@@ -741,8 +741,8 @@ export default function AdminDashboard() {
                         </button>
                         <button
                             onClick={() => setActiveTab('gallery')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'gallery'
-                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                            className={`px-4 sm:px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'gallery'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
@@ -750,8 +750,8 @@ export default function AdminDashboard() {
                         </button>
                         <button
                             onClick={() => setActiveTab('documents')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'documents'
-                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                            className={`px-4 sm:px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'documents'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
@@ -759,8 +759,8 @@ export default function AdminDashboard() {
                         </button>
                         <button
                             onClick={() => setActiveTab('settings')}
-                            className={`px-6 py-3 rounded-full font-medium transition-all ${activeTab === 'settings'
-                                ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
+                            className={`px-4 sm:px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap text-sm sm:text-base flex-shrink-0 ${activeTab === 'settings'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
                                 : 'text-gray-600 hover:text-gray-900'
                                 }`}
                         >
@@ -784,7 +784,7 @@ export default function AdminDashboard() {
                                         <select
                                             value={calculatorData.cakeSize}
                                             onChange={handleCalculatorSizeChange}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent"
                                         >
                                             <option value="">Select size</option>
                                             <optgroup label="Single Tier (Round)">
@@ -817,7 +817,7 @@ export default function AdminDashboard() {
                                         <label className="block text-sm font-medium text-gray-700 mb-2">
                                             Select Flavors {calculatorData.cakeSize ? `(Up to ${getMaxFlavors()} flavors)` : '(Select size first)'}
                                             {calculatorData.cakeSize === 'other' && (
-                                                <span className="text-xs text-yellow-600 font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
+                                                <span className="text-xs text-[#6B2E5F] font-medium block mt-1">⚠️ Price may vary based on size and complexity</span>
                                             )}
                                         </label>
 
@@ -832,7 +832,7 @@ export default function AdminDashboard() {
                                                             checked={calculatorData.flavors.includes(flavor)}
                                                             onChange={(e) => handleCalculatorFlavorChange(flavor, e.target.checked)}
                                                             disabled={!calculatorData.cakeSize || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
-                                                            className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                            className="mr-2 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                                                         />
                                                         <span className="text-sm text-gray-700">{flavor}</span>
                                                     </label>
@@ -851,7 +851,7 @@ export default function AdminDashboard() {
                                                             checked={calculatorData.flavors.includes(flavor)}
                                                             onChange={(e) => handleCalculatorFlavorChange(flavor, e.target.checked)}
                                                             disabled={!calculatorData.cakeSize || calculatorData.cakeSize === 'other' || (!calculatorData.flavors.includes(flavor) && calculatorData.flavors.length >= getMaxFlavors())}
-                                                            className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                            className="mr-2 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                                                         />
                                                         <span className="text-sm text-gray-700">{flavor}</span>
                                                         <span className="text-xs text-purple-600 ml-1">(+$15)</span>
@@ -868,7 +868,7 @@ export default function AdminDashboard() {
                                                     {calculatorData.flavors.map((flavor) => (
                                                         <span
                                                             key={flavor}
-                                                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-800"
+                                                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-[#C8A2B8]/20 text-[#6B2E5F]"
                                                         >
                                                             {flavor}
                                                             {specialtyFlavors.includes(flavor) && <span className="ml-1 text-xs">(+$15)</span>}
@@ -892,7 +892,7 @@ export default function AdminDashboard() {
                                                         checked={calculatorData.frostings.includes(frosting)}
                                                         onChange={(e) => handleCalculatorFrostingChange(frosting, e.target.checked)}
                                                         disabled={!calculatorData.frostings.includes(frosting) && calculatorData.frostings.length >= 2}
-                                                        className="mr-2 w-4 h-4 text-yellow-600 focus:ring-yellow-500 rounded"
+                                                        className="mr-2 w-4 h-4 text-[#C8A2B8] focus:ring-[#C8A2B8] rounded"
                                                     />
                                                     <span className="text-sm text-gray-700">{frosting}</span>
                                                 </label>
@@ -920,7 +920,7 @@ export default function AdminDashboard() {
                                             type="number"
                                             value={calculatorData.laborHours}
                                             onChange={(e) => setCalculatorData({ ...calculatorData, laborHours: Number(e.target.value) })}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent"
                                             min="0"
                                             step="0.5"
                                         />
@@ -955,7 +955,7 @@ export default function AdminDashboard() {
                                             type="number"
                                             value={calculatorData.decor}
                                             onChange={(e) => setCalculatorData({ ...calculatorData, decor: Number(e.target.value) })}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent"
                                             min="0"
                                             step="5"
                                         />
@@ -1007,7 +1007,7 @@ export default function AdminDashboard() {
                                     </div>
                                     <div className="flex justify-between py-4">
                                         <span className="text-lg font-bold text-gray-800">Final Price:</span>
-                                        <span className="text-2xl font-bold text-yellow-600">${finalPrice.toFixed(2)}</span>
+                                        <span className="text-2xl font-bold text-[#6B2E5F]">${finalPrice.toFixed(2)}</span>
                                     </div>
                                 </div>
                             </div>
@@ -1018,31 +1018,31 @@ export default function AdminDashboard() {
                 {activeTab === 'calendar' && (
                     <div className="max-w-8xl mx-auto">
                         <div className="card">
-                            <div className="flex justify-between items-center mb-6">
-                                <h3 className="text-2xl font-bold">Order Management</h3>
-                                <button className="btn-secondary">Add New Order</button>
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                <h3 className="text-2xl font-bold text-[#6B2E5F]">Order Management</h3>
+                                <button className="btn-secondary w-full sm:w-auto">Add New Order</button>
                             </div>
 
                             {/* Quick Stats */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                                <div className="bg-blue-50 p-4 rounded-lg text-center">
-                                    <div className="text-2xl font-bold text-blue-600">{orders.length}</div>
-                                    <div className="text-sm text-gray-600">Total Orders</div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
+                                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg text-center border border-blue-100">
+                                    <div className="text-xl sm:text-2xl font-bold text-blue-600">{orders.length}</div>
+                                    <div className="text-xs sm:text-sm text-gray-600 mt-1">Total Orders</div>
                                 </div>
-                                <div className="bg-yellow-50 p-4 rounded-lg text-center">
-                                    <div className="text-2xl font-bold text-yellow-600">
+                                <div className="bg-[#C8A2B8]/10 p-3 sm:p-4 rounded-lg text-center border border-[#C8A2B8]/20">
+                                    <div className="text-xl sm:text-2xl font-bold text-[#6B2E5F]">
                                         {orders.filter(order => order.status === 'pending').length}
                                     </div>
-                                    <div className="text-sm text-gray-600">Pending</div>
+                                    <div className="text-xs sm:text-sm text-gray-600 mt-1">Pending</div>
                                 </div>
-                                <div className="bg-green-50 p-4 rounded-lg text-center">
-                                    <div className="text-2xl font-bold text-green-600">
+                                <div className="bg-green-50 p-3 sm:p-4 rounded-lg text-center border border-green-100">
+                                    <div className="text-xl sm:text-2xl font-bold text-green-600">
                                         {orders.filter(order => order.status === 'completed').length}
                                     </div>
-                                    <div className="text-sm text-gray-600">Completed</div>
+                                    <div className="text-xs sm:text-sm text-gray-600 mt-1">Completed</div>
                                 </div>
-                                <div className="bg-purple-50 p-4 rounded-lg text-center">
-                                    <div className="text-2xl font-bold text-purple-600">
+                                <div className="bg-purple-50 p-3 sm:p-4 rounded-lg text-center border border-purple-100">
+                                    <div className="text-xl sm:text-2xl font-bold text-purple-600">
                                         {orders.filter(order => {
                                             const today = new Date();
                                             today.setHours(0, 0, 0, 0);
@@ -1051,26 +1051,26 @@ export default function AdminDashboard() {
                                             return orderDate >= today && ['pending', 'approved', 'in_progress'].includes(order.status);
                                         }).length}
                                     </div>
-                                    <div className="text-sm text-gray-600">Upcoming</div>
+                                    <div className="text-xs sm:text-sm text-gray-600 mt-1">Upcoming</div>
                                 </div>
                             </div>
 
                             {/* Order Filter Tabs */}
-                            <div className="flex flex-wrap gap-2 mb-6">
+                            <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-6 px-2 sm:px-0">
                                 <button
                                     onClick={() => setOrderFilter('all')}
-                                    className={`px-4 py-2 rounded-full font-medium transition-all ${orderFilter === 'all'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    className={`px-4 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${orderFilter === 'all'
+                                        ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
-                                    All Orders ({orders.length})
+                                    All ({orders.length})
                                 </button>
                                 <button
                                     onClick={() => setOrderFilter('upcoming')}
-                                    className={`px-4 py-2 rounded-full font-medium transition-all ${orderFilter === 'upcoming'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    className={`px-4 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${orderFilter === 'upcoming'
+                                        ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
                                     Upcoming ({orders.filter(order => {
@@ -1083,27 +1083,27 @@ export default function AdminDashboard() {
                                 </button>
                                 <button
                                     onClick={() => setOrderFilter('unapproved')}
-                                    className={`px-4 py-2 rounded-full font-medium transition-all ${orderFilter === 'unapproved'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    className={`px-4 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${orderFilter === 'unapproved'
+                                        ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
-                                    Unapproved ({orders.filter(order => order.status === 'pending').length})
+                                    Pending ({orders.filter(order => order.status === 'pending').length})
                                 </button>
                                 <button
                                     onClick={() => setOrderFilter('completed')}
-                                    className={`px-4 py-2 rounded-full font-medium transition-all ${orderFilter === 'completed'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    className={`px-4 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${orderFilter === 'completed'
+                                        ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
                                     Completed ({orders.filter(order => order.status === 'completed').length})
                                 </button>
                                 <button
                                     onClick={() => setOrderFilter('cancelled')}
-                                    className={`px-4 py-2 rounded-full font-medium transition-all ${orderFilter === 'cancelled'
-                                        ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-md'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    className={`px-4 py-2 rounded-full font-medium transition-all text-sm sm:text-base ${orderFilter === 'cancelled'
+                                        ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F]'
+                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
                                 >
                                     Cancelled ({orders.filter(order => order.status === 'cancelled').length})
@@ -1125,129 +1125,134 @@ export default function AdminDashboard() {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full">
-                                        <thead>
-                                            <tr className="border-b border-gray-200">
-                                                <th className="text-left py-3 px-4 font-semibold">Customer</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Email</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Event Date</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Occasion</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Size</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Budget</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Delivery</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Status</th>
-                                                <th className="text-left py-3 px-4 font-semibold">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {filteredOrders.map((order) => (
-                                                <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
-                                                    <td className="py-3 px-4">
-                                                        <div>
-                                                            <div className="font-medium">{order.name}</div>
-                                                            {order.phone && (
-                                                                <div className="text-sm text-gray-500">{order.phone}</div>
-                                                            )}
-                                                        </div>
-                                                    </td>
-                                                    <td className="py-3 px-4">{order.email}</td>
-                                                    <td className="py-3 px-4">{formatDate(order.date_needed)}</td>
-                                                    <td className="py-3 px-4">{order.occasion === 'other' ? (order.occasion_other || 'Other') : (order.occasion || 'N/A')}</td>
-                                                    <td className="py-3 px-4">{order.size}</td>
-                                                    <td className="py-3 px-4">
-                                                        {order.target_budget && (
-                                                            <span className="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                                                                {order.target_budget}
-                                                            </span>
-                                                        )}
-                                                    </td>
-                                                    <td className="py-3 px-4">
-                                                        {order.delivery_option === 'delivery' ? (
-                                                            <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                                                                Delivery
-                                                            </span>
-                                                        ) : (
-                                                            <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
-                                                                Pickup
-                                                            </span>
-                                                        )}
-                                                    </td>
-                                                    <td className="py-3 px-4">
-                                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                                            order.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
-                                                                order.status === 'approved' ? 'bg-yellow-100 text-yellow-800' :
-                                                                    'bg-gray-100 text-gray-800'
-                                                            }`}>
-                                                            {order.status.replace('_', ' ')}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-3 px-4">
-                                                        <div className="flex flex-wrap gap-2">
-                                                            <button
-                                                                onClick={() => viewOrder(order)}
-                                                                className="text-purple-600 hover:text-purple-800 text-sm px-2 py-1 rounded border border-purple-300 hover:bg-purple-50"
-                                                            >
-                                                                View
-                                                            </button>
-                                                            <button
-                                                                onClick={() => editOrder(order)}
-                                                                className="text-blue-600 hover:text-blue-800 text-sm px-2 py-1 rounded border border-blue-300 hover:bg-blue-50"
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                            <button
-                                                                onClick={() => deleteOrder(order.id)}
-                                                                className="text-red-600 hover:text-red-800 text-sm px-2 py-1 rounded border border-red-300 hover:bg-red-50"
-                                                            >
-                                                                Delete
-                                                            </button>
-                                                            {order.status === 'pending' && (
-                                                                <>
+                                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                                    <div className="inline-block min-w-full align-middle">
+                                        <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+                                            <table className="min-w-full divide-y divide-gray-200">
+                                                <thead className="bg-[#C8A2B8]/10">
+                                                    <tr>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider">Customer</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider hidden md:table-cell">Email</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider">Event Date</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider hidden lg:table-cell">Occasion</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider hidden lg:table-cell">Size</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider hidden xl:table-cell">Budget</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider hidden md:table-cell">Delivery</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider">Status</th>
+                                                        <th className="px-3 sm:px-6 py-3 text-left text-xs font-semibold text-[#6B2E5F] uppercase tracking-wider">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                    {filteredOrders.map((order) => (
+                                                        <tr key={order.id} className="hover:bg-[#C8A2B8]/5 transition-colors">
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
+                                                                <div>
+                                                                    <div className="font-medium text-gray-900">{order.name}</div>
+                                                                    {order.phone && (
+                                                                        <div className="text-sm text-gray-500">{order.phone}</div>
+                                                                    )}
+                                                                    <div className="text-sm text-gray-500 md:hidden mt-1">{order.email}</div>
+                                                                </div>
+                                                            </td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-700 hidden md:table-cell">{order.email}</td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-700">{formatDate(order.date_needed)}</td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-700 hidden lg:table-cell">{order.occasion === 'other' ? (order.occasion_other || 'Other') : (order.occasion || 'N/A')}</td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-700 hidden lg:table-cell">{order.size}</td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-700 hidden xl:table-cell">
+                                                                {order.target_budget && (
+                                                                    <span className="text-xs bg-[#C8A2B8]/20 text-[#6B2E5F] px-2 py-1 rounded-full">
+                                                                        {order.target_budget}
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm hidden md:table-cell">
+                                                                {order.delivery_option === 'delivery' ? (
+                                                                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                                                        Delivery
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                                                        Pickup
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap">
+                                                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                                                    order.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
+                                                                        order.status === 'approved' ? 'bg-[#C8A2B8]/20 text-[#6B2E5F]' :
+                                                                            'bg-gray-100 text-gray-800'
+                                                                    }`}>
+                                                                    {order.status.replace('_', ' ')}
+                                                                </span>
+                                                            </td>
+                                                            <td className="px-3 sm:px-6 py-4 whitespace-nowrap text-sm">
+                                                                <div className="flex flex-wrap gap-1 sm:gap-2">
                                                                     <button
-                                                                        onClick={() => updateOrderStatus(order.id, 'approved')}
-                                                                        className="text-green-600 hover:text-green-800 text-sm px-2 py-1 rounded border border-green-300 hover:bg-green-50"
+                                                                        onClick={() => viewOrder(order)}
+                                                                        className="text-[#6B2E5F] hover:text-[#C8A2B8] text-xs sm:text-sm px-2 py-1 rounded border border-[#C8A2B8] hover:bg-[#C8A2B8]/10 transition-colors"
                                                                     >
-                                                                        Accept
+                                                                        View
                                                                     </button>
                                                                     <button
-                                                                        onClick={() => updateOrderStatus(order.id, 'cancelled')}
-                                                                        className="text-orange-600 hover:text-orange-800 text-sm px-2 py-1 rounded border border-orange-300 hover:bg-orange-50"
+                                                                        onClick={() => editOrder(order)}
+                                                                        className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm px-2 py-1 rounded border border-blue-300 hover:bg-blue-50 transition-colors"
                                                                     >
-                                                                        Deny
-                                                                    </button>
-                                                                </>
-                                                            )}
-                                                            {order.status === 'approved' && (
-                                                                <>
-                                                                    <button
-                                                                        onClick={() => openPriceModal(order)}
-                                                                        className="text-yellow-600 hover:text-yellow-800 text-sm px-2 py-1 rounded border border-yellow-300 hover:bg-yellow-50"
-                                                                    >
-                                                                        Set Price
+                                                                        Edit
                                                                     </button>
                                                                     <button
-                                                                        onClick={() => updateOrderStatus(order.id, 'in_progress')}
-                                                                        className="text-blue-600 hover:text-blue-800 text-sm px-2 py-1 rounded border border-blue-300 hover:bg-blue-50"
+                                                                        onClick={() => deleteOrder(order.id)}
+                                                                        className="text-red-600 hover:text-red-800 text-xs sm:text-sm px-2 py-1 rounded border border-red-300 hover:bg-red-50 transition-colors"
                                                                     >
-                                                                        Start
+                                                                        Delete
                                                                     </button>
-                                                                </>
-                                                            )}
-                                                            {order.status === 'in_progress' && (
-                                                                <button
-                                                                    onClick={() => updateOrderStatus(order.id, 'completed')}
-                                                                    className="text-green-600 hover:text-green-800 text-sm px-2 py-1 rounded border border-green-300 hover:bg-green-50"
-                                                                >
-                                                                    Complete
-                                                                </button>
-                                                            )}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                                                    {order.status === 'pending' && (
+                                                                        <>
+                                                                            <button
+                                                                                onClick={() => updateOrderStatus(order.id, 'approved')}
+                                                                                className="text-green-600 hover:text-green-800 text-xs sm:text-sm px-2 py-1 rounded border border-green-300 hover:bg-green-50 transition-colors"
+                                                                            >
+                                                                                Accept
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() => updateOrderStatus(order.id, 'cancelled')}
+                                                                                className="text-orange-600 hover:text-orange-800 text-xs sm:text-sm px-2 py-1 rounded border border-orange-300 hover:bg-orange-50 transition-colors"
+                                                                            >
+                                                                                Deny
+                                                                            </button>
+                                                                        </>
+                                                                    )}
+                                                                    {order.status === 'approved' && (
+                                                                        <>
+                                                                            <button
+                                                                                onClick={() => openPriceModal(order)}
+                                                                                className="text-[#6B2E5F] hover:text-[#C8A2B8] text-xs sm:text-sm px-2 py-1 rounded border border-[#C8A2B8] hover:bg-[#C8A2B8]/10 transition-colors"
+                                                                            >
+                                                                                Set Price
+                                                                            </button>
+                                                                            <button
+                                                                                onClick={() => updateOrderStatus(order.id, 'in_progress')}
+                                                                                className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm px-2 py-1 rounded border border-blue-300 hover:bg-blue-50 transition-colors"
+                                                                            >
+                                                                                Start
+                                                                            </button>
+                                                                        </>
+                                                                    )}
+                                                                    {order.status === 'in_progress' && (
+                                                                        <button
+                                                                            onClick={() => updateOrderStatus(order.id, 'completed')}
+                                                                            className="text-green-600 hover:text-green-800 text-xs sm:text-sm px-2 py-1 rounded border border-green-300 hover:bg-green-50 transition-colors"
+                                                                        >
+                                                                            Complete
+                                                                        </button>
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -1287,7 +1292,7 @@ export default function AdminDashboard() {
 
                             {galleryLoading ? (
                                 <div className="text-center py-8">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto"></div>
+                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C8A2B8] mx-auto"></div>
                                     <p className="mt-4 text-gray-600">Loading gallery...</p>
                                 </div>
                             ) : galleryImages.length === 0 ? (
@@ -1315,7 +1320,7 @@ export default function AdminDashboard() {
                                                 {/* Featured badge */}
                                                 {image.is_featured && (
                                                     <div className="absolute top-3 right-3">
-                                                        <span className="backdrop-blur-sm bg-yellow-400/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
+                                                        <span className="backdrop-blur-sm bg-[#D4AF37]/90 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-sm">
                                                             Featured
                                                         </span>
                                                     </div>
@@ -1328,7 +1333,7 @@ export default function AdminDashboard() {
                                                         <button
                                                             onClick={() => toggleFeatured(image.id, image.is_featured)}
                                                             className={`text-xs px-2 py-1 rounded transition-colors ${image.is_featured
-                                                                ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+                                                                ? 'bg-[#C8A2B8]/20 text-[#6B2E5F] hover:bg-[#C8A2B8]/30'
                                                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                                                 }`}
                                                         >
@@ -1357,7 +1362,7 @@ export default function AdminDashboard() {
                             <h3 className="text-2xl font-bold mb-6">Document Vault</h3>
 
                             <div className="max-w-md mx-auto">
-                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-yellow-400 transition-colors">
+                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#C8A2B8] transition-colors">
                                     <div className="text-4xl mb-4">📊</div>
                                     <h4 className="text-lg font-semibold mb-2">Export Order History</h4>
                                     <p className="text-gray-600 mb-4">Download all orders as CSV file</p>
@@ -1383,8 +1388,8 @@ export default function AdminDashboard() {
                                         </div>
                                         <div className="text-sm text-gray-600">Completed</div>
                                     </div>
-                                    <div className="bg-yellow-50 p-4 rounded-lg">
-                                        <div className="text-2xl font-bold text-yellow-600">
+                                    <div className="bg-[#C8A2B8]/10 p-4 rounded-lg">
+                                        <div className="text-2xl font-bold text-[#6B2E5F]">
                                             {orders.filter(o => o.status === 'pending').length}
                                         </div>
                                         <div className="text-sm text-gray-600">Pending</div>
@@ -1449,7 +1454,7 @@ export default function AdminDashboard() {
                                             value={passwordChangeData.currentPassword}
                                             onChange={(e) => setPasswordChangeData({ ...passwordChangeData, currentPassword: e.target.value })}
                                             required
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                                             placeholder="Enter your current password"
                                         />
                                     </div>
@@ -1464,7 +1469,7 @@ export default function AdminDashboard() {
                                             onChange={(e) => setPasswordChangeData({ ...passwordChangeData, newPassword: e.target.value })}
                                             required
                                             minLength={6}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                                             placeholder="Enter your new password (min. 6 characters)"
                                         />
                                     </div>
@@ -1479,7 +1484,7 @@ export default function AdminDashboard() {
                                             onChange={(e) => setPasswordChangeData({ ...passwordChangeData, confirmPassword: e.target.value })}
                                             required
                                             minLength={6}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                                             placeholder="Confirm your new password"
                                         />
                                     </div>
@@ -1487,7 +1492,7 @@ export default function AdminDashboard() {
                                     <button
                                         type="submit"
                                         disabled={isChangingPassword}
-                                        className="w-full bg-gradient-to-r from-yellow-500 to-yellow-300 text-white py-3 text-lg rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="w-full bg-[#C8A2B8] text-white py-3 text-lg rounded-xl font-semibold hover:bg-[#6B2E5F] hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {isChangingPassword ? 'Changing Password...' : 'Change Password'}
                                     </button>
@@ -1931,7 +1936,7 @@ export default function AdminDashboard() {
                                         <div><strong>Status:</strong>
                                             <span className={`ml-2 px-2 py-1 rounded-full text-xs font-medium ${viewingOrder.status === 'completed' ? 'bg-green-100 text-green-800' :
                                                 viewingOrder.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
-                                                    viewingOrder.status === 'approved' ? 'bg-yellow-100 text-yellow-800' :
+                                                    viewingOrder.status === 'approved' ? 'bg-[#C8A2B8]/20 text-[#6B2E5F]' :
                                                         'bg-gray-100 text-gray-800'
                                                 }`}>
                                                 {viewingOrder.status.replace('_', ' ')}

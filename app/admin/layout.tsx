@@ -76,7 +76,7 @@ export default function AdminLayout({
             <html lang="en">
                 <body className="antialiased">
                     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C8A2B8]"></div>
                     </div>
                 </body>
             </html>
@@ -115,7 +115,7 @@ export default function AdminLayout({
                                         value={credentials.email}
                                         onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                                         placeholder="Enter your email"
                                     />
                                 </div>
@@ -130,7 +130,7 @@ export default function AdminLayout({
                                         value={credentials.password}
                                         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                                         required
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#C8A2B8] focus:border-transparent transition-all"
                                         placeholder="Enter your password"
                                     />
                                 </div>
@@ -138,7 +138,7 @@ export default function AdminLayout({
                                 <button
                                     type="submit"
                                     disabled={isLoggingIn}
-                                    className="w-full bg-gradient-to-r from-yellow-500 to-yellow-300 text-white py-3 text-lg rounded-xl font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full bg-[#C8A2B8] text-white py-3 text-lg rounded-xl font-semibold hover:bg-[#6B2E5F] hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isLoggingIn ? 'Signing In...' : 'Sign In'}
                                 </button>

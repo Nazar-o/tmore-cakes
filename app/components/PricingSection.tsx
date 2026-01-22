@@ -71,10 +71,10 @@ export default function PricingSection() {
         <section id="pricing" className="py-20 gradient-bg">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6 ">
-                        <span className="gradient-text-dark pricing-section-title">Our Cake Collection</span>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#6B2E5F]">
+                        Our Cake Collection
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto pricing-section-text">
+                    <p className="text-xl text-[#2E2E2E] max-w-3xl mx-auto pricing-section-text">
                         Explore our variety of cake sizes, flavors, and styles. Each cake is custom-made to perfection for your special occasion.
                     </p>
                 </div>
@@ -85,8 +85,8 @@ export default function PricingSection() {
                         <button
                             onClick={() => setActiveTab('sizes')}
                             className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'sizes'
-                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
-                                : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F] font-bold'
+                                : 'text-gray-600 hover:text-gray-900 font-bold'
                                 }`}
                         >
                             Cake Sizes & Styles
@@ -94,8 +94,8 @@ export default function PricingSection() {
                         <button
                             onClick={() => setActiveTab('flavors')}
                             className={`px-6 py-3 rounded-full font-medium transition-all whitespace-nowrap ${activeTab === 'flavors'
-                                ? 'bg-gradient-to-r from-yellow-500 to-yellow-300 text-white shadow-md'
-                                : 'text-gray-600 hover:text-gray-900'
+                                ? 'bg-[#C8A2B8] text-white shadow-md hover:bg-[#6B2E5F] font-bold'
+                                : 'text-gray-600 hover:text-gray-900 font-bold'
                                 }`}
                         >
                             Flavors & Frostings
@@ -125,11 +125,11 @@ export default function PricingSection() {
                                 </div>
 
                                 <div>
-                                    <h4 className="text-xl font-semibold mb-4 text-purple-600 text-center">Premium Flavors (+$15)</h4>
+                                    <h4 className="text-xl font-semibold mb-4 text-[#6B2E5F] text-center">Premium Flavors (+$15)</h4>
                                     <div className="flavors-grid-mobile grid grid-cols-2 gap-3">
                                         {flavors.premium.map((flavor, index) => (
                                             <div key={index} className="flex items-center space-x-2">
-                                                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                                <div className="w-2 h-2 bg-[#6B2E5F] rounded-full"></div>
                                                 <span className="text-gray-700">{flavor}</span>
                                             </div>
                                         ))}
@@ -149,7 +149,7 @@ export default function PricingSection() {
                                 <div className="frostings-list-mobile flex flex-col items-center gap-3">
                                     {frostings.map((frosting, index) => (
                                         <div key={index} className="flex items-center space-x-2">
-                                            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                                            <div className="w-2 h-2 bg-[#D4AF37] rounded-full"></div>
                                             <span className="text-gray-700">{frosting}</span>
                                         </div>
                                     ))}
@@ -163,18 +163,18 @@ export default function PricingSection() {
                                 <h3 className="pricing-card-title">Additional Services</h3>
                                 <div className="additional-services-mobile grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div className="service-card-mobile text-center">
-                                        <div className="text-2xl mb-2">🚚</div>
+                                        <div className="text-2xl mb-2"></div>
                                         <h4 className="font-semibold mb-2">Delivery</h4>
                                         <p className="text-gray-600 mb-2">$35 - $85</p>
                                         <p className="text-sm text-gray-500">Delivery fees are calculated based on distance and are recommended for 2-tier cakes or larger.</p>
                                     </div>
                                     <div className="service-card-mobile text-center">
-                                        <div className="text-2xl mb-2">🎨</div>
+                                        <div className="text-2xl mb-2"></div>
                                         <h4 className="font-semibold mb-2">Setup Fee</h4>
                                         <p className="text-gray-600">$25 - $100</p>
                                     </div>
                                     <div className="service-card-mobile text-center">
-                                        <div className="text-2xl mb-2">⭐</div>
+                                        <div className="text-2xl mb-2"></div>
                                         <h4 className="font-semibold mb-2">Custom Decorations</h4>
                                         <p className="text-gray-600">Priced by design</p>
                                     </div>
@@ -194,7 +194,7 @@ export default function PricingSection() {
                                 <div className="space-y-3">
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Starting at:</span>
-                                        <span className="text-xl font-bold text-yellow-600">$9/serving</span>
+                                        <span className="text-xl font-bold text-[#6B2E5F]">$9/serving</span>
                                     </div>
                                     <div className="flex justify-between items-center py-2 border-b border-gray-200">
                                         <span className="text-gray-700">Minimum order:</span>
@@ -216,10 +216,10 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
-                                        <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
+                                        <div className="text-lg font-bold text-[#6B2E5F] mb-3">from ${size.basePrice}</div>
                                         {size.description && (
-                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                                <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
+                                            <div className="bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
+                                                <p className="text-sm text-[#6B2E5F] font-medium">{size.description}</p>
                                             </div>
                                         )}
                                     </div>
@@ -236,10 +236,10 @@ export default function PricingSection() {
                                     <div key={index} className="pricing-card-mobile card text-center group hover:scale-105 transition-transform duration-300 w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-1rem)] max-w-sm">
                                         <h3 className="text-xl font-bold mb-2 text-gray-900">{size.name}</h3>
                                         <div className="text-sm text-gray-500 mb-3">{size.servings} servings</div>
-                                        <div className="text-lg font-bold text-yellow-600 mb-3">from ${size.basePrice}</div>
+                                        <div className="text-lg font-bold text-[#6B2E5F] mb-3">from ${size.basePrice}</div>
                                         {size.description && (
-                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                                <p className="text-sm text-yellow-800 font-medium">{size.description}</p>
+                                            <div className="bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
+                                                <p className="text-sm text-[#6B2E5F] font-medium">{size.description}</p>
                                             </div>
                                         )}
                                     </div>
@@ -266,8 +266,8 @@ export default function PricingSection() {
                                                 ))}
                                             </div>
                                         </div>
-                                        <div className="mt-4 bg-purple-50 border border-purple-200 rounded-lg p-3">
-                                            <p className="text-sm text-purple-800 font-medium">Other size combinations available: contact for pricing.</p>
+                                        <div className="mt-4 bg-[#C8A2B8]/10 border border-[#C8A2B8]/30 rounded-lg p-3">
+                                            <p className="text-sm text-[#6B2E5F] font-medium">Other size combinations available: contact for pricing.</p>
                                         </div>
                                     </div>
                                 ))}

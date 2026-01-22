@@ -32,7 +32,7 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section className="hero-section relative min-h-[60vh] sm:min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] max-h-[90vh] flex items-center justify-center overflow-hidden">
+        <section className="hero-section relative min-h-[60vh] sm:min-h-[65vh] md:min-h-[70vh] lg:min-h-[75vh] max-h-[80vh] flex items-center justify-center overflow-hidden">
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0 bg-white">
                 <div
@@ -57,7 +57,7 @@ export default function HeroSection() {
             <div className="relative z-20 norican-font text-center text-white px-4 max-w-8xl mx-auto top-20">
                 {/* <h1>
                     Crafting Sweet Memories,<br />
-                    <span className="text-yellow-300 ">One Slice at a Time</span>
+                    <span className="text-[#C8A2B8] ">One Slice at a Time</span>
                 </h1> */}
             </div>
 
